@@ -12,6 +12,8 @@ The project will utilize the following data structures and techniques:
 - Loading and saving data to a .dat file
 - Integration with GitHub for version control and collaboration
 - Group Communication with a discord server and resource/reference storage
+- Drag-and-Drop:
+    * Budget categories: Allow users to drag-and-drop budget categories to reorder them or to move a category between different groups (such as needs, wants, or savings). This would enable users to easily organize and prioritize their budget categories based on their personal preferences.
 
 ### Backend
 - `Transaction` class representing a single transaction, with fields such as name, amount, date, and payment method
