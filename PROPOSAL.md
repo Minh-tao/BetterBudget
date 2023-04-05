@@ -26,21 +26,42 @@ The project will utilize the following data structures and techniques:
 1. JavaFX Documentation: Official JavaFX documentation to learn about various UI components and their usage.
 2. JavaFX Tutorials: Online tutorials to understand how to create and manage JavaFX applications.
 3. Design Inspiration: Websites like Dribbble and Behance for UI design inspiration and ideas.
-4. More to come...
+4. Dra
+5. More to come...
 
 
 ## Objectives
-1. Design and implement a clean and visually appealing user interface using JavaFX components.
-2. Integrate the ATM and spending visualizer features in a seamless manner.
-3. Implement data persistence for storing and retrieving user transactions and account information.
-4. Create a robust backend system for managing transactions, accounts, and categories.
-5. Implement budgeting tools that allow users to set saving goals and visualize their progress.
-6. Provide suggestions for reducing spending and reallocating funds based on user spending habits.
-7. Ensure the application is user-friendly and intuitive, with clear affordances for user interactions.
-8. Implement additional features such as drag and drop, radio buttons, and progress bars to enhance the user experience.
+Our objectives for this project are as follows:
+1. Splash screen and UI design: Create an attractive and visually appealing splash screen and overall user interface using JavaFX components, incorporating design inspiration from various sources.
+2. Transaction visualization: Implement a visually informative way to display users' transaction history, such as using graphs or charts.
+3. Interactive budgeting tool: Develop an interactive budgeting tool that allows users to set saving goals, track their progress, and adjust their budget according to their needs.
+4. Spending category breakdown: Create a feature that categorizes users' spending and provides an overview of their spending habits in each category.
+5. Animation for transactions: Implement smooth animations for transaction-related actions, such as adding, editing, or deleting transactions.
+6. Drag-and-drop functionality: Integrate drag-and-drop capabilities for easy manipulation and organization of transactions and budget elements.
+7. Data persistence and file handling: Implement a robust back-end system for loading and saving user data, ensuring the application can reliably store and retrieve user information.
+
+## Dream Objectives
+1. Real-time suggestions and feedback: Provide real-time suggestions and feedback to users based on their spending habits, helping them make better financial decisions.
+2. Deploy our application either through an executable or through a web app.
 
 ## Mock-ups
 Hand-drawn mock-ups of the user interface will be created to guide the implementation of the UI, ensuring that it is visually appealing, informative, and intuitive to interact with.
 
 ## Individuality and Collaboration
 The project will exhibit individuality by offering unique features and a customized design inspired by various sources. The team will collaborate effectively by dividing tasks and responsibilities, ensuring a cohesive final product.
+
+## Teamwork and Reflection
+
+Upon completion of the project, our team will provide a reflection on our experience, detailing the following:
+
+* A description of our group's work process and division of tasks
+* A list of resources used to implement each objective
+* A discussion of the objectives that were particularly challenging
+* A description of any aspects that don't work as desired
+* A description of what we would have improved if we had more time
+
+
+Additionally, each team member will individually reflect on:
+
+* Their personal contributions and self-assessment of their work
+* Their partners' contributions and assessment of their partners' work
