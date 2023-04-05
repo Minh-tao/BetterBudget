@@ -33,12 +33,12 @@ The project will utilize the following data structures and techniques:
 
 ## Objectives
 Our objectives for this project are as follows:
-1. Splash screen and UI design: Create an attractive and visually appealing splash screen and overall user interface using JavaFX components, incorporating design inspiration from various sources.
-2. Transaction visualization: Implement a visually informative way to display users' transaction history, such as using graphs or charts.
-3. Interactive budgeting tool: Develop an interactive budgeting tool that allows users to set saving goals, track their progress, and adjust their budget according to their needs.
+1. Intro screen: Create an attractive and visually appealing intro screen and overall user interface using JavaFX components, incorporating design inspiration from various sources; intro screen should incorporate the application's logo and contain the user login screen.
+2. Transaction trends/metrics visualization: Implement a visually informative way to display helpful information to the user about their spending behavior and trends, such as using graphs or charts.
+3. Budgeting tools: Develop budgeting tools that help users with budgeting, such as setting saving goals, amount of budget remaining, amount of budget saved/exceeded/...
 4. Spending category breakdown: Create a feature that categorizes users' spending and provides an overview of their spending habits in each category.
 5. Animation for transactions: Implement smooth animations for transaction-related actions, such as adding, editing, or deleting transactions.
-6. Drag-and-drop functionality: Integrate drag-and-drop capabilities for easy manipulation and organization of transactions and budget elements.
+6. Drag-and-drop functionality: Implement drag-and-drop capabilities for easy manipulation and organization of transactions and budget elements.
 7. Data persistence and file handling: Implement a robust back-end system for loading and saving user data, ensuring the application can reliably store and retrieve user information.
     a.      Make sure to go in-depth in technical outline
 
