@@ -31,18 +31,21 @@ The project will utilize the following data structures and techniques:
 
 ## Objectives
 Our objectives for this project are as follows:
-1. Intro screen: Create an attractive and visually appealing intro screen and overall user interface using JavaFX components, incorporating design inspiration from various sources; intro screen should incorporate the application's logo and contain the user login screen.
-2. Transaction trends/metrics visualization: Implement a visually informative way to display helpful information to the user about their spending behavior and trends, such as using graphs or charts.
-3. Budgeting tools: Develop budgeting tools that help users with budgeting, such as setting saving goals, amount of budget remaining, amount of budget saved/exceeded/...
-4. Spending category breakdown: Create a feature that categorizes users' spending and provides an overview of their spending habits in each category.
-5. Animation for transactions: Implement smooth animations for transaction-related actions, such as adding, editing, or deleting transactions.
-6. Drag-and-drop functionality: Implement drag-and-drop capabilities for easy manipulation and organization of transactions and budget elements.
-7. Data persistence and file handling: Implement a robust back-end system for loading and saving user data, ensuring the application can reliably store and retrieve user information.
+1. Intro screen: Create an attractive and visually appealing intro screen and overall user interface using JavaFX components, incorporating design inspiration from various sources; intro screen should incorporate the application's logo and an animation.
+2. Login screen: screen prompting user for their login information, which will access the persistent user data if they are not loggin in for the first time.
+3. NWS page: create a page that prompts the user for their spending needs, wants, and savings goals that help users with budgeting, such as setting saving goals, amount of budget remaining, amount of budget saved/exceeded/...
+4. Transactions page: page for inputting and storing individual transactions. 
+5. Transaction trends/metrics visualization: Implement a visually informative way to display helpful information to the user about their spending behavior and trends, such as using graphs or charts.
+6. Spending category breakdown: Create a feature that categorizes users' spending and provides an overview of their spending habits in each category.
+7. Animation for transactions: Implement smooth animations for transaction-related actions, such as adding, editing, or deleting transactions.
+8. Drag-and-drop functionality: Implement drag-and-drop capabilities for easy manipulation and organization of transactions and budget elements.
+9. Data persistence and file handling: Implement a robust back-end system for loading and saving user data, ensuring the application can reliably store and retrieve user information.
     a.      Make sure to go in-depth in technical outline
 
 ## Dream Objectives
 1. Real-time suggestions and feedback: Provide real-time suggestions and feedback to users based on their spending habits, helping them make better financial decisions.
 2. Deploy our application either through an executable or through a web app.
+3. Automated testing harness
 
 ## Mock-ups
 Hand-drawn mock-ups of the user interface will be created to guide the implementation of the UI, ensuring that it is visually appealing, informative, and intuitive to interact with.
