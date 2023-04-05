@@ -67,3 +67,9 @@ Additionally, each team member will individually reflect on:
 
 * Their personal contributions and self-assessment of their work
 * Their partners' contributions and assessment of their partners' work
+
+## Project members
+
+* [Malcolm Bell](https://github.com/mbell9)
+* [Minh Tao](https://github.com/Minh-tao)
+* [Zulnorain Ahmed](https://github.com/zahmed333)
