@@ -70,6 +70,6 @@ Additionally, each team member will individually reflect on:
 
 ## Project members
 
-* [Malcolm Bell](https://github.com/mbell9)
-* [Minh Tao](https://github.com/Minh-tao)
-* [Zulnorain Ahmed](https://github.com/zahmed333)
+* [Malcolm Bell](https://github.com/mbell9) - mbell1@colgate.edu
+* [Minh Tao](https://github.com/Minh-tao) - mtao@colgate.edu
+* [Zulnorain Ahmed](https://github.com/zahmed333) - zahmed@colgate.edu
