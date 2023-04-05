@@ -11,6 +11,7 @@ The project will utilize the following data structures and techniques:
 - Trello for Project Management so we can create story maps and break the project down into small tasks.
 - Loading and saving data to a .dat file
 - Integration with GitHub for version control and collaboration
+- Group Communication with a discord server and resource/reference storage
 
 ### Backend
 - `Transaction` class representing a single transaction, with fields such as name, amount, date, and payment method
@@ -39,6 +40,7 @@ Our objectives for this project are as follows:
 5. Animation for transactions: Implement smooth animations for transaction-related actions, such as adding, editing, or deleting transactions.
 6. Drag-and-drop functionality: Integrate drag-and-drop capabilities for easy manipulation and organization of transactions and budget elements.
 7. Data persistence and file handling: Implement a robust back-end system for loading and saving user data, ensuring the application can reliably store and retrieve user information.
+    a.      Make sure to go in-depth in technical outline
 
 ## Dream Objectives
 1. Real-time suggestions and feedback: Provide real-time suggestions and feedback to users based on their spending habits, helping them make better financial decisions.
