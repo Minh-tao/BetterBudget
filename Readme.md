@@ -44,6 +44,8 @@ Our objectives for this project are as follows:
 9. Data persistence and file handling: Implement a robust back-end system for loading and saving user data, ensuring the application can reliably store and retrieve user information.
     a.      Make sure to go in-depth in technical outline
 10. Resizability: make windows/components/widgets resizable, make them properly adjust to the user's screen resolution. Properly display app on mobile.
+11. Back-end data integration between modules: choose data structures and ensure changes update other modules: transactions <-> NWS <-> metrics (visualization) <-> suggestions/allowances
+12. Suggestions/Allowances: effectively convey to the user how much they can spend on needs/wants and how close they are to a limit in order to reach their savings goals.
 
 ## Dream Objectives
 1. Real-time suggestions and feedback: Provide real-time suggestions and feedback to users based on their spending habits, helping them make better financial decisions.
