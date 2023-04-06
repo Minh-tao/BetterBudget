@@ -43,6 +43,7 @@ Our objectives for this project are as follows:
 8. Drag-and-drop functionality: Implement drag-and-drop capabilities for easy manipulation and organization of transactions and budget elements.
 9. Data persistence and file handling: Implement a robust back-end system for loading and saving user data, ensuring the application can reliably store and retrieve user information.
     a.      Make sure to go in-depth in technical outline
+10. Resizability: make windows/components/widgets resizable, make them properly adjust to the user's screen resolution. Properly display app on mobile.
 
 ## Dream Objectives
 1. Real-time suggestions and feedback: Provide real-time suggestions and feedback to users based on their spending habits, helping them make better financial decisions.
