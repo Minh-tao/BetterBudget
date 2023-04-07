@@ -2,6 +2,7 @@
 
 ## Statement
 Our final project is a budgeting application that combines features from an ATM app, spending visualizer, and To-Do list. The goal of the application is to help users visualize their financial transactions, set saving goals, and make suggestions on where to reduce spending or allocate extra money. The application will showcase our proficiency in JavaFX, graphical user interfaces, and software design principles.
+   ----- TO DO: motivation, problem we are addressing, why, how it fixes the problem --------
 
 ## Technical Outline
 The project will utilize the following data structures and techniques:
@@ -30,6 +31,8 @@ The project will utilize the following data structures and techniques:
 2. JavaFX Tutorials: Online tutorials to understand how to create and manage JavaFX applications.
 3. Design Inspiration: Websites like Dribbble and Behance for UI design inspiration and ideas.
 4. More to come...
+
+------ TO DO: add more sources, citations ------
 
 ## Objectives
 Our objectives for this project are as follows:
