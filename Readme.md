@@ -1,8 +1,7 @@
 # Project Proposal
 
 ## Statement
-Our final project is a budgeting application that combines features from an ATM app, spending visualizer, and To-Do list. The goal of the application is to help users visualize their financial transactions, set saving goals, and make suggestions on where to reduce spending or allocate extra money. The application will showcase our proficiency in JavaFX, graphical user interfaces, and software design principles.
-   ----- TO DO: motivation, problem we are addressing, why, how it fixes the problem --------
+Our final project is a budgeting application that helps users manage their savings and transactions. The goal of the application is to help users visualize their financial transactions, set saving goals, and make suggestions on where to reduce spending or allocate extra money. The application will showcase our proficiency in JavaFX, graphical user interfaces, and software design principles. The program was created to address a problem we see in the financial applications that we use; often, the applications that give you up-to-date info on how much money you spend and receive, such as bank statements, do not include tools that help you manage your finances, such as by breaking down the nature of your transactions and giving relevant analytics, setting budgeting goals, or listing things that the user needs or wants to pay for. This application integrates these features into a single package, thereby addressing the aforementioned problem.
 
 ## Technical Outline
 The project will utilize the following data structures and techniques:
@@ -70,7 +69,6 @@ Upon completion of the project, our team will provide a reflection on our experi
 * A discussion of the objectives that were particularly challenging
 * A description of any aspects that don't work as desired
 * A description of what we would have improved if we had more time
-
 
 Additionally, each team member will individually reflect on:
 
