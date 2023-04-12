@@ -29,9 +29,6 @@ The project will utilize the following data structures and techniques:
 1. JavaFX Documentation: Official JavaFX documentation to learn about various UI components and their usage.
 2. JavaFX Tutorials: Online tutorials to understand how to create and manage JavaFX applications.
 3. Design Inspiration: Websites like Dribbble and Behance for UI design inspiration and ideas.
-4. More to come...
-
------- TO DO: add more sources, citations ------
 
 ## Objectives
 Our objectives for this project are as follows:
