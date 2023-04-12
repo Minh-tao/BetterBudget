@@ -9,10 +9,10 @@ The project will utilize the following data structures and techniques:
 - Hashmaps for storing Account data specifically.
 - JavaFX components such as TableView, TabPane, PieChart, and Canvas for the user interface
 - Trello for Project Management so we can create story maps and break the project down into small tasks.
-- Loading and saving data to a .dat file
+- Loading and saving data, such as to a .dat file
 - Integration with GitHub for version control and collaboration
-- Group Communication with a discord server and resource/reference storage
-- Drag-and-Drop:
+- Group communication with a discord server and resource/reference storage
+- Drag-and-Drop functionality:
     * Budget categories: Allow users to drag-and-drop budget categories to reorder them or to move a category between different groups (such as needs, wants, or savings). This would enable users to easily organize and prioritize their budget categories based on their personal preferences.
 
 ### Backend
@@ -41,7 +41,6 @@ Our objectives for this project are as follows:
 7. Animation for transactions: Implement smooth animations for transaction-related actions, such as adding, editing, or deleting transactions.
 8. Drag-and-drop functionality: Implement drag-and-drop capabilities for easy manipulation and organization of transactions and budget elements.
 9. Data persistence and file handling: Implement a robust back-end system for loading and saving user data, ensuring the application can reliably store and retrieve user information.
-    a.      Make sure to go in-depth in technical outline
 10. Resizability: make windows/components/widgets resizable, make them properly adjust to the user's screen resolution. Properly display app on mobile.
 11. Back-end data integration between modules: choose data structures and ensure changes update other modules: transactions <-> NWS <-> metrics (visualization) <-> suggestions/allowances
 12. Suggestions/Allowances: effectively convey to the user how much they can spend on needs/wants and how close they are to a limit in order to reach their savings goals.
@@ -52,7 +51,7 @@ Our objectives for this project are as follows:
 3. Automated testing harness
 
 ## Mock-ups
-Hand-drawn mock-ups of the user interface will be created to guide the implementation of the UI, ensuring that it is visually appealing, informative, and intuitive to interact with.
+Mock-ups of the user interface (both hand-drawn and made in SceneBuilder) will be created to guide the implementation of the UI, ensuring that it is visually appealing, informative, and intuitive to interact with.
 
 ## Individuality and Collaboration
 The project will exhibit individuality by offering unique features and a customized design inspired by various sources. The team will collaborate effectively by dividing tasks and responsibilities, ensuring a cohesive final product.
