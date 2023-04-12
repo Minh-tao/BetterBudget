@@ -34,7 +34,7 @@ The project will utilize the following data structures and techniques:
 Our objectives for this project are as follows:
 1. Intro screen: Create an attractive and visually appealing intro screen and overall user interface using JavaFX components, incorporating design inspiration from various sources; intro screen should incorporate the application's logo and an animation.
 2. Login screen: screen prompting user for their login information, which will access the persistent user data if they are not loggin in for the first time.
-3. NWS (Need/Want/Savings Goals) page: create a page that prompts the user for their spending needs, wants, and savings goals that help users with budgeting, such as setting saving goals, amount of budget remaining, amount of budget saved/exceeded/...
+3. NWS (Needs/Wants/Savings Goals) page: create a page that prompts the user for their spending needs, wants, and savings goals that help users with budgeting, such as setting saving goals, amount of budget remaining, amount of budget saved/exceeded/...
 4. Transactions page: page for inputting and storing individual transactions. 
 5. Transaction trends/metrics visualization: Implement a visually informative way to display helpful information to the user about their spending behavior and trends, such as using graphs or charts.
 6. Spending category breakdown: Create a feature that categorizes users' spending and provides an overview of their spending habits in each category.
@@ -49,9 +49,6 @@ Our objectives for this project are as follows:
 1. Real-time suggestions and feedback: Provide real-time suggestions and feedback to users based on their spending habits, helping them make better financial decisions.
 2. Deploy our application either through an executable or through a web app.
 3. Automated testing harness
-
-## Mock-ups
-Mock-ups of the user interface (both hand-drawn and made in SceneBuilder) will be created to guide the implementation of the UI, ensuring that it is visually appealing, informative, and intuitive to interact with.
 
 ## Individuality and Collaboration
 The project will exhibit individuality by offering unique features and a customized design inspired by various sources. The team will collaborate effectively by dividing tasks and responsibilities, ensuring a cohesive final product.
@@ -76,3 +73,13 @@ Additionally, each team member will individually reflect on:
 * [Malcolm Bell](https://github.com/mbell9) - mbell1@colgate.edu
 * [Minh Tao](https://github.com/Minh-tao) - mtao@colgate.edu
 * [Zulnorain Ahmed](https://github.com/zahmed333) - zahmed@colgate.edu
+
+## Mockup Photos
+
+![Mock-up](https://i.imgur.com/lPplgl1.jpg)
+![Mock-up](https://i.imgur.com/jeGBJMs.png)
+![Mock-up](https://i.imgur.com/oT2q4Tk.png)
+![Mock-up](https://i.imgur.com/ZUez3N3.jpg)
+![Mock-up](https://i.imgur.com/LjJMZn2.png)
+![Mock-up](https://i.imgur.com/ZUez3N3.jpg)
+![Mock-up](https://i.imgur.com/Fu04DcM.jpg)
