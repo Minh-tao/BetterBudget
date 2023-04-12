@@ -76,10 +76,21 @@ Additionally, each team member will individually reflect on:
 
 ## Mockup Photos
 
+### Logo Design
+
 ![Mock-up](https://i.imgur.com/lPplgl1.jpg)
 ![Mock-up](https://i.imgur.com/jeGBJMs.png)
+
+### Login/Title Screen
+
 ![Mock-up](https://i.imgur.com/oT2q4Tk.png)
 ![Mock-up](https://i.imgur.com/ZUez3N3.jpg)
+
+### Transactions List
+
 ![Mock-up](https://i.imgur.com/LjJMZn2.png)
+
+### Program Animations/Functionality
+
 ![Mock-up](https://i.imgur.com/ZUez3N3.jpg)
 ![Mock-up](https://i.imgur.com/Fu04DcM.jpg)
