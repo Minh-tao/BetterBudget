@@ -34,7 +34,7 @@ The project will utilize the following data structures and techniques:
 Our objectives for this project are as follows:
 1. Intro screen: Create an attractive and visually appealing intro screen and overall user interface using JavaFX components, incorporating design inspiration from various sources; intro screen should incorporate the application's logo and an animation.
 2. Login screen: screen prompting user for their login information, which will access the persistent user data if they are not loggin in for the first time.
-3. NWS page: create a page that prompts the user for their spending needs, wants, and savings goals that help users with budgeting, such as setting saving goals, amount of budget remaining, amount of budget saved/exceeded/...
+3. NWS (Need/Want/Savings Goals) page: create a page that prompts the user for their spending needs, wants, and savings goals that help users with budgeting, such as setting saving goals, amount of budget remaining, amount of budget saved/exceeded/...
 4. Transactions page: page for inputting and storing individual transactions. 
 5. Transaction trends/metrics visualization: Implement a visually informative way to display helpful information to the user about their spending behavior and trends, such as using graphs or charts.
 6. Spending category breakdown: Create a feature that categorizes users' spending and provides an overview of their spending habits in each category.
