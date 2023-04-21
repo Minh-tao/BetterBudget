@@ -1,4 +1,4 @@
-# Project Proposal
+# Project Proposal - Malcolm, Minh, Zul
 
 ## Statement
 Our final project is a budgeting application that helps users manage their savings and transactions. The goal of the application is to help users visualize their financial transactions, set saving goals, and make suggestions on where to reduce spending or allocate extra money. The application will showcase our proficiency in JavaFX, graphical user interfaces, and software design principles. The program was created to address a problem we see in the financial applications that we use. Often, the applications that give you up-to-date info on how much money you spend and receive, such as bank statements, do not include tools that help you manage your finances. These tools should do things such as break down the nature of your transactions and give relevant analytics, set budgeting goals, or list things that the user needs or wants to pay for. This application integrates these features into a single package, thereby addressing the aforementioned problem.
