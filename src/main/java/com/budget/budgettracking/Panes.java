@@ -9,7 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 /*
@@ -36,7 +35,7 @@ class Panes {
     //FONTS
     // Create the welcome text
 
-    Font titleFont = Font.loadFont(getClass().getResourceAsStream("/font.ttf"), 24);
+    Font titleFont = Font.loadFont(getClass().getResourceAsStream("/fonts/font.ttf"), 24);
     Font titleFont2 = Font.font("DejaVu Serif", 32);
     Font biggerBodyFont = Font.font("DejaVu Serif", 22);
     Font bodyFont = Font.font("DejaVu Serif", 16);

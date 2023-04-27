@@ -67,7 +67,7 @@ public class BankingTransaction extends Application {
 // Create the welcome text
         Text welcomeText = new Text("Welcome to Better Budget!");
 // Set font style to font.ttf
-        welcomeText.setFont(Font.loadFont(getClass().getResourceAsStream("/font.ttf"), 24));
+        welcomeText.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/font.ttf"), 24));
         welcomeText.setFill(Color.web("#00BB62"));
 
         // Create a thin light green line
