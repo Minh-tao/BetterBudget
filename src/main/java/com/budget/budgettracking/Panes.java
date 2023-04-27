@@ -34,7 +34,9 @@ class Panes {
     //Font messinaSerif = Font.loadFont("file:resources/MessinaSerif-Regular.ttf", 45);
     //doesn't work at all times, or doesn't load properly, I can't tell.
     //FONTS
-    Font titleFont = Font.font("DejaVu Serif", FontWeight.BOLD, 32);
+    // Create the welcome text
+
+    Font titleFont = Font.loadFont(getClass().getResourceAsStream("/font.ttf"), 24);
     Font titleFont2 = Font.font("DejaVu Serif", 32);
     Font biggerBodyFont = Font.font("DejaVu Serif", 22);
     Font bodyFont = Font.font("DejaVu Serif", 16);
