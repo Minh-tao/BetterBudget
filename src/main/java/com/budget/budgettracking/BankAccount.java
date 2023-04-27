@@ -1,4 +1,4 @@
-package org.ColgateBankingTransaction;
+package com.budget.budgettracking;
 
 import java.util.HashMap;
 
