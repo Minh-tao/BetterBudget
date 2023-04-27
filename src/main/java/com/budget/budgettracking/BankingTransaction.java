@@ -64,9 +64,11 @@ public class BankingTransaction extends Application {
         logo.setPreserveRatio(true);
         logo.setFitWidth(200);
 
-        // Create the welcome text
+// Create the welcome text
         Text welcomeText = new Text("Welcome to Better Budget!");
-        welcomeText.setFont(new Font(24));
+// Set font style to font.ttf
+        welcomeText.setFont(Font.loadFont(getClass().getResourceAsStream("/font.ttf"), 24));
+        welcomeText.setFill(Color.web("#00BB62"));
 
         // Create a thin light green line
         Separator separator = new Separator();
