@@ -1,0 +1,13 @@
+.chart-pie-label-line {
+    -fx-stroke: black;
+    -fx-fill: black;
+}
+
+.chart-pie-label {
+    -fx-fill: black;
+    -fx-font-size: 14;
+}
+.chart-legend {
+   -fx-background-color:  #fafad2;
+   -fx-stroke: #ce9c1d;
+}
