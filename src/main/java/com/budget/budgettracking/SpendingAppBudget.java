@@ -1,8 +1,5 @@
 package com.budget.budgettracking;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -12,26 +9,15 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 /** Class used to create SpendingApp GUI and add functionality
  *
@@ -88,7 +74,6 @@ public class SpendingAppBudget extends Application{
             new Purchase("Subway Pass", 10, 3.50, "Transportation"),
             new Purchase("Vacation Fund", 1, 1000.0, "Savings and Investments")
     ); // hold purchases
-    Map<SimpleStringProperty, SimpleDoubleProperty> liveMap = new HashMap<>(); // map to split costs by category
     ObservableList<String> categoryList = FXCollections.observableArrayList( // list of categories
             "Clothing", "Debt payments", "Education", "Entertainment", "Food", "Gifts and donations",
             "Health and wellness", "Housing", "Insurance", "Personal care",
@@ -96,7 +81,7 @@ public class SpendingAppBudget extends Application{
     );
 
     // tableview
-    TableView<Purchase> table = new TableView<Purchase>(purchaseList);
+    TableView<Purchase> table = new TableView<>(purchaseList);
 
     /** Application start method
      *  @param stage: GUI stage
@@ -126,7 +111,7 @@ public class SpendingAppBudget extends Application{
         // set the scene
         VBox root = new VBox(tabPane);
         Scene scene = new Scene(root, Color.LIGHTBLUE);
-//        scene.getStylesheets().add(getClass().getResource("src/main/resources/com/budget/budgettracking/stylesheet.css").toExternalForm()); // import stylesheet.css
+        scene.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("stylesheet.css")).toExternalForm());
         stage.setResizable(false);
         stage.setWidth(WIDTH);
         stage.setHeight(HEIGHT);
@@ -160,16 +145,16 @@ public class SpendingAppBudget extends Application{
      */
     private void tableSetup() {
         // create table columns
-        TableColumn<Purchase, String> itemCol = new TableColumn<Purchase, String>("Item");
+        TableColumn<Purchase, String> itemCol = new TableColumn<>("Item");
         itemCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<Purchase, Integer> qtyCol = new TableColumn<Purchase, Integer>("Qty");
+        TableColumn<Purchase, Integer> qtyCol = new TableColumn<>("Qty");
         qtyCol.setCellValueFactory(new PropertyValueFactory<>("qty"));
 
-        TableColumn<Purchase, Double> priceCol = new TableColumn<Purchase, Double>("Cost/unit");
+        TableColumn<Purchase, Double> priceCol = new TableColumn<>("Cost/unit");
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        TableColumn<Purchase, String> catCol = new TableColumn<Purchase, String>("Category");
+        TableColumn<Purchase, String> catCol = new TableColumn<>("Category");
         catCol.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         table.setEditable(false);
@@ -243,8 +228,8 @@ public class SpendingAppBudget extends Application{
         quitBox.setAlignment(Pos.BOTTOM_RIGHT);
 
         // label styling (sizes, font)
-        Font titlefont = Font.loadFont("file:resources/fonts/Roboto/Roboto-Regular.ttf", 18);
-        Font font = Font.loadFont("file:resources/fonts/Roboto/Roboto-Regular.ttf", 14);
+        Font titlefont = Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 18);
+        Font font = Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 14);
         addItemLabel.setFont(titlefont);
         addTitleBox.setAlignment(Pos.BOTTOM_CENTER);
         purchasedLabel.setFont(titlefont);
@@ -409,10 +394,10 @@ public class SpendingAppBudget extends Application{
      * @return BreakdownTabBudget: tab containing PieChart
      */
     private BreakdownTabBudget createPieTab() {
-        // map for piechart
+        // map for pie chart
         MapProperty<String, Double> map = new SimpleMapProperty<>(FXCollections.observableHashMap());
         Double prevTotal;
-        Double categoryTotal;
+        double categoryTotal;
         for (Purchase item : purchaseList) {
             String key = item.getCategory();
             Integer amt = item.getQty();
@@ -476,7 +461,7 @@ public class SpendingAppBudget extends Application{
      */
     private void qtyHandler(String mode) {
         int num = Integer.parseInt(qtyField.getText());
-        if (mode == "inc") {
+        if (Objects.equals(mode, "inc")) {
             qtyField.setText(Integer.toString(num + 1));
         } else {
             if (num > 0) {
@@ -489,10 +474,10 @@ public class SpendingAppBudget extends Application{
      * Class for Purchase objects that are to be stored in list/table
      */
     public static class Purchase {
-        private SimpleStringProperty name;
-        private SimpleIntegerProperty qty;
-        private SimpleDoubleProperty price;
-        private SimpleStringProperty category;
+        private final SimpleStringProperty name;
+        private final SimpleIntegerProperty qty;
+        private final SimpleDoubleProperty price;
+        private final SimpleStringProperty category;
 
         private Purchase(String name, int qty, double uPrice, String category) {
             this.name = new SimpleStringProperty(name);
