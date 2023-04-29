@@ -45,7 +45,9 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
-                    <include>fonts/*.ttf</include>
+                    <include>**/*.ttf</include>
+                    <include>**/*.jpg</include>
+                    <include>**/*.css</include>
                 </includes>
             </resource>
         </resources>
