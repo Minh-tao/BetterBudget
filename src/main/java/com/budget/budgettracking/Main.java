@@ -1,4 +1,4 @@
 package com.budget.budgettracking;
 
-public class DataStorage {
+public class Main {
 }
