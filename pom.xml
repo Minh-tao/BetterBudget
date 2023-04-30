@@ -70,7 +70,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.budget.budgettracking/com.budget.budgettracking.Budget</mainClass>
+                            <mainClass>com.budget.budgettracking/com.budget.budgettracking.Main</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
