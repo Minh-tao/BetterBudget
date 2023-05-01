@@ -53,6 +53,8 @@
                 <includes>
                     <include>**/*.ttf</include>
                     <include>**/*.jpg</include>
+                    <include>**/*.png</include>
+                    <include>**/*.gif</include>
                     <include>**/*.css</include>
                 </includes>
             </resource>
@@ -76,7 +78,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.budget.budgettracking/com.budget.budgettracking.Main</mainClass>
+                            <mainClass>com.budget.budgettracking/com.budget.budgettracking.App</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

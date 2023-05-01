@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -20,6 +21,7 @@ public class BudgetInput {
         Tab inputTab = new Tab();
         GridPane outerGridpane = new GridPane();
         GridPane panelGrid = new GridPane();
+        VBox inputPanel = new VBox();
         FlowPane flow = new FlowPane();
         VBox nameBox = new VBox();
         VBox amountBox = new VBox();
@@ -27,7 +29,6 @@ public class BudgetInput {
         VBox tableBox = new VBox();
         VBox buttonBox = new VBox();
         HBox addBox = new HBox();
-//        HBox buttonBox = new HBox();
         HBox totalBudgetBox = new HBox();
 
         // widgets
@@ -49,6 +50,8 @@ public class BudgetInput {
         RadioButton monthlyRadioButton = new RadioButton("Monthly");
         RadioButton annuallyRadioButton = new RadioButton("Annually");
         RadioButton otherRadioButton = new RadioButton("Other");
+
+        ToggleGroup toggleGroup = new ToggleGroup();
 
         Button addButton = new Button("Add Budget Category");
         Button viewButton = new Button("View Budget Overview");
@@ -99,7 +102,7 @@ public class BudgetInput {
         amountBox.setAlignment(Pos.TOP_CENTER);
         timeBox.setAlignment(Pos.TOP_CENTER);
         buttonBox.setAlignment(Pos.TOP_CENTER);
-        totalBudgetBox.setAlignment(Pos.BOTTOM_CENTER);
+        totalBudgetBox.setAlignment(Pos.TOP_LEFT);
         tableBox.setAlignment(Pos.TOP_CENTER);
         flow.setPadding(new Insets(5, 0, 5, 0));
         flow.setVgap(4);
@@ -111,9 +114,10 @@ public class BudgetInput {
         Font titlefont = Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 18);
         Font font = Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 14);
 
+        addHeaderLabel.getStyleClass().add("title");
+        tableHeaderLabel.getStyleClass().add("title");
         nameLabel.getStyleClass().add("custom-label");
         totalLabel.getStyleClass().add("custom-label");
-        addHeaderLabel.getStyleClass().add("custom-label");
         amountLabel.getStyleClass().add("custom-label");
         timeLabel.getStyleClass().add("custom-label");
 
@@ -146,7 +150,7 @@ public class BudgetInput {
         panelGrid.setStyle("-fx-border-style: solid inside;"
                 + "-fx-border-width: 1;"
                 + "-fx-border-color: black;"
-                + "-fx-padding: 30;"
+                + "-fx-padding: 0;"
                 + "-fx-background-color: LIGHTCYAN");
         tableBox.setStyle("-fx-border-style: solid inside;"
                 + "-fx-border-width: 1;"
@@ -183,9 +187,7 @@ public class BudgetInput {
         outerGridpane.getColumnConstraints().addAll(column1, column2);
 //        outerGridpane.getRowConstraints().addAll(row1, row2, row3, row4);
 //
-//        panelGrid.setVgap(50);
-//        panelGrid.setHgap(10);
-//        panelGrid.setPadding(new Insets(10, 10, 10, 10));
+        inputPanel.setPadding(new Insets(10, 10, 10, 10));
 //
 //        ColumnConstraints innerColumn1 = new ColumnConstraints();
 //        innerColumn1.setHgrow(Priority.SOMETIMES);
@@ -228,10 +230,8 @@ public class BudgetInput {
 
         outerGridpane.add(totalBudgetBox, 0, 0);
         outerGridpane.add(addHeaderLabel, 0, 1);
-        outerGridpane.add(panelGrid, 0, 2);
-            panelGrid.add(nameBox, 0, 0);
-            panelGrid.add(amountBox, 1, 0);
-            panelGrid.add(flow, 0, 1, 2, 1);
+        outerGridpane.add(inputPanel, 0, 2);
+            inputPanel.getChildren().addAll(nameBox, amountBox, flow);
         outerGridpane.add(addBox, 0, 3);
         outerGridpane.add(tableHeaderLabel, 1, 1);
         outerGridpane.add(tableBox, 1, 2);
@@ -262,6 +262,7 @@ public class BudgetInput {
     private void otherHandler() {// Enable the TextField when the "Other" radio button is selected
         otherRadioButton.setOnAction(event -> {
             otherField.setDisable(!otherRadioButton.isSelected());
+            System.out.println("other pressed");
         });
     }
 
