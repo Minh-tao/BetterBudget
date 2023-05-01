@@ -17,6 +17,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** Class used to create SpendingApp GUI and add functionality
@@ -395,23 +398,20 @@ public class TransactionInput extends Application{
      */
     private TransactionView createChartTab() {
         // map for pie chart
-        MapProperty<String, Double> map = new SimpleMapProperty<>(FXCollections.observableHashMap());
-        Double prevTotal;
-        double categoryTotal;
-        for (Purchase item : purchaseList) {
-            String key = item.getCategory();
-            Integer amt = item.getQty();
-            Double value = item.getPrice();
+        List<Transaction> tList = new ArrayList<>(FXCollections.observableArrayList());
+        tList.add(new Transaction("Starcraft 2", 25, "Games", LocalDate.now()));
+        tList.add(new Transaction("Star Citizen", 125, "Games", LocalDate.now()));
+        tList.add(new Transaction("Warcraft 3", 25, "Games", LocalDate.now().minusMonths(1)));
+        tList.add(new Transaction("MW2 2022", 70, "Games", LocalDate.now().minusMonths(2)));
+        tList.add(new Transaction("Crying Stars", 25, "Games", LocalDate.now().minusMonths(2)));
 
-            if (map.containsKey(key)) {         // add cost of current row to previous in same category
-                prevTotal = map.get(key);
-                categoryTotal = (amt * value) + prevTotal;
-            } else {                            // if row's category hasn't been put in map yet
-                categoryTotal = (amt * value);  // multiplying cost by qty
-            }
-            map.put(key, categoryTotal);
-        }
-        TransactionView TransactionView = new TransactionView(map);
+        tList.add(new Transaction("Starcraft 2", 15, "Entertainment", LocalDate.now()));
+        tList.add(new Transaction("Star Citizen", 75, "Entertainment", LocalDate.now()));
+        tList.add(new Transaction("Warcraft 3", 85, "Entertainment", LocalDate.now().minusMonths(1)));
+        tList.add(new Transaction("MW2 2022", 10, "Entertainment", LocalDate.now().minusMonths(2)));
+        tList.add(new Transaction("Crying Stars", 25, "Entertainment", LocalDate.now().minusMonths(2)));
+
+        TransactionView TransactionView = new TransactionView(tList);
         TransactionView.setTooltip(new Tooltip("Shows a breakdown of the given purchased items"));
         return TransactionView;
     }

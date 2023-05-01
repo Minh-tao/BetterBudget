@@ -121,8 +121,9 @@ public class TransactionView extends Tab {
             XYChart.Series series = new XYChart.Series();
             series.setName(category.getKey());
 
-            for (Map.Entry<String, Double> monthData : category.getValue().entrySet()) {
-                series.getData().add(new XYChart.Data(monthData.getKey(), monthData.getValue()));
+            for (int i = 1; i <= 12; i++) {
+                String month = Month.of(i).getDisplayName(TextStyle.SHORT, Locale.getDefault());
+                series.getData().add(new XYChart.Data(month, category.getValue().get(month)));
             }
             chart.getData().add(series);
         }
