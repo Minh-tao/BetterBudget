@@ -99,7 +99,7 @@ public class BankingTransaction extends Application {
 
 
         // Apply the custom logo transition
-        LogoTransition logoTransition = new LogoTransition(logo, welcomeText, separator, introPane, loginPane);
+        LogoTransition logoTransition = new LogoTransition(logo, welcomeText, separator, introPane);
         logoTransition.setOnFinished(event -> {
             mainStage.setScene(loginScene);
         });
