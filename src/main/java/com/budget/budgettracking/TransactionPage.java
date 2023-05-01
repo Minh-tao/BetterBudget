@@ -565,55 +565,6 @@ public class TransactionPage extends Application
     /* SECTION Subclasses */
     /* ================================================================================================== */
 
-    /* LINK Tasks */
-    /* ---------------------------------------------------------- */
-
-    public static class Transaction
-    {
-        private StringProperty name;
-        private DoubleProperty amount;
-        private StringProperty category;
-        private ObjectProperty<LocalDate> date;
-
-        public Transaction(String name, double amount, String category, LocalDate date)
-        {
-
-            this.name = new SimpleStringProperty(name);
-            this.amount = new SimpleDoubleProperty(amount);
-            this.category = new SimpleStringProperty(category);
-            this.date = new SimpleObjectProperty<LocalDate>(date);
-        }
-
-        public Transaction(String name, double amount, String category)
-        {
-            this(name, amount, category, LocalDate.now());
-        }
-
-        public Transaction(Transaction toClone) {
-            this.name = toClone.name;
-            this.amount = toClone.amount;
-            this.category = toClone.category;
-            this.date = toClone.date;
-        }
-
-        public StringProperty nameProperty  () { return name; }
-        public DoubleProperty amountProperty() { return amount; }
-        public StringProperty categoryProperty () { return category; }
-        public ObjectProperty<LocalDate> dateProperty() { return date; }
-
-        public String getName() { return this.nameProperty().get(); }
-        public void setName(String name) { this.name.set(name); }
-
-        public double getAmount() { return this.amountProperty().get(); }
-        public void setAmount(double amount) { this.amount.set(amount); }
-
-        //public LocalDate getDate() { return this.dateCreatedProperty().get(); }
-
-        @Override
-        public String toString() { return getName(); }
-
-    }
-
     /* LINK GridPane Coordiantes */
     /* ---------------------------------------------------------- */
 
