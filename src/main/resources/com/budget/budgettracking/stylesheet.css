@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Roboto-Regular';
-    src: url('fonts/Roboto-Regular.ttf')
+    src: url('fonts/Roboto-Regular.ttf');
 }
 
 .chart-pie-label-line {
@@ -20,13 +20,13 @@
 .custom-label {
     -fx-font-family: Roboto-Regular;
     -fx-font-size: 14px;
-    -fx-font-weight: bold;
+    -fx-font-weight: normal;
 }
 
 .button {
     -fx-font-family: Roboto-Regular;
     -fx-font-size: 14px;
-    -fx-font-weight: bold;
+    -fx-font-weight: normal;
 }
 
 .title {
