@@ -84,7 +84,7 @@ public class App extends Application{
         primaryStage.setWidth(WIDTH);
         primaryStage.setHeight(HEIGHT);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Spending Visualizer");\
+        primaryStage.setTitle("Spending Visualizer");
         primaryStage.show();
     }
 
