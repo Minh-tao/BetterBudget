@@ -27,8 +27,7 @@ public class App extends Application{
     private static final String LOGO_PATH = "Logo.gif";
 
     public void start(Stage primaryStage) {
-        // set up primary stage
-        // show scenes, call other classes -> get scenes
+
         Image icon = new Image("Logo.png");
         BudgetInput budgetInput = new BudgetInput();
         Scene scene = budgetInput.createScene();
@@ -45,9 +44,9 @@ public class App extends Application{
         logo.setPreserveRatio(true);
         logo.setFitWidth(200);
 
-// Create the welcome text
+        // Create the welcome text
         Text welcomeText = new Text("Welcome to Better Budget!");
-// Set font style to font.ttf
+        // Set font style to font.ttf
         welcomeText.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/font.ttf"), 24));
         welcomeText.setFill(Color.web("#00BB62"));
 
@@ -77,15 +76,6 @@ public class App extends Application{
 
         primaryStage.getIcons().add(icon);
         primaryStage.setTitle("BetterBudget Spending Tracker");
-
-        BudgetInput budgetInput = new BudgetInput();
-        Scene scene = budgetInput.createScene();
-        primaryStage.setResizable(false);
-        primaryStage.setWidth(WIDTH);
-        primaryStage.setHeight(HEIGHT);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Spending Visualizer");
-        primaryStage.show();
     }
 
     public static void main(String[] args) { launch(args); }

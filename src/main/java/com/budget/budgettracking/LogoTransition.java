@@ -16,14 +16,12 @@ public class LogoTransition extends Transition {
     private final ImageView logo;
     private final Text welcomeText;
     private final Separator separator;
-    private final Pane loginPane;
     private final Pane introPane;
 
-    public LogoTransition(ImageView logo, Text welcomeText, Separator separator, Pane loginPane, Pane introPane) {
+    public LogoTransition(ImageView logo, Text welcomeText, Separator separator, Pane introPane) {
         this.logo = logo;
         this.welcomeText = welcomeText;
         this.separator = separator;
-        this.loginPane = loginPane;
         this.introPane = introPane;
         setCycleDuration(Duration.millis(2900));
     }
@@ -40,6 +38,5 @@ public class LogoTransition extends Transition {
                 Color.rgb(255, 255, 255, 1 - fade),
                 CornerRadii.EMPTY,
                 null)));
-        loginPane.setOpacity(fade);
     }
 }
