@@ -30,9 +30,7 @@ public class App extends Application{
 
         Image icon = new Image("Logo.png");
         BudgetInput budgetInput = new BudgetInput();
-        System.out.println("ah");
         Scene scene = budgetInput.createScene();
-        System.out.println("ah2");
 
 
         BorderPane root = new BorderPane();
