@@ -52,7 +52,6 @@ public class BudgetInput {
         RadioButton otherRadioButton = new RadioButton("Other");
 
         ToggleGroup toggleGroup = new ToggleGroup();
-
         Button addButton = new Button("Add Budget Category");
         Button viewButton = new Button("View Budget Overview");
         Button quitButton = new Button("Quit");
