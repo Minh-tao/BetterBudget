@@ -92,7 +92,7 @@ public class BudgetInput {
 
         VBox root = new VBox(tp);
         Scene scene = new Scene(root, Color.LIGHTBLUE);
-        scene.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("stylesheet.css")).toExternalForm());
+        scene.getStylesheets().add("stylesheet.css");
         return scene;
     }
 

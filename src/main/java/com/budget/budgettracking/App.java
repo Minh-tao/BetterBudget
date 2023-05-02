@@ -30,7 +30,10 @@ public class App extends Application{
 
         Image icon = new Image("Logo.png");
         BudgetInput budgetInput = new BudgetInput();
+        System.out.println("ah");
         Scene scene = budgetInput.createScene();
+        System.out.println("ah2");
+
 
         BorderPane root = new BorderPane();
 
@@ -76,6 +79,7 @@ public class App extends Application{
 
         primaryStage.getIcons().add(icon);
         primaryStage.setTitle("BetterBudget Spending Tracker");
+        primaryStage.show();
     }
 
     public static void main(String[] args) { launch(args); }
