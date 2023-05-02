@@ -28,9 +28,15 @@ public class App extends Application{
 
     public void start(Stage primaryStage) {
 
+        DataStorage dataStorage = new DataStorage();
+
         Image icon = new Image("Logo.png");
         BudgetInput budgetInput = new BudgetInput();
         Scene scene = budgetInput.createScene();
+
+        LoginScene loginScene = new LoginScene(dataStorage);
+        Scene lScene = loginScene.getScene();
+
 
 
         BorderPane root = new BorderPane();
@@ -71,7 +77,7 @@ public class App extends Application{
         // Apply the custom logo transition
         LogoTransition logoTransition = new LogoTransition(logo, welcomeText, separator, introPane);
         logoTransition.setOnFinished(event -> {
-            primaryStage.setScene(scene);
+            primaryStage.setScene(lScene);
         });
         logoTransition.play();
 

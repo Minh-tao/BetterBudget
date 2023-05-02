@@ -2,6 +2,7 @@ package com.budget.budgettracking;
 
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.paint.Color;
@@ -14,7 +15,7 @@ import java.util.function.UnaryOperator;
  * This class contains the styling and properties of each element in the application.
  * This separates the codes that handles the styling of each element to scenes
  */
-class Styling extends Panes {
+abstract class Styling extends Panes {
 
     /**
      * This UnaryOperator, named 'digitFilter', checks if the user input contains only digits.
@@ -145,4 +146,6 @@ class Styling extends Panes {
         button.setPrefHeight(40);
         button.setCursor(Cursor.HAND);
     }
+
+    protected abstract Scene loginButtonEvent(String username, String password);
 }
