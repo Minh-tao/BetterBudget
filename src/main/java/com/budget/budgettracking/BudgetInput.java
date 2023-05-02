@@ -1,5 +1,6 @@
 package com.budget.budgettracking;
 
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,10 +13,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
+import java.io.InputStream;
 import java.util.Objects;
 
-public class BudgetInput {
+public class BudgetInput extends Application{
     // visual components
         TabPane tp = new TabPane();
         Tab inputTab = new Tab();
@@ -39,7 +42,7 @@ public class BudgetInput {
         Label amountLabel = new Label("Amount: ");
         Label timeLabel = new Label("Time Period: "); // frequency, occurency, repeating:
 
-        TextField totalField = new TextField("$ ");
+        TextField totalField = new TextField("");
         TextField nameField = new TextField("Name");
         TextField amountField = new TextField("");
         TextField otherField = new TextField("Other");
@@ -124,15 +127,15 @@ public class BudgetInput {
         // widget styling
         nameField.setMaxWidth(125);
         nameField.setPrefWidth(125);
-        nameCombo.setMaxWidth(125);
-        nameCombo.setPrefWidth(125);
+        nameCombo.setMaxWidth(175);
+        nameCombo.setPrefWidth(175);
         nameCombo.setEditable(true);
         amountField.setMaxWidth(75);
         amountField.setPromptText("$");
         addButton.setPrefWidth(200);
         totalField.setPromptText("$");
         totalField.setMaxWidth(75);
-        totalField.setAlignment(Pos.CENTER_RIGHT);
+        totalField.setAlignment(Pos.CENTER_LEFT);
         quitButton.setPrefWidth(75);
         addButton.setFont(font);
         amountField.setFont(font);
@@ -160,8 +163,8 @@ public class BudgetInput {
     }
 
     private void gridConstraints() {
-//        outerGridpane.setGridLinesVisible(true);
-//        panelGrid.setGridLinesVisible(true);
+        outerGridpane.setGridLinesVisible(true);
+
         // outerGridPane styling
         ColumnConstraints column1 = new ColumnConstraints();
             column1.setPercentWidth(40);
@@ -258,7 +261,6 @@ public class BudgetInput {
         budgetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
-
     private void otherHandler() {// Enable the TextField when the "Other" radio button is selected
         otherRadioButton.setOnAction(event -> {
             otherField.setDisable(!otherRadioButton.isSelected());
@@ -287,6 +289,17 @@ public class BudgetInput {
 //        addButton.setOnAction(e -> addHandler());
         viewButton.setOnAction(e -> overviewHandler());
         quitButton.setOnAction(e -> quitHandler());
+    }
+
+//    FOR DEBUGGING - make sure class extends Application
+    public void start(Stage stage) {
+        final int WIDTH = 750;
+        final int HEIGHT = 450;
+        Scene scene = createScene();
+        stage.setWidth(WIDTH);
+        stage.setHeight(HEIGHT);
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

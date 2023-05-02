@@ -30,14 +30,11 @@ public class App extends Application{
 
         Image icon = new Image("Logo.png");
         BudgetInput budgetInput = new BudgetInput();
-        System.out.println("ah");
         Scene scene = budgetInput.createScene();
-        System.out.println("ah2");
-
 
         BorderPane root = new BorderPane();
 
-        Scene scene2 = new Scene(root, 600, 400);
+        Scene scene2 = new Scene(root, WIDTH, HEIGHT);
         primaryStage.getIcons().add(icon);
         primaryStage.setScene(scene2);
         primaryStage.setTitle("Better Budget");
@@ -72,9 +69,7 @@ public class App extends Application{
 
         // Apply the custom logo transition
         LogoTransition logoTransition = new LogoTransition(logo, welcomeText, separator, introPane);
-        logoTransition.setOnFinished(event -> {
-            primaryStage.setScene(scene);
-        });
+        logoTransition.setOnFinished(event -> primaryStage.setScene(scene));
         logoTransition.play();
 
         primaryStage.getIcons().add(icon);
