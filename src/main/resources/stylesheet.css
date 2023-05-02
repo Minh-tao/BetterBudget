@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'Roboto-Regular';
+    src: url('fonts/Roboto-Regular.ttf');
+}
+
+.chart-pie-label-line {
+    -fx-stroke: black;
+    -fx-fill: black;
+}
+
+.chart-pie-label {
+    -fx-fill: black;
+    -fx-font-size: 14;
+}
+.chart-legend {
+   -fx-background-color:  #fafad2;
+   -fx-stroke: #ce9c1d;
+}
+
+.custom-label {
+    -fx-font-family: Roboto-Regular;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+}
+
+.button {
+    -fx-font-family: Roboto-Regular;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+}
+
+.title {
+    -fx-font-family: Roboto-Regular;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}

@@ -1,6 +1,7 @@
 package com.budget.budgettracking;
 
 import javafx.application.Application;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,6 +16,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application{
@@ -74,6 +77,14 @@ public class App extends Application{
 
         primaryStage.getIcons().add(icon);
         primaryStage.setTitle("BetterBudget Spending Tracker");
+
+        BudgetInput budgetInput = new BudgetInput();
+        Scene scene = budgetInput.createScene();
+        primaryStage.setResizable(false);
+        primaryStage.setWidth(WIDTH);
+        primaryStage.setHeight(HEIGHT);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Spending Visualizer");\
         primaryStage.show();
     }
 
