@@ -1,41 +1,39 @@
 package com.budget.budgettracking;
 
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Tab;
-import java.text.NumberFormat;
-import java.util.Map;
+
+import java.util.*;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import java.time.format.TextStyle;
+import java.time.Month;
+
 
 /**
- * Class for creating BreakdownTab: a custom tab to display a PieChart
+ * Class for creating BreakdownTab: a custom tab to display a LineChart
  */
 public class TransactionView extends Tab {
 
-    ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-
-
     /**
-     * Create BreakdownTab and PieChart
-     * @param map: Map containing categories as keys and total costs for each category as values
+     * Create BreakdownTab and LineChart
+     * @param list: Map containing categories as keys and total costs for each category as values
      */
-    public TransactionView(Map<String, Double> map) {
+    public TransactionView(List<Transaction> list) {
 
         setText("Spending Breakdown");
 
@@ -44,7 +42,7 @@ public class TransactionView extends Tab {
         VBox vBox = new VBox();
         HBox quitBox = new HBox();
 
-        PieChart chart = createPieChart(map);
+        LineChart<String, Number> chart = createChart(list);
 
         Font font = Font.loadFont("file:resources/fonts/Roboto/Roboto-Regular.ttf", 14);
 
@@ -75,43 +73,72 @@ public class TransactionView extends Tab {
     }
 
     /**
-     * Method creates PieChart from map data
-     * @param map: Map containing categories as keys and total costs for each category as values
-     * @return PieChart chart
+     * Method creates LineChart from map data
+     * @param list: Map containing categories as keys and total costs for each category as values
+     * @return LineChart chart
      */
-    public static PieChart createPieChart(Map<String, Double> map) {
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-        );
-        Double count = 0.0;
+    public static LineChart<String, Number> createChart(List<Transaction> list) {
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Month");
+        yAxis.setLabel("Amount Spent");
+        final LineChart<String,Number> chart =
+                new LineChart<>(xAxis,yAxis);
 
-        for (Map.Entry<String, Double> item : map.entrySet()) {
-            String category = item.getKey();
-            Double amount = item.getValue();
-            count += amount;
-
-            pieChartData.add(new PieChart.Data(category, amount));
-        }
-        final Double total = count;
-
-        PieChart chart = new PieChart(pieChartData);
-
+        chart.setTitle("Stock Monitoring, 2010");
         chart.setStyle("-fx-font-family: Roboto-Regular; -fx-font-size: 14px;");
-        chart.setTitle("Spending Breakdown");
         Label titleLabel = (Label) chart.lookup(".chart-title");
         titleLabel.setStyle("-fx-font-family: Roboto-Regular; -fx-font-size: 20px;");
 
-        chart.setLabelLineLength(20);
-        // chart.getData().forEach(data -> {
-        //     String label = String.format("%s: $%.2f %.2f%%", data.getName(), data.getPieValue(), ((data.getPieValue()/total) * 100));
-        //     data.setName(label);
-        // });
-
-        chart.getData().forEach(data -> {
-            String label = String.format("%s: %.2f%%", data.getName(), ((data.getPieValue()/total) * 100));
-            data.setName(label);
-        });
+        createChartData(list, chart);
 
         return chart;
     }
-}
 
+    private static void createChartData(List<Transaction> transactions, LineChart<String,Number> chart)
+    {
+        Map<String, Map<String, Double>> chartData = new HashMap<>();
+
+        // Each category will represent one line/entry in the map
+        for (Transaction t : transactions)
+        {
+            String c = t.getCategory();
+            String tMonth = t.getDate().getMonth().getDisplayName(TextStyle.SHORT, Locale.getDefault());
+            Double tAmount = t.getAmount();
+            if (!chartData.containsKey(c))
+            {
+                Map<String, Double> months = addMonthMap();
+                months.put(tMonth, months.get(tMonth) + tAmount);
+                chartData.put(c, months);
+            } else
+            {
+                Map<String, Double> months = chartData.get(c);
+                months.put(tMonth, months.get(tMonth) + tAmount);
+            }
+        }
+
+        for (Map.Entry<String, Map<String, Double>> category : chartData.entrySet()) {
+            XYChart.Series series = new XYChart.Series();
+            series.setName(category.getKey());
+
+            for (int i = 1; i <= 12; i++) {
+                String month = Month.of(i).getDisplayName(TextStyle.SHORT, Locale.getDefault());
+                series.getData().add(new XYChart.Data(month, category.getValue().get(month)));
+            }
+            chart.getData().add(series);
+        }
+
+    }
+
+    // Each category stores the total amount spent in each month in a map
+    // key month, value: total spent on this category this month
+    private static Map<String, Double> addMonthMap()
+    {
+        Map<String, Double> months = new HashMap<>();
+        for (int i = 1; i <= 12; i++) {
+            String month = Month.of(i).getDisplayName(TextStyle.SHORT, Locale.getDefault());
+            months.put(month, 0.0);
+        }
+        return months;
+    }
+}
