@@ -87,7 +87,7 @@ public class DataStorage {
                         "Budget",
                         user.getUsername(),
                         budget.getName(),
-                        Double.toString(budget.getLimit())
+                        Double.toString(budget.getAmount())
                 };
                 data.add(budgetData);
             }
@@ -133,7 +133,7 @@ public class DataStorage {
         for (Budget budget : user.getBudgets()) {
             if (budget.getName().equals(oldBudgetName)) {
                 budget.setName(newBudgetName);
-                budget.setLimit(newBudgetLimit);
+                budget.setAmount(newBudgetLimit);
                 break;
             }
         }

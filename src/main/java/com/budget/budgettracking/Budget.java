@@ -2,8 +2,8 @@ package com.budget.budgettracking;
 
 public class Budget {
     private String name;
-    private double limit;
     private double amount;
+    private double current;
 
     enum Frequency {
         DAILY,
@@ -13,22 +13,27 @@ public class Budget {
         ANNUALLY
     }
 
-    public Budget(String name, double amount, double limit) {
+    public Budget(String name, double amount, double current) {
         this.name = name;
-        this.limit = limit;
-        this.amount = 0;
+        this.amount = amount;
+        this.current = current;
+    }
+    public Budget(String name, double amount) {
+        this.name = name;
+        this.amount = amount;
+        this.current = 0;
     }
 
     public String getName() {
         return name;
     }
 
-    public double getLimit() {
-        return limit;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setLimit(double limit) {
-        this.limit = limit;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     public void setName(String name) {
@@ -39,7 +44,7 @@ public class Budget {
     public String toString() {
         return "Budget{" +
                 "name='" + name + '\'' +
-                ", limit=" + limit +
+                ", amount=" + amount +
                 '}';
     }
 }

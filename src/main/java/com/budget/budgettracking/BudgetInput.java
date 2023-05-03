@@ -2,6 +2,8 @@ package com.budget.budgettracking;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -23,8 +25,8 @@ public class BudgetInput extends Application{
     // visual components
         TabPane tp = new TabPane();
         Tab inputTab = new Tab();
+        BudgetView viewTab;
         GridPane outerGridpane = new GridPane();
-        GridPane panelGrid = new GridPane();
         VBox inputPanel = new VBox();
         FlowPane flow = new FlowPane();
         VBox nameBox = new VBox();
@@ -34,14 +36,22 @@ public class BudgetInput extends Application{
         HBox buttonBox = new HBox();
         HBox addBox = new HBox();
         HBox totalBudgetBox = new HBox();
+        HBox totalInner = new HBox();
+        HBox totalButtonBox = new HBox();
+        HBox addHeaderBox = new HBox();
+        HBox tableHeaderBox = new HBox();
+        HBox categoryLabelBox = new HBox();
 
         // widgets
-        Label totalLabel = new Label("Total Budget: ");
-        Label addHeaderLabel = new Label("Add Budget Category");
+        Label totalLabel = new Label("Total Monthly Budget");
+        Label addHeaderLabel = new Label("Budget");
         Label tableHeaderLabel = new Label("Current Categories");
-        Label nameLabel = new Label("Name: ");
-        Label amountLabel = new Label("Amount: ");
-        Label timeLabel = new Label("Time Period: "); // frequency, occurency, repeating:
+        Label nameLabel = new Label("Name");
+        Label amountLabel = new Label("Amount");
+        Label categoryLabel = new Label("Add Category");
+        Label timeLabel = new Label("Time Period"); // frequency, occurency, repeating:
+
+        Separator separator = new Separator();
 
         TextField totalField = new TextField("");
         TextField nameField = new TextField("Name");
@@ -57,15 +67,19 @@ public class BudgetInput extends Application{
         ToggleGroup toggleGroup = new ToggleGroup();
 
         Button totalButton = new Button("Update Total");
-        Button addButton = new Button("Add Budget Category");
+        Button removeButton = new Button("Remove");
+        Button addButton = new Button("Add");
         Button viewButton = new Button("View Budget Overview");
         Button quitButton = new Button("Quit");
+
+        // initial budget, TODO should be loaded from user data
+        double totalBudgetAmount = 0.0;
 
         // dropdown for budget category name
         ObservableList<String> nameList = FXCollections.observableArrayList( // list of categories
                 "Clothing", "Debt payments", "Education", "Entertainment", "Food", "Gifts and donations",
                 "Health and wellness", "Housing", "Insurance", "Personal care",
-                "Savings and investments", "Taxes", "Transportation", "Miscellaneous"
+                "Savings", "Taxes", "Transportation", "Miscellaneous"
         );
         ComboBox<String> nameCombo = new ComboBox<>(nameList);
 
@@ -112,20 +126,18 @@ public class BudgetInput extends Application{
     private void allStyling() {
         // box alignment
         nameBox.setAlignment(Pos.CENTER);
-        amountBox.setAlignment(Pos.TOP_CENTER);
-        timeBox.setAlignment(Pos.TOP_CENTER);
+        amountBox.setAlignment(Pos.CENTER);
+        timeBox.setAlignment(Pos.CENTER);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
-        buttonBox.setSpacing(10);
-        addBox.setAlignment(Pos.CENTER_LEFT);
-        totalBudgetBox.setAlignment(Pos.TOP_LEFT);
+        addBox.setAlignment(Pos.CENTER);
+        totalInner.setAlignment(Pos.CENTER);
+        totalButtonBox.setAlignment(Pos.CENTER);
+        totalBudgetBox.setAlignment(Pos.CENTER);
         tableBox.setAlignment(Pos.TOP_CENTER);
-        flow.setAlignment(Pos.TOP_CENTER);
-        flow.setPadding(new Insets(5, 0, 5, 0));
-        flow.setVgap(4);
-        flow.setHgap(4);
-        flow.setPrefWrapLength(170); // preferred width allows for two columns
-        flow.setStyle("-fx-background-color: #00BB62;");
-        inputPanel.setPadding(new Insets(10, 10, 10, 10));
+        inputPanel.setAlignment(Pos.CENTER);
+        addHeaderBox.setAlignment(Pos.BOTTOM_CENTER);
+        tableHeaderBox.setAlignment(Pos.BOTTOM_CENTER);
+        categoryLabelBox.setAlignment(Pos.CENTER);
 
         // label styling (sizes, font)
         Font titlefont = Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 18);
@@ -133,10 +145,12 @@ public class BudgetInput extends Application{
 
         addHeaderLabel.getStyleClass().add("title");
         tableHeaderLabel.getStyleClass().add("title");
+        categoryLabel.getStyleClass().add("title");
         nameLabel.getStyleClass().add("custom-label");
         totalLabel.getStyleClass().add("custom-label");
         amountLabel.getStyleClass().add("custom-label");
         timeLabel.getStyleClass().add("custom-label");
+        categoryLabel.getStyleClass().add("custom-label");
 
         // widget styling
         nameField.setMaxWidth(125);
@@ -146,11 +160,25 @@ public class BudgetInput extends Application{
         nameCombo.setEditable(true);
         amountField.setMaxWidth(75);
         amountField.setPromptText("$");
-        addButton.setPrefWidth(200);
         totalField.setPromptText("$");
         totalField.setMaxWidth(75);
+        totalField.setPrefHeight(25);
         totalField.setAlignment(Pos.CENTER_LEFT);
         quitButton.setPrefWidth(75);
+        buttonBox.setSpacing(10);
+        flow.setAlignment(Pos.TOP_CENTER);
+        flow.setPadding(new Insets(5, 0, 5, 0));
+        flow.setVgap(4);
+        flow.setHgap(4);
+        flow.setPrefWrapLength(170);
+//        flow.setStyle("-fx-background-color: #00BB62;");
+//        inputPanel.setPadding(new Insets(10, 10, 10, 10));
+        inputPanel.setSpacing(10);
+        totalBudgetBox.setSpacing(10);
+//        totalBudgetBox.setPadding(new Insets(10, 10, 10, 10));
+//        totalBudgetBox.setMaxWidth(340);
+        totalInner.setSpacing(5);
+        totalInner.setPadding(new Insets(10, 10, 10, 10));
         addButton.setFont(font);
         amountField.setFont(font);
         quitButton.setFont(font);
@@ -160,16 +188,20 @@ public class BudgetInput extends Application{
 
         // box/grid styling
         outerGridpane.setAlignment(Pos.CENTER);
-        outerGridpane.setStyle("-fx-background-color: radial-gradient(center 50% 50%, radius 50%, #F2FFDB, #00BB62);");
+        outerGridpane.setStyle("-fx-background-color: linear-gradient(to bottom, #F2FFDB, #00BB62);");
         outerGridpane.setPadding(new Insets(10, 10, 10, 10));
         outerGridpane.setHgap(10);
         outerGridpane.setVgap(10);
-        inputPanel.getStyleClass().add("inputPanel");
+//        inputPanel.getStyleClass().add("inputPanel");
+        inputPanel.setStyle(
+                "-fx-border-style: solid inside;"
+                +"-fx-border-width: 1;"
+                +"-fx-border-color: black;"
+                +"-fx-background-color: LIGHTCYAN;");
         tableBox.setStyle("-fx-border-style: solid inside;"
                 + "-fx-border-width: 1;"
                 + "-fx-border-color: black;"
                 + "-fx-background-color: LIGHTGREY;");
-        buttonBox.setStyle("-fx-background-color: transparent;");
     }
 
     private void gridConstraints() {
@@ -187,16 +219,10 @@ public class BudgetInput extends Application{
         RowConstraints row2 = new RowConstraints();
 //            row2.setMaxHeight(261);
 //            row2.setMinHeight(10);
-//            row2.setPrefHeight(261);
+            row2.setPrefHeight(20);
 //            row2.setVgrow(Priority.SOMETIMES);
         RowConstraints row3 = new RowConstraints();
-//            row3.setMinHeight(10);
-//            row3.setPrefHeight(30);
-//            row3.setVgrow(Priority.SOMETIMES);
         RowConstraints row4 = new RowConstraints();
-//            row4.setMinHeight(10);
-//            row4.setPrefHeight(10);
-//            row4.setVgrow(Priority.SOMETIMES);
         RowConstraints row5 = new RowConstraints();
 
         outerGridpane.getColumnConstraints().addAll(column1, column2);
@@ -205,21 +231,26 @@ public class BudgetInput extends Application{
 
     private void populate() {
         // add to grid
-        totalBudgetBox.getChildren().addAll(totalLabel, totalField, totalButton);
+//        totalInner.getChildren().addAll(totalLabel, totalField);
+        totalButtonBox.getChildren().addAll(totalButton);
+        categoryLabelBox.getChildren().addAll(categoryLabel);
+        totalBudgetBox.getChildren().addAll(totalLabel, totalField);
         nameBox.getChildren().addAll(nameLabel, nameCombo);
         amountBox.getChildren().addAll(amountLabel, amountField);
         timeBox.getChildren().addAll(timeLabel, flow);
         addBox.getChildren().addAll(addButton);
         tableBox.getChildren().addAll(budgetTable);
-        buttonBox.getChildren().addAll(viewButton, quitButton);
+        buttonBox.getChildren().addAll(removeButton, viewButton, quitButton);
         flow.getChildren().addAll(dailyRadioButton,
                 weeklyRadioButton, monthlyRadioButton,
                 annuallyRadioButton, otherRadioButton, otherField);
-        outerGridpane.add(totalBudgetBox, 0, 0);
-        outerGridpane.add(addHeaderLabel, 0, 1);
+        outerGridpane.add(totalBudgetBox, 0, 0, 2, 1);
+        addHeaderBox.getChildren().add(addHeaderLabel);
+        tableHeaderBox.getChildren().add(tableHeaderLabel);
+//        outerGridpane.add(addHeaderBox, 0, 1);
         outerGridpane.add(inputPanel, 0, 2);
-            inputPanel.getChildren().addAll(nameBox, amountBox, timeBox, addBox);
-        outerGridpane.add(tableHeaderLabel, 1, 1);
+            inputPanel.getChildren().addAll(totalBudgetBox, totalButtonBox, separator, categoryLabelBox, nameBox, amountBox, addBox);
+        outerGridpane.add(tableHeaderBox, 1, 1);
         outerGridpane.add(tableBox, 1, 2);
         outerGridpane.add(buttonBox, 1, 3);
 
@@ -233,14 +264,18 @@ public class BudgetInput extends Application{
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
         TableColumn<Budget, String> percentColumn = new TableColumn<>("% of Total Budget");
-        percentColumn.setCellValueFactory(new PropertyValueFactory<>("percent"));
+        percentColumn.setCellValueFactory(cellData -> {
+            Budget budget = cellData.getValue();
+            double percentage = (budget.getAmount() / totalBudgetAmount) * 100;
+            return new SimpleStringProperty(String.format("%.2f%%", percentage));
+        });
 
         TableColumn<Budget, String> timeColumn = new TableColumn<>("Time Period");
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
 
         budgetTable.setEditable(false);
         budgetTable.setItems(budgetList);
-        budgetTable.getColumns().addAll(nameColumn, amountColumn, percentColumn, timeColumn);
+        budgetTable.getColumns().addAll(nameColumn, amountColumn, percentColumn); // removed timeColumn
         budgetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
@@ -251,16 +286,45 @@ public class BudgetInput extends Application{
         });
     }
 
+    private void createView() {
+        BudgetView tab = new BudgetView(totalBudgetAmount, budgetList);
+        if (tp.getTabs().size() <= 1) {
+            tp.getTabs().add(tab);
+        } else { tp.getTabs().set(1, tab); }
+    }
+
     private void overviewHandler() {
+        createView();
         tp.getSelectionModel().select(1); //index, or tab name, or selectNext()
     }
 
     private void addHandler() {
-        // limit must be <= total budget
-        // reset name dropdown
-        // reset limit field
-        // un-toggle radio buttons
-        // reset other field
+        if (nameCombo.getValue() == null) {
+            System.out.println("Invalid name");
+            return;
+        }
+        String name = (String)nameCombo.getValue();
+        nameCombo.setValue(null);
+
+        if (amountField.getText().isEmpty() || amountField.getText().equals("$")) {
+            System.out.println("Invalid amount");
+            return;
+        }
+
+        double amount = Double.parseDouble(amountField.getText());
+
+        if (amount > totalBudgetAmount) {
+            System.out.println("Amount exceeds budget");
+            return;
+        }
+        amountField.setText(null);
+
+        Budget newBudget = new Budget(name, amount, 0);
+        budgetList.add(newBudget);
+    }
+
+    private void removeHandler() {
+
     }
 
     private void quitHandler() {
@@ -268,8 +332,17 @@ public class BudgetInput extends Application{
         Platform.exit();
     }
 
+    private void updateHandler() {
+        // TODO totalBudget == 0, button says "Set", changes to "Update" after
+        // TODO grey out and disable panel below separator until budget is set
+        System.out.println("Updated total");
+        totalBudgetAmount = Double.parseDouble(totalField.getText());
+    }
+
     private void setHandlers() {
-//        addButton.setOnAction(e -> addHandler());
+        totalButton.setOnAction(e -> updateHandler());
+        addButton.setOnAction(e -> addHandler());
+        removeButton.setOnAction(e -> removeHandler());
         viewButton.setOnAction(e -> overviewHandler());
         quitButton.setOnAction(e -> quitHandler());
     }
