@@ -13,9 +13,15 @@
     -fx-font-size: 14;
 }
 .chart-legend {
-   -fx-background-color:  #fafad2;
+   -fx-background-color:  #70ca9a;
    -fx-stroke: #ce9c1d;
 }
+
+.default-color0.chart-pie { -fx-pie-color: #ffd700; }
+.default-color1.chart-pie { -fx-pie-color: #ffa500; }
+.default-color2.chart-pie { -fx-pie-color: #860061; }
+.default-color3.chart-pie { -fx-pie-color: #adff2f; }
+.default-color4.chart-pie { -fx-pie-color: #ff5700; }
 
 .custom-label {
     -fx-font-family: Roboto-Regular;

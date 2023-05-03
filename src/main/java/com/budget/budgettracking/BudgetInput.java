@@ -287,7 +287,7 @@ public class BudgetInput extends Application{
     }
 
     private void createView() {
-        BudgetView tab = new BudgetView(totalBudgetAmount, budgetList);
+        BudgetView tab = new BudgetView(tp, totalBudgetAmount, budgetList);
         if (tp.getTabs().size() <= 1) {
             tp.getTabs().add(tab);
         } else { tp.getTabs().set(1, tab); }
@@ -324,7 +324,8 @@ public class BudgetInput extends Application{
     }
 
     private void removeHandler() {
-
+        Budget item = budgetTable.getSelectionModel().getSelectedItem();
+        budgetList.remove(item);
     }
 
     private void quitHandler() {
