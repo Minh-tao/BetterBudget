@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
@@ -30,7 +31,7 @@ public class BudgetInput extends Application{
         VBox amountBox = new VBox();
         VBox timeBox = new VBox();
         VBox tableBox = new VBox();
-        VBox buttonBox = new VBox();
+        HBox buttonBox = new HBox();
         HBox addBox = new HBox();
         HBox totalBudgetBox = new HBox();
 
@@ -53,9 +54,9 @@ public class BudgetInput extends Application{
         RadioButton monthlyRadioButton = new RadioButton("Monthly");
         RadioButton annuallyRadioButton = new RadioButton("Annually");
         RadioButton otherRadioButton = new RadioButton("Other");
-
         ToggleGroup toggleGroup = new ToggleGroup();
 
+        Button totalButton = new Button("Update Total");
         Button addButton = new Button("Add Budget Category");
         Button viewButton = new Button("View Budget Overview");
         Button quitButton = new Button("Quit");
@@ -83,6 +84,7 @@ public class BudgetInput extends Application{
         populate();
         setHandlers();
         tableSetup();
+        radioButtons();
         // tooltips
 
         // tab
@@ -99,19 +101,31 @@ public class BudgetInput extends Application{
         return scene;
     }
 
+    private void radioButtons() {
+        dailyRadioButton.setToggleGroup(toggleGroup);
+        weeklyRadioButton.setToggleGroup(toggleGroup);
+        monthlyRadioButton.setToggleGroup(toggleGroup);
+        annuallyRadioButton.setToggleGroup(toggleGroup);
+        otherRadioButton.setToggleGroup(toggleGroup);
+    }
+
     private void allStyling() {
         // box alignment
         nameBox.setAlignment(Pos.CENTER);
         amountBox.setAlignment(Pos.TOP_CENTER);
         timeBox.setAlignment(Pos.TOP_CENTER);
-        buttonBox.setAlignment(Pos.TOP_CENTER);
+        buttonBox.setAlignment(Pos.CENTER_RIGHT);
+        buttonBox.setSpacing(10);
+        addBox.setAlignment(Pos.CENTER_LEFT);
         totalBudgetBox.setAlignment(Pos.TOP_LEFT);
         tableBox.setAlignment(Pos.TOP_CENTER);
+        flow.setAlignment(Pos.TOP_CENTER);
         flow.setPadding(new Insets(5, 0, 5, 0));
         flow.setVgap(4);
         flow.setHgap(4);
         flow.setPrefWrapLength(170); // preferred width allows for two columns
-        flow.setStyle("-fx-background-color: DAE6F3;");
+        flow.setStyle("-fx-background-color: #00BB62;");
+        inputPanel.setPadding(new Insets(10, 10, 10, 10));
 
         // label styling (sizes, font)
         Font titlefont = Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 18);
@@ -144,17 +158,13 @@ public class BudgetInput extends Application{
         otherField.setPromptText("Enter frequency");
         otherField.setDisable(true);
 
-
         // box/grid styling
         outerGridpane.setAlignment(Pos.CENTER);
-        outerGridpane.setStyle("-fx-background-color: linear-gradient(to bottom, #2FC9ED, #F6CE55);");
+        outerGridpane.setStyle("-fx-background-color: radial-gradient(center 50% 50%, radius 50%, #F2FFDB, #00BB62);");
         outerGridpane.setPadding(new Insets(10, 10, 10, 10));
         outerGridpane.setHgap(10);
-        panelGrid.setStyle("-fx-border-style: solid inside;"
-                + "-fx-border-width: 1;"
-                + "-fx-border-color: black;"
-                + "-fx-padding: 0;"
-                + "-fx-background-color: LIGHTCYAN");
+        outerGridpane.setVgap(10);
+        inputPanel.getStyleClass().add("inputPanel");
         tableBox.setStyle("-fx-border-style: solid inside;"
                 + "-fx-border-width: 1;"
                 + "-fx-border-color: black;"
@@ -163,79 +173,52 @@ public class BudgetInput extends Application{
     }
 
     private void gridConstraints() {
-        outerGridpane.setGridLinesVisible(true);
+        outerGridpane.setGridLinesVisible(false);
 
         // outerGridPane styling
         ColumnConstraints column1 = new ColumnConstraints();
             column1.setPercentWidth(40);
         ColumnConstraints column2 = new ColumnConstraints();
             column2.setPercentWidth(60);
-//        RowConstraints row1 = new RowConstraints();
+        RowConstraints row1 = new RowConstraints();
 //            row1.setMaxHeight(25);
 //            row1.setPrefHeight(0);
 //            row1.setVgrow(Priority.SOMETIMES);
-//        RowConstraints row2 = new RowConstraints();
+        RowConstraints row2 = new RowConstraints();
 //            row2.setMaxHeight(261);
 //            row2.setMinHeight(10);
 //            row2.setPrefHeight(261);
 //            row2.setVgrow(Priority.SOMETIMES);
-//        RowConstraints row3 = new RowConstraints();
+        RowConstraints row3 = new RowConstraints();
 //            row3.setMinHeight(10);
 //            row3.setPrefHeight(30);
 //            row3.setVgrow(Priority.SOMETIMES);
-//        RowConstraints row4 = new RowConstraints();
+        RowConstraints row4 = new RowConstraints();
 //            row4.setMinHeight(10);
 //            row4.setPrefHeight(10);
 //            row4.setVgrow(Priority.SOMETIMES);
+        RowConstraints row5 = new RowConstraints();
+
         outerGridpane.getColumnConstraints().addAll(column1, column2);
-//        outerGridpane.getRowConstraints().addAll(row1, row2, row3, row4);
-//
-        inputPanel.setPadding(new Insets(10, 10, 10, 10));
-//
-//        ColumnConstraints innerColumn1 = new ColumnConstraints();
-//        innerColumn1.setHgrow(Priority.SOMETIMES);
-//        innerColumn1.setMinWidth(10);
-//        innerColumn1.setPrefWidth(50);
-//        ColumnConstraints innerColumn2 = new ColumnConstraints();
-//        innerColumn2.setHgrow(Priority.SOMETIMES);
-//        innerColumn2.setMinWidth(10);
-//        innerColumn2.setPrefWidth(50);
-//
-//        RowConstraints innerRow1 = new RowConstraints();
-//        innerRow1.setMaxHeight(66.5);
-//        innerRow1.setMinHeight(10);
-//        innerRow1.setPrefHeight(40.5);
-//        innerRow1.setVgrow(Priority.SOMETIMES);
-//        RowConstraints innerRow2 = new RowConstraints();
-//        innerRow2.setMaxHeight(120.5);
-//        innerRow2.setMinHeight(10);
-//        innerRow2.setPrefHeight(57.0);
-//        innerRow2.setVgrow(Priority.SOMETIMES);
-//
-//        panelGrid.getColumnConstraints().addAll(innerColumn1, innerColumn2);
-//        panelGrid.getRowConstraints().addAll(innerRow1, innerRow2);
+        outerGridpane.getRowConstraints().addAll(row1, row2, row3, row4, row5);
     }
 
     private void populate() {
         // add to grid
-        totalBudgetBox.getChildren().addAll(totalLabel, totalField);
+        totalBudgetBox.getChildren().addAll(totalLabel, totalField, totalButton);
         nameBox.getChildren().addAll(nameLabel, nameCombo);
         amountBox.getChildren().addAll(amountLabel, amountField);
-        timeBox.getChildren().addAll(timeLabel, dailyRadioButton,
-                weeklyRadioButton, monthlyRadioButton,
-                annuallyRadioButton, otherRadioButton, otherField);
+        timeBox.getChildren().addAll(timeLabel, flow);
         addBox.getChildren().addAll(addButton);
         tableBox.getChildren().addAll(budgetTable);
         buttonBox.getChildren().addAll(viewButton, quitButton);
-        flow.getChildren().addAll(timeLabel, dailyRadioButton,
+        flow.getChildren().addAll(dailyRadioButton,
                 weeklyRadioButton, monthlyRadioButton,
                 annuallyRadioButton, otherRadioButton, otherField);
-
         outerGridpane.add(totalBudgetBox, 0, 0);
         outerGridpane.add(addHeaderLabel, 0, 1);
         outerGridpane.add(inputPanel, 0, 2);
-            inputPanel.getChildren().addAll(nameBox, amountBox, flow);
-        outerGridpane.add(addBox, 0, 3);
+            inputPanel.getChildren().addAll(nameBox, amountBox, timeBox, addBox);
         outerGridpane.add(tableHeaderLabel, 1, 1);
         outerGridpane.add(tableBox, 1, 2);
         outerGridpane.add(buttonBox, 1, 3);
