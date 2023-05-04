@@ -35,7 +35,7 @@ public class TransactionView extends Tab {
      */
     public TransactionView(List<Transaction> list) {
 
-        setText("Spending Breakdown");
+        setText("Transactions Breakdown");
 
         BorderPane bp = new BorderPane();
         Button quit = new Button("Quit");
@@ -58,7 +58,7 @@ public class TransactionView extends Tab {
         vBox.setAlignment(Pos.BOTTOM_RIGHT);
         vBox.setPadding(new Insets(0, 0, 0, 0));
         vBox.setStyle("-fx-background-color: linear-gradient(to bottom, #2FC9ED, #F6CE55);");
-        this.setTooltip(new Tooltip("Shows a breakdown of the given purchased items"));
+        this.setTooltip(new Tooltip("Shows a breakdown of transactions"));
 
         // sp.getChildren().addAll(chart, hole, totalText);
         bp.setCenter(chart);
@@ -81,11 +81,11 @@ public class TransactionView extends Tab {
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Month");
-        yAxis.setLabel("Amount Spent");
+        yAxis.setLabel("Total Amount");
         final LineChart<String,Number> chart =
                 new LineChart<>(xAxis,yAxis);
 
-        chart.setTitle("Stock Monitoring, 2010");
+        chart.setTitle("Transactions Breakdown");
         chart.setStyle("-fx-font-family: Roboto-Regular; -fx-font-size: 14px;");
         Label titleLabel = (Label) chart.lookup(".chart-title");
         titleLabel.setStyle("-fx-font-family: Roboto-Regular; -fx-font-size: 20px;");

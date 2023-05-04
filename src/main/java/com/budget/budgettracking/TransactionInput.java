@@ -6,6 +6,7 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,11 +17,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 /** Class used to create SpendingApp GUI and add functionality
  *
@@ -36,10 +37,9 @@ public class TransactionInput extends Application{
     GridPane outerGrid = new GridPane();
     GridPane inputPanel = new GridPane();
     VBox nameBox = new VBox();
-    VBox priceBox = new VBox();
+    VBox amountBox = new VBox();
     VBox categoryBox = new VBox();
-    VBox qtyBox = new VBox();
-    HBox qtyControls = new HBox();
+    VBox dateBox = new VBox();
     HBox purchaseBox = new HBox();
     GridPane bottomGrid = new GridPane();
     HBox totalBox = new HBox();
@@ -50,33 +50,29 @@ public class TransactionInput extends Application{
     VBox tableBox = new VBox();
 
     // labels
-    Label addItemLabel = new Label("Add Item");
-    Label purchasedLabel = new Label("Purchased Items");
+    Label addItemLabel = new Label("Add Transaction");
+    Label purchasedLabel = new Label("Transactions");
     Label nameLabel = new Label("Name");
     Label categoryLabel = new Label("Category");
-    Label priceLabel = new Label("Price");
-    Label qtyLabel = new Label("Quantity");
+    Label amountLabel = new Label("Amount");
+    Label dateLabel = new Label("Date");
     Label totalLabel = new Label("Total ");
 
     // widgets
     TextField nameField = new TextField();
-    TextField priceField = new TextField();
-    TextField qtyField = new TextField();
-    Button qMinus = new Button("-");
-    Button qPlus = new Button("+");
+    TextField amountField = new TextField();
+    DatePicker dateField = new DatePicker();
     ComboBox<String> categoryComboBox = new ComboBox<>();
-    Button purchaseButton = new Button("Purchase");
-    Button removeButton = new Button("Remove Selected Item");
+    Button purchaseButton = new Button("Add Transaction");
     TextField totalField = new TextField();
     Button quitButton = new Button("Quit");
 
     // lists
-    ObservableList<Purchase> purchaseList = FXCollections.observableArrayList(
-            new Purchase("Rent", 1, 1800.0, "Housing"),
-            new Purchase("Food", 1, 300.0, "Food"),
-            new Purchase("Subway Pass", 10, 3.50, "Transportation"),
-            new Purchase("Vacation Fund", 1, 1000.0, "Savings and Investments")
+    ObservableList<Transaction> mockData = FXCollections.observableArrayList(
     ); // hold purchases
+
+
+
     ObservableList<String> categoryList = FXCollections.observableArrayList( // list of categories
             "Clothing", "Debt payments", "Education", "Entertainment", "Food", "Gifts and donations",
             "Health and wellness", "Housing", "Insurance", "Personal care",
@@ -84,7 +80,7 @@ public class TransactionInput extends Application{
     );
 
     // tableview
-    TableView<Purchase> table = new TableView<>(purchaseList);
+    TableView<Transaction> table = new TableView<>(mockData);
 
     /** Application start method
      *  @param stage: GUI stage
@@ -101,7 +97,9 @@ public class TransactionInput extends Application{
         createToolTips();
         populateGrids();
         tableSetup();
+        addAmountRegex();
         bindTotalField();
+        addMockData();
 
         // create and add tabs to tabPane
         shopTab.setText("Purchases");
@@ -123,16 +121,29 @@ public class TransactionInput extends Application{
         stage.show();
     }
 
+    /** Input validation for amount field to prevent invalid input
+     *
+     */
+    private void addAmountRegex() {
+        amountField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Validate the new value to ensure that it only contains numeric characters, decimals and negative sign
+            if (!newValue.matches("\\d*\\.?\\d*")) {
+                // If the new value is non-numeric, replace it with the old value
+                amountField.setText(oldValue);
+            }
+        });
+    }
+
     /** Helper function binds purchaseList to the totalField to display the total cost of all items
      *
      */
     private void bindTotalField() {
         // Add a listener to the purchaseList
-        purchaseList.addListener((ListChangeListener<Purchase>) change -> {
+        table.getItems().addListener((ListChangeListener<Transaction>) change -> {
             // Recalculate the total cost
             double totalCost = 0;
-            for (Purchase purchase : purchaseList) {
-                totalCost += purchase.getPrice() * purchase.getQty();
+            for (Transaction t : table.getItems()) {
+                totalCost += t.getAmount();
             }
             // Update the total field with the new total cost
             String str = String.format("$ %.2f", totalCost);
@@ -148,21 +159,27 @@ public class TransactionInput extends Application{
      */
     private void tableSetup() {
         // create table columns
-        TableColumn<Purchase, String> itemCol = new TableColumn<>("Item");
+        TableColumn<Transaction, String> itemCol = new TableColumn<>("Item");
         itemCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<Purchase, Integer> qtyCol = new TableColumn<>("Qty");
-        qtyCol.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        TableColumn<Transaction, Double> amountCol = new TableColumn<>("Amount");
+        amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
-        TableColumn<Purchase, Double> priceCol = new TableColumn<>("Cost/unit");
-        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-        TableColumn<Purchase, String> catCol = new TableColumn<>("Category");
+        TableColumn<Transaction, String> catCol = new TableColumn<>("Category");
         catCol.setCellValueFactory(new PropertyValueFactory<>("category"));
 
+        TableColumn<Transaction, LocalDate> dateCol = new TableColumn<>("Date");
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        TableColumn delCol = new TableColumn();
+        delCol.setCellFactory(ButtonTableCell.<Transaction>forTableColumn("X", (Transaction Transaction) ->
+        {
+            removeHandler(Transaction);
+            return Transaction;
+        }));
+
         table.setEditable(false);
-        table.setItems(purchaseList);
-        table.getColumns().addAll(itemCol, qtyCol, priceCol, catCol);
+        table.getColumns().addAll(itemCol, amountCol, catCol, dateCol, delCol);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
@@ -171,10 +188,7 @@ public class TransactionInput extends Application{
      */
     private void setButtonHandlers() {
         // set button handlers
-        qPlus.setOnAction(e -> qtyHandler("inc"));
-        qMinus.setOnAction(e -> qtyHandler("dec"));
-        removeButton.setOnAction(e -> removeHandler());
-        purchaseButton.setOnAction(e -> purchaseHandler());
+        purchaseButton.setOnAction(e -> addTransactionHandler());
         quitButton.setOnAction(e -> quitHandler());
     }
 
@@ -189,15 +203,14 @@ public class TransactionInput extends Application{
         inputPanel.add(nameBox, 0, 0);
         nameBox.getChildren().addAll(nameLabel, nameField);
 
-        inputPanel.add(priceBox, 1, 0);
-        priceBox.getChildren().addAll(priceLabel, priceField);
+        inputPanel.add(amountBox, 1, 0);
+        amountBox.getChildren().addAll(amountLabel, amountField);
 
         inputPanel.add(categoryBox, 0, 1);
         categoryBox.getChildren().addAll(categoryLabel, categoryComboBox);
 
-        inputPanel.add(qtyBox, 1, 1);
-        qtyBox.getChildren().addAll(qtyLabel, qtyControls);
-        qtyControls.getChildren().addAll(qMinus, qtyField, qPlus);
+        inputPanel.add(dateBox, 1, 1);
+        dateBox.getChildren().addAll(dateLabel, dateField);
 
         inputPanel.add(purchaseBox, 0, 2, 2, 1);
         purchaseBox.getChildren().add(purchaseButton);
@@ -208,7 +221,6 @@ public class TransactionInput extends Application{
         outerGrid.add(tableBox, 1, 1);
         outerGrid.add(bottomGrid, 1, 2);
         bottomGrid.add(removeBox, 0, 0);
-        removeBox.getChildren().add(removeButton);
         bottomGrid.add(totalBox, 1, 0);
         totalBox.getChildren().addAll(totalLabel, totalField);
         bottomGrid.add(quitBox, 1, 1);
@@ -221,10 +233,10 @@ public class TransactionInput extends Application{
     private void allStyling() {
         // box alignment
         nameBox.setAlignment(Pos.CENTER);
-        priceBox.setAlignment(Pos.TOP_CENTER);
+        amountBox.setAlignment(Pos.TOP_CENTER);
         categoryBox.setAlignment(Pos.TOP_CENTER);
-        qtyBox.setAlignment(Pos.TOP_CENTER);
-        qtyControls.setAlignment(Pos.TOP_CENTER);
+        dateBox.setAlignment(Pos.TOP_CENTER);
+        // dateField.setAlignment(Pos.TOP_CENTER);
         purchaseBox.setAlignment(Pos.BOTTOM_CENTER);
         totalBox.setAlignment(Pos.TOP_RIGHT);
         removeBox.setAlignment(Pos.TOP_LEFT);
@@ -234,24 +246,27 @@ public class TransactionInput extends Application{
         Font titlefont = Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 18);
         Font font = Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 14);
         addItemLabel.setFont(titlefont);
+        addTitleBox.setMargin(addItemLabel, new Insets(0,0,12,0));
         addTitleBox.setAlignment(Pos.BOTTOM_CENTER);
         purchasedLabel.setFont(titlefont);
+
         pTitleBox.setAlignment(Pos.BOTTOM_CENTER);
+        pTitleBox.setMargin(purchasedLabel, new Insets(0,0,12,0));
+
+
         nameLabel.setFont(font);
-        priceLabel.setFont(font);
+        amountLabel.setFont(font);
         categoryLabel.setFont(font);
-        qtyLabel.setFont(font);
+        dateLabel.setFont(font);
         totalLabel.setFont(font);
         totalLabel.setAlignment(Pos.CENTER_RIGHT);
 
         // widget styling
         nameField.setMaxWidth(125);
         nameField.setPrefWidth(125);
-        priceField.setMaxWidth(75);
-        priceField.setPromptText("$");
-        qtyField.setMaxWidth(25);
-        qtyField.setText("1");
-        qtyField.setAlignment(Pos.CENTER);
+        amountField.setMaxWidth(100);
+        amountField.setPromptText("$");
+        dateField.setMaxWidth(100);
         purchaseButton.setPrefWidth(100);
         totalField.setPromptText("$");
         totalField.setEditable(false);
@@ -259,22 +274,17 @@ public class TransactionInput extends Application{
         totalField.setAlignment(Pos.CENTER_RIGHT);
         quitButton.setPrefWidth(75);
         purchaseButton.setFont(font);
-        removeButton.setFont(font);
-        qMinus.setFont(font);
-        qMinus.setStyle("-fx-font-weight: bold;");
-        qMinus.setPrefHeight(30);
-        qPlus.setFont(font);
-        qPlus.setStyle("-fx-font-weight: bold;");
-        qPlus.setPrefHeight(30);
-        priceField.setFont(font);
+        amountField.setFont(font);
         quitButton.setFont(font);
-        qtyField.setFont(font);
+        String style = "-fx-font-family: '" + font.getFamily() + "'; "
+                + "-fx-font-size: " + font.getSize() + "px;";
+        dateField.setStyle(style);
         totalField.setFont(font);
 
         // box/grid styling
         outerGrid.setAlignment(Pos.CENTER);
-        outerGrid.setStyle("-fx-background-color: linear-gradient(to bottom, #2FC9ED, #F6CE55);");
-        outerGrid.setPadding(new Insets(10, 10, 10, 10));
+        outerGrid.setStyle("-fx-background-color: linear-gradient(to right, #45F18A, #B3BCCB);");
+        outerGrid.setPadding(new Insets(15, 10, 10, 10));
         outerGrid.setHgap(10);
         // addTitleBox.setStyle("-fx-background-color: transparent;");
         // pTitleBox.setStyle("-fx-background-color: transparent;");
@@ -282,7 +292,7 @@ public class TransactionInput extends Application{
                 + "-fx-border-width: 1;"
                 + "-fx-border-color: black;"
                 + "-fx-padding: 30;"
-                + "-fx-background-color: LIGHTCYAN");
+                + "-fx-background-color: #f0f0f0");
         tableBox.setStyle("-fx-border-style: solid inside;"
                 + "-fx-border-width: 1;"
                 + "-fx-border-color: black;"
@@ -378,17 +388,15 @@ public class TransactionInput extends Application{
      */
     private void createToolTips(){
         // tooltips
-        nameField.setTooltip(new Tooltip("Enter item name"));
-        priceField.setTooltip(new Tooltip("Enter item price"));
-        categoryComboBox.setTooltip(new Tooltip("Select a category relevant to the item"));
-        qtyField.setTooltip(new Tooltip("Enter item quantity"));
-        qMinus.setTooltip(new Tooltip("Decrease quantity by 1"));
-        qPlus.setTooltip(new Tooltip("Increase quantity by 1"));
-        purchaseButton.setTooltip(new Tooltip("Add item to the table"));
-        table.setTooltip(new Tooltip("Purchased items will appear here"));
-        removeButton.setTooltip(new Tooltip("Click on a row and press this button to remove it from the table"));
-        totalField.setTooltip(new Tooltip("The total cost of all purchased items"));
-        shopTab.setTooltip(new Tooltip("Enter item purchases to be analyzed"));
+        nameField.setTooltip(new Tooltip("Enter transaction name"));
+        amountField.setTooltip(new Tooltip("Enter transaction amount"));
+        categoryComboBox.setTooltip(new Tooltip("Select a category relevant to the transaction"));
+        dateField.setTooltip(new Tooltip("Enter transaction date"));
+        purchaseButton.setTooltip(new Tooltip("Add transaction to the table"));
+        table.setTooltip(new Tooltip("Transaction will appear here"));
+        // removeButton.setTooltip(new Tooltip("Click on a row and press this button to remove it from the table"));
+        totalField.setTooltip(new Tooltip("The total amount of all transactions"));
+        shopTab.setTooltip(new Tooltip("Enter transaction to be analyzed"));
         quitButton.setTooltip(new Tooltip("Close the application"));
     }
 
@@ -396,48 +404,56 @@ public class TransactionInput extends Application{
      * Method gets the sums for each item category, and calls TransactionView class to create a tab for a chart object
      * @return TransactionView: tab containing the chart
      */
+    private void addMockData() {
+        // map for chart
+        mockData.add(new Transaction("Starcraft 2", 25, "Entertainment", LocalDate.now()));
+        mockData.add(new Transaction("Rainbow Six Siege", 100, "Entertainment", LocalDate.now()));
+        mockData.add(new Transaction("Warcraft 3", 60, "Entertainment", LocalDate.now().minusMonths(1)));
+        mockData.add(new Transaction("Battlefield 4", 15, "Entertainment", LocalDate.now().minusMonths(2)));
+        mockData.add(new Transaction("Crying Suns", 25, "Entertainment", LocalDate.now().minusMonths(2)));
+        mockData.add(new Transaction("Minecraft", 25, "Entertainment", LocalDate.now().minusMonths(3)));
+        mockData.add(new Transaction("Signalis", 20, "Entertainment", LocalDate.now().minusMonths(2)));
+        mockData.add(new Transaction("Undertale", 20, "Entertainment", LocalDate.now().minusMonths(3)));
+
+        mockData.add(new Transaction("Protein powder", 12, "Health and wellness", LocalDate.now()));
+        mockData.add(new Transaction("Treadmill", 100, "Health and wellness", LocalDate.now().minusMonths(4)));
+        mockData.add(new Transaction("Blender", 30, "Health and wellness", LocalDate.now()));
+        mockData.add(new Transaction("Weights", 25, "Health and wellness", LocalDate.now().minusMonths(1)));
+        mockData.add(new Transaction("Running Shoes", 80, "Health and wellness", LocalDate.now().minusMonths(3)));
+        mockData.add(new Transaction("Jump Rope", 25, "Health and wellness", LocalDate.now().minusMonths(2)));
+
+        mockData.add(new Transaction("China: Crony Capitalism", 25, "Education", LocalDate.now()));
+        mockData.add(new Transaction("Wacom Tablet", 75, "Education", LocalDate.now().plusMonths(2)));
+        mockData.add(new Transaction("Apple Pen", 80, "Education", LocalDate.now().minusMonths(1)));
+        mockData.add(new Transaction("iPad", 150, "Education", LocalDate.now().minusMonths(2)));
+    }
+
     private TransactionView createChartTab() {
-        // map for pie chart
-        List<Transaction> tList = new ArrayList<>(FXCollections.observableArrayList());
-        tList.add(new Transaction("Starcraft 2", 25, "Games", LocalDate.now()));
-        tList.add(new Transaction("Star Citizen", 125, "Games", LocalDate.now()));
-        tList.add(new Transaction("Warcraft 3", 25, "Games", LocalDate.now().minusMonths(1)));
-        tList.add(new Transaction("MW2 2022", 70, "Games", LocalDate.now().minusMonths(2)));
-        tList.add(new Transaction("Crying Stars", 25, "Games", LocalDate.now().minusMonths(2)));
-
-        tList.add(new Transaction("Starcraft 2", 15, "Entertainment", LocalDate.now()));
-        tList.add(new Transaction("Star Citizen", 75, "Entertainment", LocalDate.now()));
-        tList.add(new Transaction("Warcraft 3", 85, "Entertainment", LocalDate.now().minusMonths(1)));
-        tList.add(new Transaction("MW2 2022", 10, "Entertainment", LocalDate.now().minusMonths(2)));
-        tList.add(new Transaction("Crying Stars", 25, "Entertainment", LocalDate.now().minusMonths(2)));
-
-        TransactionView TransactionView = new TransactionView(tList);
+        TransactionView TransactionView = new TransactionView(table.getItems());
         TransactionView.setTooltip(new Tooltip("Shows a breakdown of the given purchased items"));
         return TransactionView;
     }
 
     /**
-     * Creates new Purchase object based on user input values and adds Purchase to list
+     * Creates new Transaction object based on user input values and adds Transaction to list
      */
-    private void purchaseHandler() {
-        int quantity = Integer.parseInt(qtyField.getText());
-        double cost = Double.parseDouble(priceField.getText());
+    private void addTransactionHandler() {
+        LocalDate date = dateField.getValue();
+        double cost = Double.parseDouble(amountField.getText());
         String category = (String)categoryComboBox.getValue();
         String name = nameField.getText();
-        Purchase newBuy = new Purchase(name, quantity, cost, category);
-        qtyField.setText("1");
-        priceField.setText(null);
-        purchaseList.add(newBuy);
-        refreshPieTab();
+        Transaction newT = new Transaction(name, cost, category, date);
+        amountField.setText(null);
+        table.getItems().add(newT);
+        refreshChartTab();
     }
 
     /**
      * Removes selected row from the TableView object
      */
-    private void removeHandler() {
-        Purchase selectedItem = table.getSelectionModel().getSelectedItem();
-        purchaseList.remove(selectedItem);
-        refreshPieTab();
+    private void removeHandler(Transaction toRemove) {
+        table.getItems().remove(toRemove);
+        refreshChartTab();
     }
 
     /**
@@ -448,74 +464,45 @@ public class TransactionInput extends Application{
     }
 
     /**
-     * Creates new PieChart tab and replaces the previous one
+     * Creates new Chart tab and replaces the previous one
      */
-    private void refreshPieTab() {
+    private void refreshChartTab() {
         chartTab = createChartTab();
         tabPane.getTabs().set(1, chartTab);
     }
 
-    /**
-     * Increment or decrement quantity count depending on which button is pressed
-     * @param mode: whether the quantity button pressed is "-" or "+"
-     */
-    private void qtyHandler(String mode) {
-        int num = Integer.parseInt(qtyField.getText());
-        if (Objects.equals(mode, "inc")) {
-            qtyField.setText(Integer.toString(num + 1));
-        } else {
-            if (num > 0) {
-                qtyField.setText(Integer.toString(num - 1));
+    static class ButtonTableCell<S> extends TableCell<S, Button> {
+
+        private final Button actionButton;
+
+        public ButtonTableCell(String label, Function< S, S> function) {
+            this.getStyleClass().add("action-button-table-cell");
+
+            this.actionButton = new Button(label);
+            this.actionButton.setOnAction((ActionEvent e) -> {
+                function.apply(getCurrentItem());
+            });
+            this.actionButton.setMaxWidth(10);
+            this.actionButton.setFont(new Font("Calibri", 11));
+        }
+
+        public S getCurrentItem() {
+            return (S) getTableView().getItems().get(getIndex());
+        }
+
+        public static <S> Callback<TableColumn<S, Button>, TableCell<S, Button>> forTableColumn(String label, Function< S, S> function) {
+            return param -> new TransactionPage.ButtonTableCell<>(label, function);
+        }
+
+        @Override
+        public void updateItem(Button item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (empty) {
+                setGraphic(null);
+            } else {
+                setGraphic(actionButton);
             }
-        }
-    }
-
-    /**
-     * Class for Purchase objects that are to be stored in list/table
-     */
-    public static class Purchase {
-        private final SimpleStringProperty name;
-        private final SimpleIntegerProperty qty;
-        private final SimpleDoubleProperty price;
-        private final SimpleStringProperty category;
-
-        private Purchase(String name, int qty, double uPrice, String category) {
-            this.name = new SimpleStringProperty(name);
-            this.qty = new SimpleIntegerProperty(qty);
-            this.price = new SimpleDoubleProperty(uPrice);
-            this.category = new SimpleStringProperty(category);
-        }
-
-        public String getName() {
-            return name.get();
-        }
-
-        public int getQty() {
-            return qty.get();
-        }
-
-        public double getPrice() {
-            return price.get();
-        }
-
-        public String getCategory() {
-            return category.get();
-        }
-
-        public void setName(String n) {
-            name.set(n);
-        }
-
-        public void setQty(int q) {
-            qty.set(q);
-        }
-
-        public void setPrice(Double p) {
-            price.set(p);
-        }
-
-        public void setCategory(String c) {
-            category.set(c);
         }
     }
 
