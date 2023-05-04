@@ -85,18 +85,6 @@ public class BankingTransaction extends Application {
 
         Scene loginScene = scenes.loginPane();
 
-        // Create the login screen layout
-        VBox loginPane = new VBox(10);
-        TextField usernameField = new TextField();
-        usernameField.setPromptText("Username");
-        PasswordField passwordField = new PasswordField();
-        passwordField.setPromptText("Password");
-        Button loginButton = new Button("Login");
-        //loginPane.getChildren().addAll(loginScene.loginForm());
-        loginPane.setAlignment(Pos.CENTER);
-
-        VBox loginForm = new VBox();
-
 
         // Apply the custom logo transition
         LogoTransition logoTransition = new LogoTransition(logo, welcomeText, separator, introPane); 

@@ -13,6 +13,7 @@ import java.util.List;
 
 public class DataStorage {
     private final List<User> users;
+    private User loggedUser;
 
     public DataStorage() {
         users = new ArrayList<>();
@@ -111,6 +112,39 @@ public class DataStorage {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public boolean checkUser(String username, String password) {
+        for (User user : users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public User getUser(String username, String password) {
+        for (User user : users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+
+    public void setLoggedUser(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                loggedUser = user;
+                break;
+            }
+        }
+    }
+
+    public User getLoggedUser() {
+        return loggedUser;
     }
 
     public void addUser(String username, String password) {
