@@ -36,6 +36,8 @@ public class ImageRectangle extends Pane {
         widthProperty.addListener((observable, oldValue, newValue) -> {
             double width = newValue.doubleValue();
             logo.setX((width - logo.getFitWidth()) / 2);
+            logo.setLayoutX((width - logo.getFitWidth()) / 2);
         });
     }
+
 }
