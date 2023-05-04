@@ -18,7 +18,7 @@ public class ImageRectangle extends Pane {
         logo.setPreserveRatio(true);
         logo.setFitHeight(height * 0.8);
         logo.setFitWidth(height * 0.8);
-        logo.layoutXProperty().bind(TopBanner.widthProperty().subtract(logo.fitWidthProperty()).divide(2));
+        logo.layoutXProperty().bind(TopBanner.widthProperty().subtract(logo.fitWidthProperty()).divide(2.25));
         logo.layoutYProperty().bind(TopBanner.heightProperty().subtract(logo.fitHeightProperty()).divide(2));
 
 
