@@ -111,7 +111,7 @@ public class SpendingAppBudget extends Application{
         // set the scene
         VBox root = new VBox(tabPane);
         Scene scene = new Scene(root, Color.LIGHTBLUE);
-        scene.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("stylesheet.css")).toExternalForm());
+        scene.getStylesheets().add("stylesheet.css");
         stage.setResizable(false);
         stage.setWidth(WIDTH);
         stage.setHeight(HEIGHT);
