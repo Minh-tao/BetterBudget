@@ -37,9 +37,11 @@ public class App extends Application{
         LoginScene loginScene = new LoginScene(dataStorage);
         Scene lScene = loginScene.getScene();
 
+
+
         BorderPane root = new BorderPane();
 
-        Scene scene2 = new Scene(root, WIDTH, HEIGHT);
+        Scene scene2 = new Scene(root, 600, 400);
         primaryStage.getIcons().add(icon);
         primaryStage.setScene(scene2);
         primaryStage.setTitle("Better Budget");
@@ -74,7 +76,9 @@ public class App extends Application{
 
         // Apply the custom logo transition
         LogoTransition logoTransition = new LogoTransition(logo, welcomeText, separator, introPane);
-        logoTransition.setOnFinished(event -> primaryStage.setScene(scene));
+        logoTransition.setOnFinished(event -> {
+            primaryStage.setScene(lScene);
+        });
         logoTransition.play();
 
         primaryStage.getIcons().add(icon);
