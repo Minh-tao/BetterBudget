@@ -33,7 +33,7 @@ public class DataStorage {
     }
 
     public void readFromCSV() {
-        String filePath = "data.csv";
+        String filePath = "/Users/ousstudent/IdeaProjects/BudgetTrackingMinh/src/main/resources/data.csv";
         try (FileReader fileReader = new FileReader(filePath);
              CSVReader csvReader = new CSVReader(fileReader)) {
 

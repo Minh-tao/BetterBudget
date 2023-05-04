@@ -22,7 +22,12 @@ public class LoginScene extends Styling {
         scene = createLoginScene();
     }
 
+
     private Scene createLoginScene() {
+
+
+        headerStackPane = new StackPane();
+        headerStackPane.setAlignment(Pos.CENTER);
 
         VBox loginForm = new VBox();
         VBox loginForm2 = new VBox();
@@ -106,12 +111,16 @@ public class LoginScene extends Styling {
         loginForm.getChildren().addAll(setErrorTexts(), userLabel, username, passLabel, password, loginForm2);
         loginButton.setOnAction(event -> loginButtonEvent(username.getText(), password.getText()));
         // Set up the 4 regions of border pane
+        // Set up the 4 regions of border pane
         mainBorderPane.setTop(headerStackPane);
         mainBorderPane.setCenter(loginForm);
         mainBorderPane.setLeft(null);
         mainBorderPane.setRight(null);
-        return scene;
 
+        // Set the scene instance variable
+        scene = new Scene(mainBorderPane, 600, 400);
+
+        return scene;
     }
 
     @Override
