@@ -1010,7 +1010,7 @@ public class Scenes extends Styling {
         return scene;
     }
 
-    private void loginButtonEvent(String accountNumber, String PIN) {
+    public Scene loginButtonEvent(String accountNumber, String PIN) {
         if (BankDatabase.checkAccount(accountNumber, PIN)) {
             mainPane(accountNumber);
             BankDatabase.loggedAccount = accountNumber;
@@ -1018,6 +1018,7 @@ public class Scenes extends Styling {
         } else {
             errorText.setText("Wrong Account Number or PIN");
         }
+        return null;
     }
 
     private void logOutButtonEvent() {

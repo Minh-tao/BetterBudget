@@ -51,7 +51,7 @@ public class BudgetInput {
         RadioButton annuallyRadioButton = new RadioButton("Annually");
         RadioButton otherRadioButton = new RadioButton("Other");
 
-        ToggleGroup toggleGroup = new ToggleGroup();
+        final ToggleGroup toggleGroup = new ToggleGroup();
 
         Button addButton = new Button("Add Budget Category");
         Button viewButton = new Button("View Budget Overview");
@@ -89,6 +89,7 @@ public class BudgetInput {
         // viewTab.setText("Overview");
         tp.getTabs().addAll(inputTab);
         tp.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+
 
         VBox root = new VBox(tp);
         Scene scene = new Scene(root, Color.LIGHTBLUE);
