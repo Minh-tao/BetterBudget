@@ -124,6 +124,15 @@ public class DataStorage {
         return false;
     }
 
+    public boolean checkUsernameAlreadyExisting(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public User getUser(String username, String password) {
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {

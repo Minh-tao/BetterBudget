@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
+import javafx.stage.Stage;
 
 public class LoginScene extends Styling {
 
@@ -15,16 +16,21 @@ public class LoginScene extends Styling {
     private BorderPane mainBorderPane;
     private StackPane headerStackPane;
 
-    public LoginScene(DataStorage dataStorage) {
+    private Stage primaryStage;
+
+    public LoginScene(DataStorage dataStorage, Stage primaryStage) {
         this.dataStorage = dataStorage;
+        this.primaryStage = primaryStage;
         mainBorderPane = new BorderPane();
         headerStackPane = new StackPane();
         scene = createLoginScene();
     }
 
 
-    private Scene createLoginScene() {
+    public Scene createLoginScene() {
 
+        RegisterScene registerPane = new RegisterScene(dataStorage);
+        Scene rScene = registerPane.getScene();
 
         headerStackPane = new StackPane();
         headerStackPane.setAlignment(Pos.CENTER);
@@ -84,7 +90,7 @@ public class LoginScene extends Styling {
         // Set ActionEvent on the LogIn Button and register now text
         loginButton.setOnAction(event ->
                 loginButtonEvent(username.getText(), password.getText()));
-        //registerNow.setOnMouseClicked(event -> registerPane());
+        registerNow.setOnMouseClicked(event -> primaryStage.setScene(rScene));
 
         // For register now text
         registerNow.setFont(smallFont);
@@ -137,10 +143,6 @@ public class LoginScene extends Styling {
         return null;
     }
 
-
-    private void mainPane(User user) {
-
-    }
 
     public Scene getScene() {
         return scene;
