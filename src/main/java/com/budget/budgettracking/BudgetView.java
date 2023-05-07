@@ -1,18 +1,26 @@
 package com.budget.budgettracking;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +34,6 @@ public class BudgetView extends Tab {
 
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
     ObservableList<Transaction> mockData = FXCollections.observableArrayList(); // DEBUG
-    TextArea testOutput = new TextArea(); // DEBUG
 
     public BudgetView(double totalBudget, ObservableList<Budget> list) {
 
@@ -60,7 +67,7 @@ public class BudgetView extends Tab {
         addMockData();
         StackedBarChart stackedBarChart = createSBC(list, mockData);
 
-        vBox.getChildren().addAll(chart, stackedBarChart, testOutput);
+        vBox.getChildren().addAll(chart, stackedBarChart);
 
         scrollPane.setContent(vBox);
         scrollPane.setFitToWidth(true);
@@ -85,17 +92,39 @@ public class BudgetView extends Tab {
         spentSeries.setName("Spent");
         for (Transaction item : tList) {
             spentSeries.getData().add(new XYChart.Data<>(item.getCategory(), item.getAmount()));
-            testOutput.appendText(item.toString());
         }
 
         XYChart.Series<String, Number> totalSeries = new XYChart.Series<>();
         totalSeries.setName("Total");
         for (Budget item : bList) {
             totalSeries.getData().add(new XYChart.Data<>(item.getName(), item.getAmount()));
-            testOutput.appendText(item.toString());
         }
 
         stackedBarChart.getData().addAll(spentSeries, totalSeries);
+
+//        Timeline tl = new Timeline();
+//        tl.getKeyFrames().add(
+//                new KeyFrame(Duration.millis(500),
+//                        new EventHandler<ActionEvent>() {
+//                            @Override public void handle(ActionEvent actionEvent) {
+//                                for (XYChart.Series<String, Number> series : stackedBarChart.getData()) {
+//                                    for (XYChart.Data<String, Number> data : series.getData()) {
+//                                        data.setYValue(Math.random() * 1000);
+//                                    }
+//                                }
+//                            }
+//                        }
+//                ));
+//        tl.setCycleCount(Animation.INDEFINITE);
+//        tl.setAutoReverse(true);
+//        tl.play();
+//
+//        xAxis.setAnimated(false);
+
+        //TODO set the color of each bar in totalSeries to match its pie slice
+        // set color of each bar in spentSeries to a single color
+        // create a startup animation
+        // pie startup animation too?
 
         return stackedBarChart;
     }

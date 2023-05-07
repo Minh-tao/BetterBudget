@@ -4,10 +4,7 @@ import javafx.application.Application;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -17,7 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application{
@@ -51,8 +47,8 @@ public class App extends Application{
 
         // Create the welcome text
         Text welcomeText = new Text("Welcome to Better Budget!");
-        // Set font style to font.ttf
-        welcomeText.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/font.ttf"), 24));
+        // Set font style to Bubbleboddy.ttf
+        welcomeText.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/Bubbleboddy.ttf"), 24));
         welcomeText.setFill(Color.web("#00BB62"));
 
         // Create a thin light green line

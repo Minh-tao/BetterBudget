@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Roboto-Regular';
-    src: url('fonts/font.ttf');
+    font-family: 'Bubbleboddy';
+    src: url('fonts/Bubbleboddy.ttf');
 }
 
 .chart-pie-label-line {
@@ -22,6 +22,7 @@
 .default-color2.chart-pie { -fx-pie-color: #860061; }
 .default-color3.chart-pie { -fx-pie-color: #adff2f; }
 .default-color4.chart-pie { -fx-pie-color: #ff5700; }
+.default-color5.chart-pie { -fx-pie-color: #ff4949; }
 
 .custom-label {
     -fx-font-family: Roboto-Regular;
@@ -48,4 +49,12 @@
     -fx-padding: 0;"
     -fx-background-color: LIGHTCYAN;
 }
+
+.total-series-bars {
+    -fx-bar-fill: GREY;
+}
+
+.root {
+   -fx-font-family: Bubbleboddy;
+   -fx-background-color: #E8F5E9;
 }

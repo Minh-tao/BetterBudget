@@ -3,21 +3,19 @@ package com.budget.budgettracking;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
+public class BudgetList {
+    private ObservableList<Budget> list;
 
-public class TransactionList {
-    private ObservableList<Transaction> list;
-
-    public TransactionList() {
+    public BudgetList() {
         list = FXCollections.observableArrayList();
     }
 
-    public boolean addTransaction(Transaction t) {
-        return list.add(t);
+    public boolean addBudget(Budget b) {
+        return list.add(b);
     }
 
-    public boolean removeTransaction(Transaction t) {
-        return list.remove(t);
+    public boolean removeBudget(Budget b) {
+        return list.remove(b);
     }
 
     public boolean isEmpty() {return list.isEmpty();}
