@@ -130,7 +130,7 @@ public class Scenes extends Styling {
 
 
 
-        loginForm.getChildren().addAll(setErrorTexts(), accountNumLabel, accountNumText, pinLabel, pinText, loginForm2);
+        loginForm.getChildren().addAll(accountNumLabel, accountNumText, pinLabel, pinText, loginForm2);
 
         // Set up the 4 regions of border pane
         mainBorderPane.setTop(headerStackPane);
@@ -306,7 +306,7 @@ public class Scenes extends Styling {
 
         // Add elements to centerPane
         centerContentVBox.getChildren().clear(); // clear first before adding designated element
-        centerContentVBox.getChildren().addAll(setErrorTexts(), depositLabel, depositText, depositButtonPlacement);
+        centerContentVBox.getChildren().addAll(setErrorTexts(errorText), depositLabel, depositText, depositButtonPlacement);
 
         // elements of Left Region of mainBorderPane
 
@@ -432,7 +432,7 @@ public class Scenes extends Styling {
 
         // Add elements to centerPane
         centerContentVBox.getChildren().clear(); // clear first before adding designated element
-        centerContentVBox.getChildren().addAll(setErrorTexts(), centerGridPane, withdrawButtonPlacement);
+        centerContentVBox.getChildren().addAll(setErrorTexts(errorText), centerGridPane, withdrawButtonPlacement);
 
         // Back Button Action Events
         backButton.setOnAction(event -> backButtonEvent());
@@ -824,7 +824,7 @@ public class Scenes extends Styling {
         // Add elements to centerPane
         // clear first before adding designated element
         centerContentVBox.getChildren().clear();
-        centerContentVBox.getChildren().addAll(setErrorTexts(), centerGridPane, registerButton, loginNow);
+        centerContentVBox.getChildren().addAll(setErrorTexts(errorText), centerGridPane, registerButton, loginNow);
 
         //  Set up the 4 regions of border pane
         mainBorderPane.setCenter(centerContentVBox);
@@ -895,7 +895,7 @@ public class Scenes extends Styling {
 
         // Add elements to centerPane
         centerContentVBox.getChildren().clear(); // clear first before adding designated element
-        centerContentVBox.getChildren().addAll(setErrorTexts(), depositLabel, depositText, depositButtonPlacement);
+        centerContentVBox.getChildren().addAll(setErrorTexts(errorText), depositLabel, depositText, depositButtonPlacement);
 
         // Set up the 4 regions of border pane
         mainBorderPane.setCenter(centerContentVBox);

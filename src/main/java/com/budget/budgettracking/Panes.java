@@ -55,7 +55,7 @@ class Panes {
     }
 
 
-    public Text setErrorTexts() {
+    public Text setErrorTexts(Text errorText) {
         errorText.setFont(smallFont);
         errorText.setFill(Color.rgb(225, 0, 40));
         errorText.setText("");

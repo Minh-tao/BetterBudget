@@ -14,6 +14,7 @@ import java.util.List;
 public class DataStorage {
     private final List<User> users;
     private User loggedUser;
+    private final String CSV_FILE_PATH = "data.csv"; // Define a constant file path
 
     public DataStorage() {
         users = new ArrayList<>();
@@ -33,8 +34,7 @@ public class DataStorage {
     }
 
     public void readFromCSV() {
-        String filePath = "/Users/ousstudent/IdeaProjects/BudgetTrackingMinh/src/resources/data.csv";
-        try (FileReader fileReader = new FileReader(filePath);
+        try (FileReader fileReader = new FileReader(CSV_FILE_PATH);
              CSVReader csvReader = new CSVReader(fileReader)) {
 
             String[] nextLine;
@@ -74,8 +74,6 @@ public class DataStorage {
         }
     }
 
-
-
     private void writeToCSV() {
         List<String[]> data = new ArrayList<>();
 
@@ -106,14 +104,13 @@ public class DataStorage {
             }
         }
 
-        try (FileWriter fileWriter = new FileWriter("data.csv", false); // Set to false to overwrite the file
+        try (FileWriter fileWriter = new FileWriter(CSV_FILE_PATH, false); // Set to false to overwrite the file
              CSVWriter csvWriter = new CSVWriter(fileWriter)) {
             csvWriter.writeAll(data);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     public boolean checkUser(String username, String password) {
         for (User user : users) {
@@ -141,7 +138,6 @@ public class DataStorage {
         }
         return null;
     }
-
 
     public void setLoggedUser(String username) {
         for (User user : users) {
@@ -197,3 +193,4 @@ public class DataStorage {
     }
 
 }
+
