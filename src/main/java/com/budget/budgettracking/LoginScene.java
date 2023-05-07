@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
+import javafx.stage.Stage;
 
 public class LoginScene extends Styling {
 
@@ -15,16 +16,25 @@ public class LoginScene extends Styling {
     private BorderPane mainBorderPane;
     private StackPane headerStackPane;
 
-    public LoginScene(DataStorage dataStorage) {
+    private Stage primaryStage;
+
+    public LoginScene(DataStorage dataStorage, Stage primaryStage) {
         this.dataStorage = dataStorage;
+        this.primaryStage = primaryStage;
         mainBorderPane = new BorderPane();
         headerStackPane = new StackPane();
         scene = createLoginScene();
     }
 
 
-    private Scene createLoginScene() {
+    public Scene createLoginScene() {
 
+        errorText = new Text();
+
+        setErrorTexts(errorText);
+
+        RegisterScene registerPane = new RegisterScene(dataStorage);
+        Scene rScene = registerPane.getScene();
 
         headerStackPane = new StackPane();
         headerStackPane.setAlignment(Pos.CENTER);
@@ -46,8 +56,8 @@ public class LoginScene extends Styling {
         // The StackPane is used to layer items after each other
 
         headerStackPane.getChildren().clear();
-        headerStackPane.getChildren().addAll(rectLarge(), title);
-
+        headerStackPane.getChildren().addAll(rectLarge(), title, errorText);
+        headerStackPane.setMargin(errorText, new Insets(110, 0, 0, 0)); // Adjust the margin values as needed
 
 
         // elements for the Center Region of mainBorderPane
@@ -81,10 +91,17 @@ public class LoginScene extends Styling {
         loginButton.setTextFill(Color.WHITE);
         loginButton.setPrefWidth(100);
 
+        HBox errorTextContainer = new HBox();
+        errorTextContainer.setAlignment(Pos.CENTER);
+        errorTextContainer.getChildren().add(errorText);
+
+        errorTextContainer.setPadding(new Insets(5, 0, 5, 0)); // Adjust the padding as needed
+        errorTextContainer.setSpacing(5); // Adjust the spacing as needed
+
         // Set ActionEvent on the LogIn Button and register now text
         loginButton.setOnAction(event ->
                 loginButtonEvent(username.getText(), password.getText()));
-        //registerNow.setOnMouseClicked(event -> registerPane());
+        registerNow.setOnMouseClicked(event -> primaryStage.setScene(rScene));
 
         // For register now text
         registerNow.setFont(smallFont);
@@ -97,8 +114,8 @@ public class LoginScene extends Styling {
         loginButton.setCursor(Cursor.HAND);
         registerNow.setCursor(Cursor.HAND);
 
-        // For the overall Log In Form (including the small text and the Login button in loginForm2 layout pane)
-        loginForm.setSpacing(10.0);
+// For the overall Log In Form (including the small text and the Login button in loginForm2 layout pane)
+        loginForm.setSpacing(5.0);
         loginForm.setPadding(padding);
         loginForm.setStyle("-fx-margin-left: 20px;");
 
@@ -106,10 +123,10 @@ public class LoginScene extends Styling {
         loginForm2.setAlignment(Pos.BOTTOM_CENTER);
         loginForm2.getChildren().addAll(registerNow, loginButton);
 
-
-
-        loginForm.getChildren().addAll(setErrorTexts(), userLabel, username, passLabel, password, loginForm2);
+// Add errorText and other elements to loginForm
+        loginForm.getChildren().addAll(errorTextContainer, userLabel, username, passLabel, password, loginForm2);
         loginButton.setOnAction(event -> loginButtonEvent(username.getText(), password.getText()));
+
         // Set up the 4 regions of border pane
         // Set up the 4 regions of border pane
         mainBorderPane.setTop(headerStackPane);
@@ -130,7 +147,9 @@ public class LoginScene extends Styling {
             // Navigate to the main pane, passing the user object
             BudgetInput budgetInput = new BudgetInput();
             errorText.setText(" ");
-            return budgetInput.createScene();
+            Scene budgetInputScene = budgetInput.createScene();
+            primaryStage.setScene(budgetInputScene);
+            return budgetInputScene;
         } else {
             errorText.setText("Wrong username or password");
         }
@@ -138,9 +157,6 @@ public class LoginScene extends Styling {
     }
 
 
-    private void mainPane(User user) {
-
-    }
 
     public Scene getScene() {
         return scene;

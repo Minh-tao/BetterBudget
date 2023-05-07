@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -58,12 +60,13 @@ public class TransactionInput extends Application{
     Label dateLabel = new Label("Date");
     Label totalLabel = new Label("Total ");
 
+
     // widgets
     TextField nameField = new TextField();
     TextField amountField = new TextField();
     DatePicker dateField = new DatePicker();
     ComboBox<String> categoryComboBox = new ComboBox<>();
-    Button purchaseButton = new Button("Add Transaction");
+    Button purchaseButton = new Button("Add");
     TextField totalField = new TextField();
     Button quitButton = new Button("Quit");
 
@@ -161,18 +164,24 @@ public class TransactionInput extends Application{
         // create table columns
         TableColumn<Transaction, String> itemCol = new TableColumn<>("Item");
         itemCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        itemCol.setStyle( "-fx-alignment: CENTER;");
 
         TableColumn<Transaction, Double> amountCol = new TableColumn<>("Amount");
         amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        amountCol.setStyle( "-fx-alignment: CENTER;");
 
         TableColumn<Transaction, String> catCol = new TableColumn<>("Category");
         catCol.setCellValueFactory(new PropertyValueFactory<>("category"));
+        catCol.setStyle( "-fx-alignment: CENTER;");
 
         TableColumn<Transaction, LocalDate> dateCol = new TableColumn<>("Date");
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        dateCol.setStyle( "-fx-alignment: CENTER;");
 
         TableColumn delCol = new TableColumn();
-        delCol.setCellFactory(ButtonTableCell.<Transaction>forTableColumn("X", (Transaction Transaction) ->
+        Image delete = new Image("delete(1).png");
+
+        delCol.setCellFactory(ButtonTableCell.<Transaction>forTableColumn(delete, (Transaction Transaction) ->
         {
             removeHandler(Transaction);
             return Transaction;
@@ -223,6 +232,7 @@ public class TransactionInput extends Application{
         bottomGrid.add(removeBox, 0, 0);
         bottomGrid.add(totalBox, 1, 0);
         totalBox.getChildren().addAll(totalLabel, totalField);
+
         bottomGrid.add(quitBox, 1, 1);
         quitBox.getChildren().add(quitButton);
     }
@@ -238,9 +248,11 @@ public class TransactionInput extends Application{
         dateBox.setAlignment(Pos.TOP_CENTER);
         // dateField.setAlignment(Pos.TOP_CENTER);
         purchaseBox.setAlignment(Pos.BOTTOM_CENTER);
-        totalBox.setAlignment(Pos.TOP_RIGHT);
+        totalBox.setAlignment(Pos.CENTER_RIGHT);
         removeBox.setAlignment(Pos.TOP_LEFT);
         quitBox.setAlignment(Pos.BOTTOM_RIGHT);
+        totalBox.setAlignment(Pos.CENTER_RIGHT);
+        totalBox.setMargin(totalLabel, new Insets(0,5,0,0));
 
         // label styling (sizes, font)
         Font titlefont = Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 18);
@@ -267,7 +279,7 @@ public class TransactionInput extends Application{
         amountField.setMaxWidth(100);
         amountField.setPromptText("$");
         dateField.setMaxWidth(100);
-        purchaseButton.setPrefWidth(100);
+        purchaseButton.setPrefWidth(60);
         totalField.setPromptText("$");
         totalField.setEditable(false);
         totalField.setMaxWidth(75);
@@ -483,15 +495,46 @@ public class TransactionInput extends Application{
                 function.apply(getCurrentItem());
             });
             this.actionButton.setMaxWidth(10);
-            this.actionButton.setFont(new Font("Calibri", 11));
+            Font font = Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 14);
+            this.actionButton.setFont(font);
+
         }
+
+        public ButtonTableCell(Image img, Function< S, S> function) {
+            this.getStyleClass().add("action-button-table-cell");
+
+            ImageView imageView = new ImageView(img);
+            imageView.setFitWidth(15); // Set the desired width
+            imageView.setFitHeight(15); // Set the desired height
+
+            this.actionButton = new Button();
+            this.actionButton.setOnAction((ActionEvent e) -> {
+                function.apply(getCurrentItem());
+            });
+            // Make the button transparent
+            this.actionButton.setStyle("-fx-background-color: transparent;");
+
+            // Set the button's borders and fill to be transparent as well
+            this.actionButton.setBorder(null);
+            this.actionButton.setBackground(null);
+
+
+            this.actionButton.setGraphic(imageView);
+
+        }
+
+
 
         public S getCurrentItem() {
             return (S) getTableView().getItems().get(getIndex());
         }
 
         public static <S> Callback<TableColumn<S, Button>, TableCell<S, Button>> forTableColumn(String label, Function< S, S> function) {
-            return param -> new TransactionPage.ButtonTableCell<>(label, function);
+            return param -> new ButtonTableCell<>(label, function);
+        }
+
+        public static <S> Callback<TableColumn<S, Button>, TableCell<S, Button>> forTableColumn(Image img, Function< S, S> function) {
+            return param -> new ButtonTableCell<>(img, function);
         }
 
         @Override
