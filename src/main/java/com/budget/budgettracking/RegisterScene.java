@@ -22,6 +22,10 @@ public class RegisterScene extends Styling {
 
     private Scene createRegisterScene() {
         // elements for Center Region of mainBorderPane
+
+        errorText = new Text();
+        setErrorTexts(errorText);
+
         GridPane centerGridPane = new GridPane();
         centerGridPane.setHgap(40);
         centerGridPane.setVgap(10);
