@@ -19,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class BudgetInput extends Application{
@@ -77,11 +78,11 @@ public class BudgetInput extends Application{
         double totalBudgetAmount = 0.0;
 
         // dropdown for budget category name
-        ObservableList<String> nameList = FXCollections.observableArrayList( // list of categories
+        ObservableList<String> nameList = FXCollections.observableArrayList(Arrays.asList( // list of categories
                 "Clothing", "Debt payments", "Education", "Entertainment", "Food", "Gifts and donations",
                 "Health and wellness", "Housing", "Insurance", "Personal care",
                 "Savings", "Taxes", "Transportation", "Miscellaneous"
-        );
+        ));
         ComboBox<String> nameCombo = new ComboBox<>(nameList);
 
         // table of budget categories
@@ -100,6 +101,7 @@ public class BudgetInput extends Application{
         setHandlers();
         tableSetup();
         radioButtons();
+        test();
         // tooltips
 
         // tab
@@ -289,7 +291,7 @@ public class BudgetInput extends Application{
     }
 
     private void createView() {
-        BudgetView tab = new BudgetView(tp, totalBudgetAmount, budgetList);
+        BudgetView tab = new BudgetView(totalBudgetAmount, budgetList);
         if (tp.getTabs().size() <= 1) {
             tp.getTabs().add(tab);
         } else { tp.getTabs().set(1, tab); }
@@ -348,6 +350,18 @@ public class BudgetInput extends Application{
         removeButton.setOnAction(e -> removeHandler());
         viewButton.setOnAction(e -> overviewHandler());
         quitButton.setOnAction(e -> quitHandler());
+    }
+
+    private void test() {
+        totalBudgetAmount = 2000;
+        budgetList.add(new Budget("Food", 250));
+        budgetList.add(new Budget("Health", 100));
+        budgetList.add(new Budget("Rent", 1000));
+        budgetList.add(new Budget("Transportation", 120));
+        budgetList.add(new Budget("Personal", 200));
+        budgetList.add(new Budget("Misc", totalBudgetAmount - 1670)); // make misc the remaining unallocated amount
+
+        createView();
     }
 
 //    FOR DEBUGGING - make sure class extends Application
