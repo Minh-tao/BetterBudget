@@ -35,7 +35,7 @@ class Panes {
     //FONTS
     // Create the welcome text
 
-    Font titleFont = Font.loadFont(getClass().getResourceAsStream("/fonts/font.ttf"), 24);
+    Font titleFont = Font.loadFont(getClass().getResourceAsStream("/fonts/Bubbleboddy.ttf"), 24);
     Font titleFont2 = Font.font("DejaVu Serif", 32);
     Font biggerBodyFont = Font.font("DejaVu Serif", 22);
     Font bodyFont = Font.font("DejaVu Serif", 16);

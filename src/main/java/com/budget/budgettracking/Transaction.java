@@ -55,6 +55,13 @@ public class Transaction implements Serializable
     public void setDate(LocalDate date) { this.date.set(date); }
 
     @Override
-    public String toString() { return getName(); }
+    public String toString() {
+        return "Transaction{" +
+            "name='" + name + '\'' +
+            ", amount=" + amount +
+            ", category=" + category +
+            ", date=" + date +
+            '}';
+    }
 
 }
