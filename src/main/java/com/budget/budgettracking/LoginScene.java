@@ -55,9 +55,17 @@ public class LoginScene extends Styling {
 
         // The StackPane is used to layer items after each other
 
+        GridPane gridPane = new GridPane();
+        gridPane.add(rectLarge(), 0, 0);
+        gridPane.add(title, 0, 1);
+        gridPane.add(errorText, 0, 2);
+
+        GridPane.setHalignment(title, HPos.CENTER);
+        GridPane.setHalignment(errorText, HPos.CENTER);
+
         headerStackPane.getChildren().clear();
-        headerStackPane.getChildren().addAll(rectLarge(), title, errorText);
-        headerStackPane.setMargin(errorText, new Insets(110, 0, 0, 0)); // Adjust the margin values as needed
+        headerStackPane.getChildren().addAll(gridPane);
+
 
 
         // elements for the Center Region of mainBorderPane

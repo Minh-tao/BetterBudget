@@ -51,6 +51,7 @@ public class RegisterScene extends Styling {
         });
 
         // Add the elements to the GridPane (All labels are on 1st col, all text-fields on 2nd col)
+        centerGridPane.add(errorText, 0, 0, 2, 1); // Add errorText to the top of the GridPane (span 2 columns
         centerGridPane.add(username, 0, 0, 1, 1);
         centerGridPane.add(usernameTxtField, 1, 0, 1, 1);
         centerGridPane.add(password, 0, 1, 1, 1);
