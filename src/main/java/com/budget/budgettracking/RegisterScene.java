@@ -6,19 +6,26 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
+import javafx.stage.Stage;
 
 public class RegisterScene extends Styling {
+
+    private Stage primaryStage;
+    private LoginScene loginScene;
 
     private DataStorage dataStorage;
     private static Scene scene;
     private Text errorText;
     private BorderPane mainBorderPane;
 
-    public RegisterScene(DataStorage dataStorage) {
+    public RegisterScene(DataStorage dataStorage, Stage primaryStage, LoginScene loginScene) {
         this.dataStorage = dataStorage;
+        this.primaryStage = primaryStage;
+        this.loginScene = loginScene;
         mainBorderPane = new BorderPane();
         scene = createRegisterScene();
     }
+
 
     private Scene createRegisterScene() {
         // elements for Center Region of mainBorderPane
@@ -39,6 +46,10 @@ public class RegisterScene extends Styling {
         TextField nameTxtField = new TextField("");
         Button registerButton = new Button("Register");
         Text loginNow = new Text("Already have an account? Log in.");
+        //maple red from color picker
+        loginNow.setFill(Color.rgb(225, 0, 40));
+        loginNow.setCursor(Cursor.HAND);
+
 
         // Set properties for elements
         // ...
@@ -47,7 +58,8 @@ public class RegisterScene extends Styling {
         registerButton.setOnAction(event ->
                 registerButtonEvent(usernameTxtField.getText(), passwordTxtField.getText(), nameTxtField.getText()));
         loginNow.setOnMouseClicked(event -> {
-            // Navigate to LoginScene
+            primaryStage.setScene(loginScene.getScene());
+
         });
 
         // Add the elements to the GridPane (All labels are on 1st col, all text-fields on 2nd col)
@@ -77,6 +89,7 @@ public class RegisterScene extends Styling {
             if (password.length() >= 6) {
                 dataStorage.addUser(username, password);
                 // Navigate to the login screen or another appropriate screen after successful registration
+                primaryStage.setScene(loginScene.getScene());
             } else {
                 errorText.setText("Password must be at least 6 characters long.");
             }

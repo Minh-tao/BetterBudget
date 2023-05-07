@@ -33,7 +33,7 @@ public class LoginScene extends Styling {
 
         setErrorTexts(errorText);
 
-        RegisterScene registerPane = new RegisterScene(dataStorage);
+        RegisterScene registerPane = new RegisterScene(dataStorage, primaryStage, this);
         Scene rScene = registerPane.getScene();
 
         headerStackPane = new StackPane();
