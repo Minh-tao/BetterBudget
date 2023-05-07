@@ -20,6 +20,22 @@ public class TransactionList {
         return list.remove(t);
     }
 
+    public int size() {
+        return list.size();
+    }
+
+    public Transaction peekLast() {
+        return list.get(size() - 1);
+    }
+
+    public Transaction peekFirst() {
+        return list.get(0);
+    }
+
+    public ObservableList<Transaction> list() {
+        return list;
+    }
+
     public boolean isEmpty() {return list.isEmpty();}
 
     @Override
