@@ -43,7 +43,7 @@ public class LoginScene extends Styling {
         VBox loginForm2 = new VBox();
 
         // elements for the Top Region of the mainBorderPane
-        Text title = new Text("BetterBudget");
+        Text title = new Text("BetterBudget Login");
 
         // StackPane automatically centers the objects
         title.setFill(Color.web("#50C878"));
@@ -126,6 +126,7 @@ public class LoginScene extends Styling {
         loginForm.setSpacing(5.0);
         loginForm.setPadding(padding);
         loginForm.setStyle("-fx-margin-left: 20px;");
+
 
         loginForm2.setSpacing(10.0);
         loginForm2.setAlignment(Pos.BOTTOM_CENTER);
