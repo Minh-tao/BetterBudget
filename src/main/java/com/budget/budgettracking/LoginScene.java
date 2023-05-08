@@ -43,7 +43,7 @@ public class LoginScene extends Styling {
         VBox loginForm2 = new VBox();
 
         // elements for the Top Region of the mainBorderPane
-        Text title = new Text("BetterBudget Login");
+        Text title = new Text("BetterBudget");
 
         // StackPane automatically centers the objects
         title.setFill(Color.web("#50C878"));
