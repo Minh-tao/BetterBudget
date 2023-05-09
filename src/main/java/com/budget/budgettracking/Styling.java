@@ -1,13 +1,19 @@
 package com.budget.budgettracking;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.util.function.UnaryOperator;
 
@@ -40,6 +46,28 @@ abstract class Styling extends Panes {
         }
         return null;
     };
+
+    public StackPane createLogoHeader() {
+        StackPane headerStackPane = new StackPane();
+        headerStackPane.setAlignment(Pos.CENTER);
+
+        Text title = new Text("BetterBudget\nRegistration");
+        title.setFill(Color.web("#50C878"));
+        title.setFont(titleFont);
+        title.setTextOrigin(VPos.TOP);
+        title.setTextAlignment(TextAlignment.CENTER);
+
+        GridPane gridPane = new GridPane();
+        gridPane.add(rectLarge(), 0, 0);
+        gridPane.add(title, 0, 1);
+
+        GridPane.setHalignment(title, HPos.CENTER);
+
+        headerStackPane.getChildren().addAll(gridPane);
+        return headerStackPane;
+    }
+
+
     private Button button;
     private boolean isSubmitButton;
 

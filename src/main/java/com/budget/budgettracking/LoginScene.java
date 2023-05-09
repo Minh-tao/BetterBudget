@@ -33,7 +33,7 @@ public class LoginScene extends Styling {
 
         setErrorTexts(errorText);
 
-        RegisterScene registerPane = new RegisterScene(dataStorage);
+        RegisterScene registerPane = new RegisterScene(dataStorage, primaryStage, this);
         Scene rScene = registerPane.getScene();
 
         headerStackPane = new StackPane();
@@ -55,9 +55,17 @@ public class LoginScene extends Styling {
 
         // The StackPane is used to layer items after each other
 
+        GridPane gridPane = new GridPane();
+        gridPane.add(rectLarge(), 0, 0);
+        gridPane.add(title, 0, 1);
+        gridPane.add(errorText, 0, 2);
+
+        GridPane.setHalignment(title, HPos.CENTER);
+        GridPane.setHalignment(errorText, HPos.CENTER);
+
         headerStackPane.getChildren().clear();
-        headerStackPane.getChildren().addAll(rectLarge(), title, errorText);
-        headerStackPane.setMargin(errorText, new Insets(110, 0, 0, 0)); // Adjust the margin values as needed
+        headerStackPane.getChildren().addAll(gridPane);
+
 
 
         // elements for the Center Region of mainBorderPane
@@ -118,6 +126,7 @@ public class LoginScene extends Styling {
         loginForm.setSpacing(5.0);
         loginForm.setPadding(padding);
         loginForm.setStyle("-fx-margin-left: 20px;");
+
 
         loginForm2.setSpacing(10.0);
         loginForm2.setAlignment(Pos.BOTTOM_CENTER);
