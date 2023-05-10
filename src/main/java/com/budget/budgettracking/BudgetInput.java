@@ -2,7 +2,6 @@ package com.budget.budgettracking;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,9 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class BudgetInput extends Application{
     // visual components
