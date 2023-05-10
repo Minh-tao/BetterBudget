@@ -176,18 +176,18 @@ public class TransactionInput extends Application{
         catCol.setStyle( "-fx-alignment: CENTER;");
 
         TableColumn<Transaction, LocalDate> dateCol = new TableColumn<>("Date");
-        dateCol.setCellValueFactory(new PropertyValueFactory<>(""));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateCol.setStyle( "-fx-alignment: CENTER;");
 
         TableColumn delCol = new TableColumn();
-        Image delete = new Image("delete(1).png");
+        Image delete = new Image("delete.png");
 
         delCol.setCellFactory(ButtonTableCell.<Transaction>forTableColumn(delete, (Transaction Transaction) ->
         {
             removeHandler(Transaction);
             return Transaction;
         }));
-
+        //table.setSelectionModel(null);
         table.setEditable(false);
         table.getColumns().addAll(itemCol, amountCol, catCol, dateCol, delCol);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -298,14 +298,14 @@ public class TransactionInput extends Application{
         purchaseButton.setFont(font);
         amountField.setFont(font);
         quitButton.setFont(font);
-//        String style = "-fx-font-family: '" + font.getFamily() + "'; "
-//                + "-fx-font-size: " + font.getSize() + "px;";
-//        dateField.setStyle(style);
+        String style = "-fx-font-family: '" + font.getFamily() + "'; "
+                + "-fx-font-size: " + font.getSize() + "px;";
+        dateField.setStyle(style);
         totalField.setFont(font);
 
         // box/grid styling
         outerGrid.setAlignment(Pos.CENTER);
-        outerGrid.setStyle("-fx-background-color: linear-gradient(to right, #45F18A, #B3BCCB);");
+        //outerGrid.setStyle("-fx-background-color: linear-gradient(to right, #45F18A, #B3BCCB);");
         outerGrid.setPadding(new Insets(15, 10, 10, 10));
         outerGrid.setHgap(10);
         // addTitleBox.setStyle("-fx-background-color: transparent;");
@@ -314,7 +314,7 @@ public class TransactionInput extends Application{
                 + "-fx-border-width: 1;"
                 + "-fx-border-color: black;"
                 + "-fx-padding: 30;"
-                + "-fx-background-color: #f0f0f0");
+                + "-fx-background-color: #7AE1B5");
         tableBox.setStyle("-fx-border-style: solid inside;"
                 + "-fx-border-width: 1;"
                 + "-fx-border-color: black;"
