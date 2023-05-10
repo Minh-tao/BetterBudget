@@ -52,8 +52,9 @@ public class DataStorage {
                     case "Budget" -> {
                         if (currentUser != null) {
                             String budgetName = nextLine[2];
-                            double budgetLimit = Double.parseDouble(nextLine[3]);
-                            Budget budget = new Budget(budgetName, 0, budgetLimit);
+                            double budgetAmount = Double.parseDouble(nextLine[3]);
+                            double budgetCurrent = Double.parseDouble(nextLine[4]);
+                            Budget budget = new Budget(budgetName, budgetAmount, budgetCurrent);
                             currentUser.getBudgets().add(budget);
                         }
                     }
@@ -74,6 +75,8 @@ public class DataStorage {
         }
     }
 
+
+
     private void writeToCSV() {
         List<String[]> data = new ArrayList<>();
 
@@ -86,7 +89,8 @@ public class DataStorage {
                         "Budget",
                         user.getUsername(),
                         budget.getName(),
-                        Double.toString(budget.getAmount())
+                        Double.toString(budget.getAmount()),
+                        Double.toString(budget.getCurrent())
                 };
                 data.add(budgetData);
             }
@@ -111,6 +115,8 @@ public class DataStorage {
             e.printStackTrace();
         }
     }
+
+
 
     public boolean checkUser(String username, String password) {
         for (User user : users) {

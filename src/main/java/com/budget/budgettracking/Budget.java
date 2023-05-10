@@ -28,6 +28,10 @@ public class Budget {
         return name;
     }
 
+    public double getCurrent() {
+        return current;
+    }
+
     public double getAmount() {
         return amount;
     }
