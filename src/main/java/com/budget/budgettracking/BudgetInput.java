@@ -24,7 +24,10 @@ import java.util.Objects;
 
 public class BudgetInput extends Application{
     // visual components
-        TabPane tp = new TabPane();
+    private DataStorage dataStorage;
+
+
+    TabPane tp = new TabPane();
         Tab inputTab = new Tab();
         BudgetView viewTab;
         GridPane outerGridpane = new GridPane();
