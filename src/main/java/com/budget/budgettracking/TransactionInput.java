@@ -175,18 +175,18 @@ public class TransactionInput extends Application{
         catCol.setStyle( "-fx-alignment: CENTER;");
 
         TableColumn<Transaction, LocalDate> dateCol = new TableColumn<>("Date");
-        dateCol.setCellValueFactory(new PropertyValueFactory<>(""));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateCol.setStyle( "-fx-alignment: CENTER;");
 
         TableColumn delCol = new TableColumn();
-        Image delete = new Image("delete(1).png");
+        Image delete = new Image("delete.png");
 
         delCol.setCellFactory(ButtonTableCell.<Transaction>forTableColumn(delete, (Transaction Transaction) ->
         {
             removeHandler(Transaction);
             return Transaction;
         }));
-
+        table.setSelectionModel(null);
         table.setEditable(false);
         table.getColumns().addAll(itemCol, amountCol, catCol, dateCol, delCol);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -297,14 +297,14 @@ public class TransactionInput extends Application{
         purchaseButton.setFont(font);
         amountField.setFont(font);
         quitButton.setFont(font);
-//        String style = "-fx-font-family: '" + font.getFamily() + "'; "
-//                + "-fx-font-size: " + font.getSize() + "px;";
-//        dateField.setStyle(style);
+        String style = "-fx-font-family: '" + font.getFamily() + "'; "
+                + "-fx-font-size: " + font.getSize() + "px;";
+        dateField.setStyle(style);
         totalField.setFont(font);
 
         // box/grid styling
         outerGrid.setAlignment(Pos.CENTER);
-        outerGrid.setStyle("-fx-background-color: linear-gradient(to right, #45F18A, #B3BCCB);");
+        //outerGrid.setStyle("-fx-background-color: linear-gradient(to right, #45F18A, #B3BCCB);");
         outerGrid.setPadding(new Insets(15, 10, 10, 10));
         outerGrid.setHgap(10);
         // addTitleBox.setStyle("-fx-background-color: transparent;");
@@ -313,7 +313,7 @@ public class TransactionInput extends Application{
                 + "-fx-border-width: 1;"
                 + "-fx-border-color: black;"
                 + "-fx-padding: 30;"
-                + "-fx-background-color: #f0f0f0");
+                + "-fx-background-color: #7AE1B5");
         tableBox.setStyle("-fx-border-style: solid inside;"
                 + "-fx-border-width: 1;"
                 + "-fx-border-color: black;"
@@ -490,72 +490,6 @@ public class TransactionInput extends Application{
     private void refreshChartTab() {
         chartTab = createChartTab();
         tabPane.getTabs().set(1, chartTab);
-    }
-
-    static class ButtonTableCell<S> extends TableCell<S, Button> {
-
-        private final Button actionButton;
-
-        public ButtonTableCell(String label, Function< S, S> function) {
-            this.getStyleClass().add("action-button-table-cell");
-
-            this.actionButton = new Button(label);
-            this.actionButton.setOnAction((ActionEvent e) -> {
-                function.apply(getCurrentItem());
-            });
-            this.actionButton.setMaxWidth(10);
-            Font font = Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 14);
-            this.actionButton.setFont(font);
-
-        }
-
-        public ButtonTableCell(Image img, Function< S, S> function) {
-            this.getStyleClass().add("action-button-table-cell");
-
-            ImageView imageView = new ImageView(img);
-            imageView.setFitWidth(15); // Set the desired width
-            imageView.setFitHeight(15); // Set the desired height
-
-            this.actionButton = new Button();
-            this.actionButton.setOnAction((ActionEvent e) -> {
-                function.apply(getCurrentItem());
-            });
-            // Make the button transparent
-            this.actionButton.setStyle("-fx-background-color: transparent;");
-
-            // Set the button's borders and fill to be transparent as well
-            this.actionButton.setBorder(null);
-            this.actionButton.setBackground(null);
-
-
-            this.actionButton.setGraphic(imageView);
-
-        }
-
-
-
-        public S getCurrentItem() {
-            return (S) getTableView().getItems().get(getIndex());
-        }
-
-        public static <S> Callback<TableColumn<S, Button>, TableCell<S, Button>> forTableColumn(String label, Function< S, S> function) {
-            return param -> new ButtonTableCell<>(label, function);
-        }
-
-        public static <S> Callback<TableColumn<S, Button>, TableCell<S, Button>> forTableColumn(Image img, Function< S, S> function) {
-            return param -> new ButtonTableCell<>(img, function);
-        }
-
-        @Override
-        public void updateItem(Button item, boolean empty) {
-            super.updateItem(item, empty);
-
-            if (empty) {
-                setGraphic(null);
-            } else {
-                setGraphic(actionButton);
-            }
-        }
     }
 
     public static void main(String[] args) { launch(args); }
