@@ -598,45 +598,5 @@ public class TransactionPage extends Application
 
     }
 
-    /* LINK Button table cells */
-    /* Creates table cells with buttons - compatible with event handlers */
-    /* ---------------------------------------------------------- */
-    /* Source: https://stackoverflow.com/questions/29489366/how-to-add-button-in-javafx-table-view */
-
-    static class ButtonTableCell<S> extends TableCell<S, Button> {
-
-        private final Button actionButton;
-
-        public ButtonTableCell(String label, Function< S, S> function) {
-            this.getStyleClass().add("action-button-table-cell");
-
-            this.actionButton = new Button(label);
-            this.actionButton.setOnAction((ActionEvent e) -> {
-                function.apply(getCurrentItem());
-            });
-            this.actionButton.setMaxWidth(10);
-            this.actionButton.setFont(new Font("Calibri", 11));
-        }
-
-        public S getCurrentItem() {
-            return (S) getTableView().getItems().get(getIndex());
-        }
-
-        public static <S> Callback<TableColumn<S, Button>, TableCell<S, Button>> forTableColumn(String label, Function< S, S> function) {
-            return param -> new ButtonTableCell<>(label, function);
-        }
-
-        @Override
-        public void updateItem(Button item, boolean empty) {
-            super.updateItem(item, empty);
-
-            if (empty) {
-                setGraphic(null);
-            } else {
-                setGraphic(actionButton);
-            }
-        }
-    }
-
     /* !SECTION */
 }

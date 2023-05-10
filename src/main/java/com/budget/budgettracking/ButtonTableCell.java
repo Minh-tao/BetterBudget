@@ -11,6 +11,11 @@ import javafx.util.Callback;
 
 import java.util.function.Function;
 
+/* Button table cells */
+/* Creates table cells with buttons - compatible with event handlers */
+/* ---------------------------------------------------------- */
+/* Source: https://stackoverflow.com/questions/29489366/how-to-add-button-in-javafx-table-view */
+
 public class ButtonTableCell<S> extends TableCell<S, Button> {
     private final Button actionButton;
 
