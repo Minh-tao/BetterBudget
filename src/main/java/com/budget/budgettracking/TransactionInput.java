@@ -187,7 +187,7 @@ public class TransactionInput extends Application{
             removeHandler(Transaction);
             return Transaction;
         }));
-        //table.setSelectionModel(null);
+        table.setSelectionModel(null);
         table.setEditable(false);
         table.getColumns().addAll(itemCol, amountCol, catCol, dateCol, delCol);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
