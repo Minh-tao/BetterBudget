@@ -2,6 +2,7 @@ package com.budget.budgettracking;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -64,7 +65,7 @@ public class TransactionInput extends Application{
     // widgets
     TextField nameField = new TextField();
     TextField amountField = new TextField();
-    DatePicker dateField = new DatePicker();
+    DatePicker dateField = new DatePicker(LocalDate.now());
     ComboBox<String> categoryComboBox = new ComboBox<>();
     Button purchaseButton = new Button("Add");
     TextField totalField = new TextField();
@@ -175,7 +176,7 @@ public class TransactionInput extends Application{
         catCol.setStyle( "-fx-alignment: CENTER;");
 
         TableColumn<Transaction, LocalDate> dateCol = new TableColumn<>("Date");
-        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>(""));
         dateCol.setStyle( "-fx-alignment: CENTER;");
 
         TableColumn delCol = new TableColumn();
@@ -199,6 +200,15 @@ public class TransactionInput extends Application{
         // set button handlers
         purchaseButton.setOnAction(e -> addTransactionHandler());
         quitButton.setOnAction(e -> quitHandler());
+        purchaseButton.disableProperty().bind(
+                Bindings.or(
+                        nameField.textProperty().isEmpty(),
+                        Bindings.or(
+                                amountField.textProperty().isEmpty(),
+                                categoryComboBox.valueProperty().isNull()
+                        )
+                )
+        );
     }
 
     /** Helper function adds widgets to boxes and adds those boxes to the GridPanes in the scene
@@ -288,9 +298,9 @@ public class TransactionInput extends Application{
         purchaseButton.setFont(font);
         amountField.setFont(font);
         quitButton.setFont(font);
-        String style = "-fx-font-family: '" + font.getFamily() + "'; "
-                + "-fx-font-size: " + font.getSize() + "px;";
-        dateField.setStyle(style);
+//        String style = "-fx-font-family: '" + font.getFamily() + "'; "
+//                + "-fx-font-size: " + font.getSize() + "px;";
+//        dateField.setStyle(style);
         totalField.setFont(font);
 
         // box/grid styling
