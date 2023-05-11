@@ -29,7 +29,6 @@ public class BudgetInput extends Application{
     // Constructor with DataStorage parameter
     public BudgetInput(DataStorage dataStorageInstance) {
         dataStorage = dataStorageInstance;
-        dataStorage.loadData();
     }
 
 
