@@ -52,8 +52,9 @@ public class DataStorage {
                     case "Budget" -> {
                         if (currentUser != null) {
                             String budgetName = nextLine[2];
-                            double budgetLimit = Double.parseDouble(nextLine[3]);
-                            Budget budget = new Budget(budgetName, 0, budgetLimit);
+                            double budgetAmount = Double.parseDouble(nextLine[3]);
+                            double budgetCurrent = Double.parseDouble(nextLine[4]);
+                            Budget budget = new Budget(budgetName, budgetAmount, budgetCurrent);
                             currentUser.getBudgets().add(budget);
                         }
                     }
@@ -74,6 +75,8 @@ public class DataStorage {
         }
     }
 
+
+
     private void writeToCSV() {
         List<String[]> data = new ArrayList<>();
 
@@ -86,7 +89,8 @@ public class DataStorage {
                         "Budget",
                         user.getUsername(),
                         budget.getName(),
-                        Double.toString(budget.getAmount())
+                        Double.toString(budget.getAmount()),
+                        Double.toString(budget.getCurrent())
                 };
                 data.add(budgetData);
             }
@@ -111,6 +115,8 @@ public class DataStorage {
             e.printStackTrace();
         }
     }
+
+
 
     public boolean checkUser(String username, String password) {
         for (User user : users) {
@@ -155,8 +161,26 @@ public class DataStorage {
     public void addUser(String username, String password) {
         User newUser = new User(username, password);
         users.add(newUser);
+
+        // Add a default budget
+        String defaultBudgetName = "Default Budget";
+        double defaultBudgetAmount = 1000.0;
+        double defaultBudgetLimit = 1000.0;
+        createBudget(newUser, defaultBudgetName, defaultBudgetAmount, defaultBudgetLimit);
+
+        // Add default transactions
+        String[] defaultTransactionNames = {"Transaction 1", "Transaction 2", "Transaction 3"};
+        double[] defaultTransactionAmounts = {100.0, 200.0, 300.0};
+        String[] defaultTransactionCategories = {"Groceries", "Bills", "Entertainment"};
+        LocalDate[] defaultTransactionDates = {LocalDate.now().minusDays(3), LocalDate.now().minusDays(2), LocalDate.now().minusDays(1)};
+
+        for (int i = 0; i < defaultTransactionNames.length; i++) {
+            createTransaction(newUser, defaultTransactionNames[i], defaultTransactionAmounts[i], defaultTransactionCategories[i], defaultTransactionDates[i]);
+        }
+
         writeToCSV();
     }
+
 
     public void removeBudget(User user, String budgetName) {
         user.getBudgets().removeIf(budget -> budget.getName().equals(budgetName));
