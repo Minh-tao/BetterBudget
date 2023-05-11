@@ -112,7 +112,6 @@ public class BudgetInput extends Application{
      * @return scene budget input window
      */
     public Scene createScene() {
-
         initializeBudgetList();
         initializeTotalBudgetAmount();
         allStyling();
