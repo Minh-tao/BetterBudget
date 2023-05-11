@@ -157,16 +157,18 @@ public class LoginScene extends Styling {
             dataStorage.setLoggedUser(username);
 
             // Navigate to the main pane, passing the user object
-            BudgetInput budgetInput = new BudgetInput(dataStorage);
+            MainWindow mainWindow = new MainWindow(dataStorage); // <-- Create a new MainWindow object with dataStorage as a parameter
+
             errorText.setText(" ");
-            Scene budgetInputScene = budgetInput.createScene();
-            primaryStage.setScene(budgetInputScene);
-            return budgetInputScene;
+            Scene mainWindowScene = mainWindow.createScene(); // <-- Create a new method createScene() in MainWindow
+            primaryStage.setScene(mainWindowScene);
+            return mainWindowScene;
         } else {
             errorText.setText("Wrong username or password");
         }
         return null;
     }
+
 
 
 
