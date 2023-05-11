@@ -27,6 +27,14 @@ public class DataStorage {
         writeToCSV();
     }
 
+    public List<Budget> getBudgets() {
+        return loggedUser != null ? loggedUser.getBudgets() : new ArrayList<>();
+    }
+
+    public double getTotalBudgetAmount() {
+        return loggedUser != null ? loggedUser.getBudgets().stream().mapToDouble(Budget::getAmount).sum() : 0.0;
+    }
+
     public void createTransaction(User user, String name, double amount, String category, LocalDate date) {
         Transaction newTransaction = new Transaction(name, amount, category, date);
         user.getTransactions().add(newTransaction);
@@ -125,6 +133,10 @@ public class DataStorage {
             }
         }
         return false;
+    }
+
+    public void loadData() {
+        readFromCSV();
     }
 
     public boolean checkUsernameAlreadyExisting(String username) {

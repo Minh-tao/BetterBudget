@@ -49,7 +49,7 @@
     <build>
         <resources>
             <resource>
-                <directory>src/resources</directory>
+                <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*.ttf</include>
                     <include>**/*.jpg</include>

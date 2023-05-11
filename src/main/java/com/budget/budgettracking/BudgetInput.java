@@ -2,7 +2,6 @@ package com.budget.budgettracking;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,14 +17,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class BudgetInput extends Application{
     // visual components
-    private DataStorage dataStorage;
 
+    private static final DataStorage dataStorage;
+
+    static {
+        dataStorage = new DataStorage();
+        dataStorage.loadData();
+    }
 
     TabPane tp = new TabPane();
         Tab inputTab = new Tab();
@@ -77,8 +79,10 @@ public class BudgetInput extends Application{
         Button viewButton = new Button("View Budget Overview");
         Button quitButton = new Button("Quit");
 
-        // initial budget, TODO should be loaded from user data
-        double totalBudgetAmount = 0.0;
+        // initial budget, INPROGRESS should be loaded from user data
+
+    double totalBudgetAmount = dataStorage.getTotalBudgetAmount();
+    //double totalBudgetAmount = 0.0;
 
         // dropdown for budget category name
         ObservableList<String> nameList = FXCollections.observableArrayList(Arrays.asList( // list of categories
@@ -89,7 +93,9 @@ public class BudgetInput extends Application{
         ComboBox<String> nameCombo = new ComboBox<>(nameList);
 
         // table of budget categories
-        ObservableList<Budget> budgetList = FXCollections.observableArrayList();
+        ObservableList<Budget> budgetList = FXCollections.observableArrayList(dataStorage.getBudgets());
+
+    //ObservableList<Budget> budgetList = FXCollections.observableArrayList();
         TableView<Budget> budgetTable = new TableView<>(budgetList);
 
     /**
@@ -336,9 +342,12 @@ public class BudgetInput extends Application{
     }
 
     private void quitHandler() {
-        // save info?
+    //    dataStorage.setBudgets(budgetList);
+    //    dataStorage.setTotalBudgetAmount(totalBudgetAmount);
+    //    dataStorage.saveBudgetData();
         Platform.exit();
     }
+
 
     private void updateHandler() {
         // TODO totalBudget == 0, button says "Set", changes to "Update" after
