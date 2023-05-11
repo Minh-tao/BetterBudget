@@ -30,11 +30,12 @@ public class MainWindow extends Application {
         // input and view tabs
         BudgetInputTab budgetInputTab = new BudgetInputTab();
         BudgetView budgetViewTab = new BudgetView(totalBudgetAmount, budgetList);
-//        TransactionInput transactionInputTab = new TransactionInput();
-//        TransactionView transactionViewTab = new TransactionView();
+
+        TransactionInput transactionInputTab = new TransactionInput();
+        //TransactionView transactionViewTab = new TransactionView();
 
 //        tp.getTabs().addAll(budgetInputTab, budgetViewTab, transactionInputTab, transactionViewTab);
-        tp.getTabs().addAll(budgetInputTab, budgetViewTab);
+        tp.getTabs().addAll(budgetInputTab, budgetViewTab, transactionInputTab);
         tp.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         Scene scene = new Scene(tp, Color.LIGHTBLUE);
