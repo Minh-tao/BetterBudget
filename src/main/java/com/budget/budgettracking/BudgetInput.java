@@ -381,13 +381,14 @@ public class BudgetInput extends Application{
     }
 
     private void test() {
-        totalBudgetAmount = 2000;
+        //This is here for testing purposes
         budgetList.add(new Budget("Food", 250));
-        budgetList.add(new Budget("Health", 100));
-        budgetList.add(new Budget("Rent", 1000));
-        budgetList.add(new Budget("Transportation", 120));
-        budgetList.add(new Budget("Personal", 200));
-        budgetList.add(new Budget("Misc", totalBudgetAmount - 1670)); // make misc the remaining unallocated amount
+//        budgetList.add(new Budget("Health", 100));
+//        budgetList.add(new Budget("Rent", 1000));
+//        budgetList.add(new Budget("Transportation", 120));
+//        budgetList.add(new Budget("Personal", 200));
+//        budgetList.add(new Budget("Misc", totalBudgetAmount - 1670)); // make misc the remaining unallocated amount
+
 
         createView();
     }
