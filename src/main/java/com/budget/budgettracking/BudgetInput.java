@@ -349,6 +349,7 @@ public class BudgetInput extends Application{
     private void removeHandler() {
         Budget item = budgetTable.getSelectionModel().getSelectedItem();
         budgetList.remove(item);
+        dataStorage.removeBudget(dataStorage.getLoggedUser(), item.getName());
     }
 
     private void quitHandler() {
