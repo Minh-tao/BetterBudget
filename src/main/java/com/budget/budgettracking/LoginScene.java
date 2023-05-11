@@ -153,8 +153,11 @@ public class LoginScene extends Styling {
     protected Scene loginButtonEvent(String username, String password) {
         User user = dataStorage.getUser(username, password);
         if (user != null) {
+            // Set the logged user in the DataStorage
+            dataStorage.setLoggedUser(username);
+
             // Navigate to the main pane, passing the user object
-            BudgetInput budgetInput = new BudgetInput();
+            BudgetInput budgetInput = new BudgetInput(dataStorage);
             errorText.setText(" ");
             Scene budgetInputScene = budgetInput.createScene();
             primaryStage.setScene(budgetInputScene);
@@ -164,6 +167,7 @@ public class LoginScene extends Styling {
         }
         return null;
     }
+
 
 
 

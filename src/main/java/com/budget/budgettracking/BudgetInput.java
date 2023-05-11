@@ -25,14 +25,18 @@ import java.util.Objects;
 public class BudgetInput extends Application{
     // visual components
 
-    private static final DataStorage dataStorage;
+    private DataStorage dataStorage;
 
-    static {
-        dataStorage = new DataStorage();
+    double totalBudgetAmount;
+
+    // Constructor with DataStorage parameter
+    public BudgetInput(DataStorage dataStorageInstance) {
+        dataStorage = dataStorageInstance;
         dataStorage.loadData();
     }
 
-    TabPane tp = new TabPane();
+
+        TabPane tp = new TabPane();
         Tab inputTab = new Tab();
         BudgetView viewTab;
         GridPane outerGridpane = new GridPane();
@@ -81,13 +85,20 @@ public class BudgetInput extends Application{
         Button addButton = new Button("Add");
         Button viewButton = new Button("View Budget Overview");
         Button quitButton = new Button("Quit");
+        ObservableList<Budget> budgetList;
 
-        // initial budget, INPROGRESS should be loaded from user data
+    private void initializeTotalBudgetAmount() {
+        totalBudgetAmount = dataStorage.getTotalBudgetAmount();
+    }
 
-    double totalBudgetAmount = dataStorage.getTotalBudgetAmount();
-    //double totalBudgetAmount = 0.0;
+    private void initializeBudgetList() {
+        budgetList = FXCollections.observableArrayList(dataStorage.getBudgets());
+    }
 
-        // dropdown for budget category name
+
+
+
+    // dropdown for budget category name
         ObservableList<String> nameList = FXCollections.observableArrayList(Arrays.asList( // list of categories
                 "Clothing", "Debt payments", "Education", "Entertainment", "Food", "Gifts and donations",
                 "Health and wellness", "Housing", "Insurance", "Personal care",
@@ -96,9 +107,7 @@ public class BudgetInput extends Application{
         ComboBox<String> nameCombo = new ComboBox<>(nameList);
 
         // table of budget categories
-        ObservableList<Budget> budgetList = FXCollections.observableArrayList(dataStorage.getBudgets());
 
-    //ObservableList<Budget> budgetList = FXCollections.observableArrayList();
         TableView<Budget> budgetTable = new TableView<>(budgetList);
 
     /**
@@ -107,6 +116,8 @@ public class BudgetInput extends Application{
      */
     public Scene createScene() {
 
+        initializeBudgetList();
+        initializeTotalBudgetAmount();
         allStyling();
         gridConstraints();
         populate();
@@ -246,7 +257,6 @@ public class BudgetInput extends Application{
     }
 
     private void populate() {
-        // add to grid
 //        totalInner.getChildren().addAll(totalLabel, totalField);
         totalButtonBox.getChildren().addAll(totalButton);
         categoryLabelBox.getChildren().addAll(categoryLabel);
@@ -337,6 +347,7 @@ public class BudgetInput extends Application{
 
         Budget newBudget = new Budget(name, amount, 0);
         budgetList.add(newBudget);
+        dataStorage.createBudget(name, 0, amount);
     }
 
     private void removeHandler() {
@@ -345,11 +356,17 @@ public class BudgetInput extends Application{
     }
 
     private void quitHandler() {
-    //    dataStorage.setBudgets(budgetList);
-    //    dataStorage.setTotalBudgetAmount(totalBudgetAmount);
-    //    dataStorage.saveBudgetData();
+        User currentUser = dataStorage.getLoggedUser();
+        if (currentUser != null) {
+            for (Budget budget : budgetList) {
+                // This will update the existing budgets in currentUser
+                dataStorage.updateBudget(currentUser, budget.getName(), budget.getName(), budget.getAmount());
+            }
+        }
+        dataStorage.saveBudgetData();
         Platform.exit();
     }
+
 
 
     private void updateHandler() {
@@ -379,7 +396,6 @@ public class BudgetInput extends Application{
         createView();
     }
 
-//    FOR DEBUGGING - make sure class extends Application
     public void start(Stage stage) {
         final int WIDTH = 750;
         final int HEIGHT = 450;
@@ -389,5 +405,4 @@ public class BudgetInput extends Application{
         stage.setScene(scene);
         stage.show();
     }
-
 }
