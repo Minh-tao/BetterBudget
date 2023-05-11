@@ -136,7 +136,7 @@ public class DataStorage {
             }
         }
 
-        try (FileWriter fileWriter = new FileWriter(CSV_FILE_PATH, false); // Set to false to overwrite the file
+        try (FileWriter fileWriter = new FileWriter(CSV_FILE_PATH, false);
              CSVWriter csvWriter = new CSVWriter(fileWriter)) {
             csvWriter.writeAll(data);
         } catch (IOException e) {
