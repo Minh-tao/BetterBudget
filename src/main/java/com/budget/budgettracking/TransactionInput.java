@@ -33,6 +33,8 @@ public class TransactionInput extends Application{
     private static final int WIDTH = 750;
     private static final int HEIGHT = 450;
 
+    String fontDirectory = "/fonts/Roboto-Regular.ttf";
+
     // visual components
     TabPane tabPane = new TabPane();
     Tab shopTab = new Tab();
@@ -265,8 +267,8 @@ public class TransactionInput extends Application{
         totalBox.setMargin(totalLabel, new Insets(0,5,0,0));
 
         // label styling (sizes, font)
-        Font titlefont = Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 18);
-        Font font = Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-Regular.ttf"), 14);
+        Font titlefont = Font.loadFont(getClass().getResourceAsStream(fontDirectory), 18);
+        Font font = Font.loadFont(getClass().getResourceAsStream(fontDirectory), 14);
         addItemLabel.setFont(titlefont);
         addTitleBox.setMargin(addItemLabel, new Insets(0,0,12,0));
         addTitleBox.setAlignment(Pos.BOTTOM_CENTER);

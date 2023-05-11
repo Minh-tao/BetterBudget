@@ -27,8 +27,8 @@ public class ButtonTableCell<S> extends TableCell<S, Button> {
             function.apply(getCurrentItem());
         });
         this.actionButton.setMaxWidth(10);
-        Font font = Font.loadFont(getClass().getResourceAsStream("/fonts/Bubbleboddy.ttf"), 14);
-        this.actionButton.setFont(font);
+//        Font font = Font.loadFont(getClass().getResourceAsStream("/fonts/Bubbleboddy.ttf"), 14);
+//        this.actionButton.setFont(font);
 
     }
 
@@ -60,11 +60,11 @@ public class ButtonTableCell<S> extends TableCell<S, Button> {
     }
 
     public static <S> Callback<TableColumn<S, Button>, TableCell<S, Button>> forTableColumn(String label, Function< S, S> function) {
-        return param -> new TransactionInput.ButtonTableCell<>(label, function);
+        return param -> new ButtonTableCell<>(label, function);
     }
 
     public static <S> Callback<TableColumn<S, Button>, TableCell<S, Button>> forTableColumn(Image img, Function< S, S> function) {
-        return param -> new TransactionInput.ButtonTableCell<>(img, function);
+        return param -> new ButtonTableCell<>(img, function);
     }
 
     @Override
