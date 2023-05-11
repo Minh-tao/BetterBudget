@@ -66,20 +66,14 @@
 .default-color4.chart-pie { -fx-pie-color: #ff5700; }
 .default-color5.chart-pie { -fx-pie-color: #ff4949; }
 
-.custom-label {
-    -fx-font-family: Roboto-Regular;
-    -fx-font-size: 14px;
-    -fx-font-weight: normal;
-}
-
-.button {
-    -fx-font-family: Roboto-Regular;
-    -fx-font-size: 14px;
-    -fx-font-weight: normal;
-}
-
 .title {
-    -fx-font-family: Roboto-Regular;
+    -fx-font-family: Bubbleboddy;
+    -fx-font-size: 18px;
+    -fx-font-weight: normal;
+}
+
+.custom-label {
+    -fx-font-family: Bubbleboddy;
     -fx-font-size: 18px;
     -fx-font-weight: normal;
 }
