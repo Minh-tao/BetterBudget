@@ -17,6 +17,11 @@
    -fx-stroke: #ce9c1d;
 }
 
+.tab-pane {
+    -fx-font-family: "Hanken Grotesk";
+    -fx-font-size: 13px;
+}
+
 .tab-pane .tab-header-area .tab-header-background {
     -fx-background-color: #3CAC70;
 }
@@ -34,8 +39,10 @@
 }
 
 .table-view {
-    -fx-selection-bar: purple;
-    -fx-selection-bar-non-focused: green;
+    /*-fx-selection-bar: purple;
+    -fx-selection-bar-non-focused: green;*/
+    -fx-font-family: "Hanken Grotesk";
+    -fx-font-size: 13px;
 }
 
 .table-view .column-header-background .filler {
