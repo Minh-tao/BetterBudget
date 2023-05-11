@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -21,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.util.function.Function;
@@ -28,16 +30,15 @@ import java.util.function.Function;
 /** Class used to create SpendingApp GUI and add functionality
  *
  */
-public class TransactionInput extends Application{
+public class TransactionInput extends Tab {
+
     private static final int WIDTH = 750;
     private static final int HEIGHT = 450;
 
     String fontDirectory = "/fonts/HankenGrotesk.ttf";
 
     // visual components
-    TabPane tabPane = new TabPane();
-    Tab shopTab = new Tab();
-    TransactionView chartTab;
+    // TransactionView chartTab;
     GridPane outerGrid = new GridPane();
     GridPane inputPanel = new GridPane();
     VBox nameBox = new VBox();
@@ -87,11 +88,11 @@ public class TransactionInput extends Application{
     // tableview
     TableView<Transaction> table = new TableView<>(mockData);
 
-    /** Application start method
-     *  @param stage: GUI stage
-     */
-    @Override
-    public void start(Stage stage) {
+    public TransactionInput() {
+        start();
+    }
+
+    public void start() {
 
         categoryComboBox = new ComboBox<>(categoryList); // fill category dropdown with categories
 
@@ -106,24 +107,17 @@ public class TransactionInput extends Application{
         bindTotalField();
         addMockData();
 
-        // create and add tabs to tabPane
-        shopTab.setText("Purchases");
-        shopTab.setContent(outerGrid);
-        chartTab = createChartTab();
-        chartTab.setText("Spending Breakdown");
-        tabPane.getTabs().addAll(shopTab, chartTab);
-        tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE); // prevent user from closing tabs
+//        // create and add tabs to tabPane
+//        shopTab.setText("Purchases");
+//        shopTab.setContent(outerGrid);
+//        chartTab = createChartTab();
+//        chartTab.setText("Spending Breakdown");
+//        tabPane.getTabs().addAll(shopTab, chartTab);
+//        tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE); // prevent user from closing tabs
 
-        // set the scene
-        VBox root = new VBox(tabPane);
-        Scene scene = new Scene(root, Color.LIGHTBLUE);
-        scene.getStylesheets().add("stylesheet.css");
-        stage.setResizable(false);
-        stage.setWidth(WIDTH);
-        stage.setHeight(HEIGHT);
-        stage.setScene(scene);
-        stage.setTitle("Spending Visualizer");
-        stage.show();
+        setText("Transactions");
+        setContent(outerGrid);
+
     }
 
     /** Input validation for amount field to prevent invalid input
@@ -164,28 +158,41 @@ public class TransactionInput extends Application{
      */
     private void tableSetup() {
         // create table columns
-        TableColumn<Transaction, String> itemCol = new TableColumn<>("Item");
+        TableColumn<Transaction, String> itemCol = new TableColumn<>("Name");
         itemCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         itemCol.setStyle( "-fx-alignment: CENTER;");
-        itemCol.prefWidthProperty().bind(table.widthProperty().multiply(0.27));
+        itemCol.prefWidthProperty().bind(table.widthProperty().multiply(0.25));
         itemCol.setResizable(false);
 
         TableColumn<Transaction, Double> amountCol = new TableColumn<>("Amount");
         amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
         amountCol.setStyle( "-fx-alignment: CENTER;");
-        amountCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
+        amountCol.prefWidthProperty().bind(table.widthProperty().multiply(0.14));
         amountCol.setResizable(false);
 
-        TableColumn<Transaction, String> catCol = new TableColumn<>("Category");
+        amountCol.setCellFactory(column -> new TextFieldTableCell<Transaction, Double>(new StringConverter<Double>() {
+            @Override
+            public String toString(Double value) {
+                return "$" + value;
+            }
+
+            @Override
+            public Double fromString(String value) {
+                // Implement if needed
+                return null;
+            }
+        }));
+
+    TableColumn<Transaction, String> catCol = new TableColumn<>("Category");
         catCol.setCellValueFactory(new PropertyValueFactory<>("category"));
         catCol.setStyle( "-fx-alignment: CENTER;");
-        catCol.prefWidthProperty().bind(table.widthProperty().multiply(0.27));
+        catCol.prefWidthProperty().bind(table.widthProperty().multiply(0.26));
         catCol.setResizable(false);
 
-        TableColumn<Transaction, LocalDate> dateCol = new TableColumn<>("Date");
+        TableColumn<Transaction, LocalDate> dateCol = new TableColumn<>("Date Ordered");
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateCol.setStyle( "-fx-alignment: CENTER;");
-        dateCol.prefWidthProperty().bind(table.widthProperty().multiply(0.19));
+        dateCol.prefWidthProperty().bind(table.widthProperty().multiply(0.21));
         dateCol.setResizable(false);
 
         TableColumn delCol = new TableColumn();
@@ -429,7 +436,6 @@ public class TransactionInput extends Application{
         table.setTooltip(new Tooltip("Transaction will appear here"));
         // removeButton.setTooltip(new Tooltip("Click on a row and press this button to remove it from the table"));
         totalField.setTooltip(new Tooltip("The total amount of all transactions"));
-        shopTab.setTooltip(new Tooltip("Enter transaction to be analyzed"));
         quitButton.setTooltip(new Tooltip("Close the application"));
     }
 
@@ -478,7 +484,7 @@ public class TransactionInput extends Application{
         Transaction newT = new Transaction(name, cost, category, date);
         amountField.setText(null);
         table.getItems().add(newT);
-        refreshChartTab();
+        // refreshChartTab();
     }
 
     /**
@@ -486,7 +492,7 @@ public class TransactionInput extends Application{
      */
     private void removeHandler(Transaction toRemove) {
         table.getItems().remove(toRemove);
-        refreshChartTab();
+        // refreshChartTab();
     }
 
     /**
@@ -496,13 +502,13 @@ public class TransactionInput extends Application{
         Platform.exit();
     }
 
-    /**
-     * Creates new Chart tab and replaces the previous one
-     */
-    private void refreshChartTab() {
-        chartTab = createChartTab();
-        tabPane.getTabs().set(1, chartTab);
-    }
+//    /**
+//     * Creates new Chart tab and replaces the previous one
+//     */
+//    private void refreshChartTab() {
+//        chartTab = createChartTab();
+//        tabPane.getTabs().set(1, chartTab);
+//    }
 
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args) {  }
 }
