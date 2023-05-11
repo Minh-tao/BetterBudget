@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Bubbleboddy';
-    src: url('fonts/Bubbleboddy.ttf');
+    font-family: 'HankenGrotesk';
+    src: url('fonts/HankenGrotesk.ttf');
 }
 
 .chart-pie-label-line {
@@ -74,14 +74,14 @@
 .default-color5.chart-pie { -fx-pie-color: #ff4949; }
 
 .title {
-    -fx-font-family: Bubbleboddy;
+    -fx-font-family: HankenGrotesk;
     -fx-font-size: 18px;
     -fx-font-weight: normal;
 }
 
 .custom-label {
-    -fx-font-family: Bubbleboddy;
-    -fx-font-size: 18px;
+    -fx-font-family: HankenGrotesk;
+    -fx-font-size: 14px;
     -fx-font-weight: normal;
 }
 
