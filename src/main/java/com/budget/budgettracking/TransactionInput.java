@@ -23,7 +23,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.function.Function;
 
 /** Class used to create SpendingApp GUI and add functionality
