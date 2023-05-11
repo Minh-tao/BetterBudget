@@ -167,20 +167,30 @@ public class TransactionInput extends Application{
         TableColumn<Transaction, String> itemCol = new TableColumn<>("Item");
         itemCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         itemCol.setStyle( "-fx-alignment: CENTER;");
+        itemCol.prefWidthProperty().bind(table.widthProperty().multiply(0.27));
+        itemCol.setResizable(false);
 
         TableColumn<Transaction, Double> amountCol = new TableColumn<>("Amount");
         amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
         amountCol.setStyle( "-fx-alignment: CENTER;");
+        amountCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
+        amountCol.setResizable(false);
 
         TableColumn<Transaction, String> catCol = new TableColumn<>("Category");
         catCol.setCellValueFactory(new PropertyValueFactory<>("category"));
         catCol.setStyle( "-fx-alignment: CENTER;");
+        catCol.prefWidthProperty().bind(table.widthProperty().multiply(0.27));
+        catCol.setResizable(false);
 
         TableColumn<Transaction, LocalDate> dateCol = new TableColumn<>("Date");
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateCol.setStyle( "-fx-alignment: CENTER;");
+        dateCol.prefWidthProperty().bind(table.widthProperty().multiply(0.19));
+        dateCol.setResizable(false);
 
         TableColumn delCol = new TableColumn();
+        delCol.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
+        delCol.setResizable(false);
         Image delete = new Image("delete.png");
 
         delCol.setCellFactory(ButtonTableCell.<Transaction>forTableColumn(delete, (Transaction Transaction) ->
@@ -320,6 +330,7 @@ public class TransactionInput extends Application{
                 + "-fx-border-color: black;"
                 + "-fx-background-color: LIGHTGREY;");
         bottomGrid.setStyle("-fx-background-color: transparent;");
+
     }
 
     /** Helper function creates ColumnConstraints and RowConstraints for GridPanes and sets their height/width
