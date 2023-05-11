@@ -11,12 +11,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import java.util.Arrays;
 
@@ -79,7 +81,7 @@ public class BudgetInputTab extends Tab{
         setHandlers();
         tableSetup();
         test();
-//        createToolTips();
+        createToolTips();
         scrollPane.setContent(vBox);
         setText("Budget Input");
         setContent(scrollPane);
@@ -184,14 +186,27 @@ public class BudgetInputTab extends Tab{
         TableColumn<Budget, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.setStyle("-fx-alignment: CENTER;");
-        nameColumn.minWidthProperty().bind(table.widthProperty().multiply(0.27));
+        nameColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.435));
         nameColumn.setResizable(false);
 
-        TableColumn<Budget, String> amountColumn = new TableColumn<>("Amount");
+        TableColumn<Budget, Double> amountColumn = new TableColumn<>("Amount");
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
         amountColumn.setStyle("-fx-alignment: CENTER;");
-        amountColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.27));
+        amountColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.23));
         amountColumn.setResizable(false);
+
+        amountColumn.setCellFactory(column -> new TextFieldTableCell<Budget, Double>(new StringConverter<Double>() {
+            @Override
+            public String toString(Double value) {
+                return "$" + value;
+            }
+
+            @Override
+            public Double fromString(String value) {
+                // Implement if needed
+                return null;
+            }
+        }));
 
         TableColumn<Budget, String> percentColumn = new TableColumn<>("% of Total Budget");
         percentColumn.setCellValueFactory(cellData -> {
@@ -200,12 +215,13 @@ public class BudgetInputTab extends Tab{
             return new SimpleStringProperty(String.format("%.2f%%", percentage));
         });
         percentColumn.setStyle("-fx-alignment: CENTER;");
-        percentColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.27));
+        percentColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.23));
         percentColumn.setResizable(false);
 
         TableColumn delCol = new TableColumn();
-        delCol.prefWidthProperty().bind(table.widthProperty().multiply(0.27));
+        delCol.prefWidthProperty().bind(table.widthProperty().multiply(0.08));
         delCol.setResizable(false);
+        delCol.setStyle("-fx-alignment: CENTER;");
         Image delete = new Image("delete.png");
         // TODO set delete column cell factory
         delCol.setCellFactory(ButtonTableCell.<Budget>forTableColumn(delete, (Budget Budget) ->
