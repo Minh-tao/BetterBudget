@@ -33,7 +33,7 @@ public class TransactionInput extends Application{
     private static final int WIDTH = 750;
     private static final int HEIGHT = 450;
 
-    String fontDirectory = "/fonts/Roboto-Regular.ttf";
+    String fontDirectory = "/fonts/HankenGrotesk.ttf";
 
     // visual components
     TabPane tabPane = new TabPane();
@@ -276,7 +276,6 @@ public class TransactionInput extends Application{
 
         pTitleBox.setAlignment(Pos.BOTTOM_CENTER);
         pTitleBox.setMargin(purchasedLabel, new Insets(0,0,12,0));
-
 
         nameLabel.setFont(font);
         amountLabel.setFont(font);
