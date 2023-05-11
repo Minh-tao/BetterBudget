@@ -326,13 +326,13 @@ public class BudgetInputTab extends Tab{
     }
 
     private void test() {
-/*        totalBudgetAmount = 2000;
+        totalBudgetAmount = 2000;
         budgetList.add(new Budget("Food", 250));
         budgetList.add(new Budget("Health", 100));
         budgetList.add(new Budget("Rent", 1000));
         budgetList.add(new Budget("Transportation", 120));
         budgetList.add(new Budget("Personal", 200));
-        budgetList.add(new Budget("Misc", totalBudgetAmount - 1670)); // make misc the remaining unallocated amount*/
+        budgetList.add(new Budget("Misc", totalBudgetAmount - 1670)); // make misc the remaining unallocated amount
 
 //        createView();
     }
