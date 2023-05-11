@@ -20,17 +20,6 @@ public class DataStorage {
         users = new ArrayList<>();
         readFromCSV();
     }
-    private static DataStorage instance;
-
-    // ... rest of the class
-
-    public static DataStorage getInstance() {
-        if (instance == null) {
-            instance = new DataStorage();
-            instance.loadData();
-        }
-        return instance;
-    }
 
     public void createBudget(String name, double amount, double limit) {
         if (loggedUser == null) {
