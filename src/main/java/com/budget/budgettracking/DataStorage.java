@@ -20,10 +20,30 @@ public class DataStorage {
         users = new ArrayList<>();
         readFromCSV();
     }
+    private static DataStorage instance;
 
-    public void createBudget(User user, String name, double amount, double limit) {
-        Budget newBudget = new Budget(name, amount, limit);
-        user.getBudgets().add(newBudget);
+    // ... rest of the class
+
+    public static DataStorage getInstance() {
+        if (instance == null) {
+            instance = new DataStorage();
+            instance.loadData();
+        }
+        return instance;
+    }
+
+    public void createBudget(String name, double amount, double limit) {
+        if (loggedUser == null) {
+            // Handle the case when there is no logged user.
+            System.out.println("No logged user found.");
+            return;
+        }
+        createBudgetForUser(loggedUser, name, amount, limit);
+    }
+
+
+
+    public void saveBudgetData() {
         writeToCSV();
     }
 
@@ -116,7 +136,7 @@ public class DataStorage {
             }
         }
 
-        try (FileWriter fileWriter = new FileWriter(CSV_FILE_PATH, false); // Set to false to overwrite the file
+        try (FileWriter fileWriter = new FileWriter(CSV_FILE_PATH, false);
              CSVWriter csvWriter = new CSVWriter(fileWriter)) {
             csvWriter.writeAll(data);
         } catch (IOException e) {
@@ -129,11 +149,13 @@ public class DataStorage {
     public boolean checkUser(String username, String password) {
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                setLoggedUser(username);
                 return true;
             }
         }
         return false;
     }
+
 
     public void loadData() {
         readFromCSV();
@@ -169,6 +191,11 @@ public class DataStorage {
     public User getLoggedUser() {
         return loggedUser;
     }
+    public void createBudgetForUser(User user, String name, double amount, double limit) {
+        Budget newBudget = new Budget(name, amount, limit);
+        user.getBudgets().add(newBudget);
+        writeToCSV();
+    }
 
     public void addUser(String username, String password) {
         User newUser = new User(username, password);
@@ -178,7 +205,7 @@ public class DataStorage {
         String defaultBudgetName = "Default Budget";
         double defaultBudgetAmount = 1000.0;
         double defaultBudgetLimit = 1000.0;
-        createBudget(newUser, defaultBudgetName, defaultBudgetAmount, defaultBudgetLimit);
+        createBudgetForUser(newUser, defaultBudgetName, defaultBudgetAmount, defaultBudgetLimit);
 
         // Add default transactions
         String[] defaultTransactionNames = {"Transaction 1", "Transaction 2", "Transaction 3"};

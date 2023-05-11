@@ -27,9 +27,6 @@ public class App extends Application{
         DataStorage dataStorage = new DataStorage();
 
         Image icon = new Image("Logo.png");
-        BudgetInput budgetInput = new BudgetInput();
-        //Scene scene = budgetInput.createScene();
-
         LoginScene loginScene = new LoginScene(dataStorage, primaryStage);
         Scene lScene = loginScene.getScene();
 
