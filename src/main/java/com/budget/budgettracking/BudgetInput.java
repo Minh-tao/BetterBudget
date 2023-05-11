@@ -21,8 +21,13 @@ import java.util.Arrays;
 
 public class BudgetInput extends Application{
     // visual components
-    private DataStorage dataStorage;
 
+    private static final DataStorage dataStorage;
+
+    static {
+        dataStorage = new DataStorage();
+        dataStorage.loadData();
+    }
 
     TabPane tp = new TabPane();
         Tab inputTab = new Tab();
@@ -74,8 +79,10 @@ public class BudgetInput extends Application{
         Button viewButton = new Button("View Budget Overview");
         Button quitButton = new Button("Quit");
 
-        // initial budget, TODO should be loaded from user data
-        double totalBudgetAmount = 0.0;
+        // initial budget, INPROGRESS should be loaded from user data
+
+    double totalBudgetAmount = dataStorage.getTotalBudgetAmount();
+    //double totalBudgetAmount = 0.0;
 
         // dropdown for budget category name
         ObservableList<String> nameList = FXCollections.observableArrayList(Arrays.asList( // list of categories
@@ -86,7 +93,9 @@ public class BudgetInput extends Application{
         ComboBox<String> nameCombo = new ComboBox<>(nameList);
 
         // table of budget categories
-        ObservableList<Budget> budgetList = FXCollections.observableArrayList();
+        ObservableList<Budget> budgetList = FXCollections.observableArrayList(dataStorage.getBudgets());
+
+    //ObservableList<Budget> budgetList = FXCollections.observableArrayList();
         TableView<Budget> budgetTable = new TableView<>(budgetList);
 
     /**
@@ -333,9 +342,12 @@ public class BudgetInput extends Application{
     }
 
     private void quitHandler() {
-        // save info?
+    //    dataStorage.setBudgets(budgetList);
+    //    dataStorage.setTotalBudgetAmount(totalBudgetAmount);
+    //    dataStorage.saveBudgetData();
         Platform.exit();
     }
+
 
     private void updateHandler() {
         // TODO totalBudget == 0, button says "Set", changes to "Update" after
