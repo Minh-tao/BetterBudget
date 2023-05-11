@@ -58,13 +58,19 @@
     -fx-font-weight: bold;
 }
 
+.table-cell {
+    -fx-background-color: #7AE1B5; /* Set background color for all cells */
+}
+
 .table-view .column-header-background .filler {
     -fx-background-color: transparent;
 }
 
-.table-cell {
-    -fx-background-color: #7AE1B5; /* Set background color for all cells */
+.table-view .corner {
+    -fx-background-color: transparent;
 }
+
+
 
 .default-color0.chart-pie { -fx-pie-color: #ffd700; }
 .default-color1.chart-pie { -fx-pie-color: #ffa500; }
