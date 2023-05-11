@@ -190,46 +190,23 @@ public class DataStorage {
         User newUser = new User(username, password);
         users.add(newUser);
 
-        // Add a default budget based on malcolm's budget
-        createAndAddBudgets(newUser);
+/*        // Mock Data to test + register defaults
+        String defaultBudgetName = "Default Budget";
+        double defaultBudgetAmount = 1000.0;
+        double defaultBudgetLimit = 1000.0;
+        createBudgetForUser(newUser, defaultBudgetName, defaultBudgetAmount, defaultBudgetLimit);
 
-        // Add a default transaction based on Minh's transaction
-        String[] transactionNames = {
-                "Starcraft 2", "Rainbow Six Siege", "Warcraft 3", "Battlefield 4", "Crying Suns", "Minecraft", "Signalis", "Undertale",
-                "Protein powder", "Treadmill", "Blender", "Weights", "Running Shoes", "Jump Rope",
-                "China: Crony Capitalism", "Wacom Tablet", "Apple Pen", "iPad"
-        };
-        double[] transactionAmounts = {
-                25, 100, 60, 15, 25, 25, 20, 20,
-                12, 100, 30, 25, 80, 25,
-                25, 75, 80, 150
-        };
-        String[] transactionCategories = {
-                "Entertainment", "Entertainment", "Entertainment", "Entertainment", "Entertainment", "Entertainment", "Entertainment", "Entertainment",
-                "Health and wellness", "Health and wellness", "Health and wellness", "Health and wellness", "Health and wellness", "Health and wellness",
-                "Education", "Education", "Education", "Education"
-        };
-        LocalDate[] transactionDates = {
-                LocalDate.now(), LocalDate.now(), LocalDate.now().minusMonths(1), LocalDate.now().minusMonths(2), LocalDate.now().minusMonths(2), LocalDate.now().minusMonths(3), LocalDate.now().minusMonths(2), LocalDate.now().minusMonths(3),
-                LocalDate.now(), LocalDate.now().minusMonths(4), LocalDate.now(), LocalDate.now().minusMonths(1), LocalDate.now().minusMonths(3), LocalDate.now().minusMonths(2),
-                LocalDate.now(), LocalDate.now().plusMonths(2), LocalDate.now().minusMonths(1), LocalDate.now().minusMonths(2)
-        };
+        // Add default transactions
+        String[] defaultTransactionNames = {"Transaction 1", "Transaction 2", "Transaction 3"};
+        double[] defaultTransactionAmounts = {100.0, 200.0, 300.0};
+        String[] defaultTransactionCategories = {"Groceries", "Bills", "Entertainment"};
+        LocalDate[] defaultTransactionDates = {LocalDate.now().minusDays(3), LocalDate.now().minusDays(2), LocalDate.now().minusDays(1)};
 
-        for (int i = 0; i < transactionNames.length; i++) {
-            createTransaction(newUser, transactionNames[i], transactionAmounts[i], transactionCategories[i], transactionDates[i]);
+        for (int i = 0; i < defaultTransactionNames.length; i++) {
+            createTransaction(newUser, defaultTransactionNames[i], defaultTransactionAmounts[i], defaultTransactionCategories[i], defaultTransactionDates[i]);
         }
-
+*/
         writeToCSV();
-    }
-
-    public void createAndAddBudgets(User user) {
-        createBudgetForUser(user, "Default Budget", 1000.0, 1000.0);
-        createBudgetForUser(user, "Food", 250.0, 250.0);
-        createBudgetForUser(user, "Health", 100.0, 100.0);
-        createBudgetForUser(user, "Rent", 1000.0, 1000.0);
-        createBudgetForUser(user, "Transportation", 120.0, 120.0);
-        createBudgetForUser(user, "Personal", 200.0, 200.0);
-        createBudgetForUser(user, "Misc", 2000.0 - 1670.0, 2000.0 - 1670.0);
     }
 
 
