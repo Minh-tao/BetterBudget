@@ -6,11 +6,13 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.chart.*;
@@ -25,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BudgetView extends Tab {
+public class BudgetViewNew extends Tab {
 
     ScrollPane scrollPane = new ScrollPane();
     VBox vBox = new VBox();
@@ -36,9 +38,21 @@ public class BudgetView extends Tab {
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
     ObservableList<Transaction> mockData = FXCollections.observableArrayList(); // DEBUG
 
-    public BudgetView(double totalBudget, ObservableList<Budget> list) {
+    private double totalBudgetAmount;
+    private BudgetInputTab budgetInputTab;
+    //    private BudgetList budgetList;
+//    private TransactionList transactionList;
+    private ObservableList<Budget> budgetList;
+    private ObservableList<Transaction> transactionList;
+    private PieChart pieChart;
+    private StackedBarChart<String, Number> stackedBarChart;
 
+    public BudgetViewNew(double totalBudgetAmount, ObservableList<Budget> budgetList, ObservableList<Transaction> transactionList) {
         setText("Budget Overview");
+
+        this.totalBudgetAmount = totalBudgetAmount;
+        this.budgetList = budgetList;
+        this.transactionList = transactionList;
 
 //        BorderPane bp = new BorderPane();
         quitButton.setOnAction(e -> {Platform.exit();});
@@ -49,9 +63,9 @@ public class BudgetView extends Tab {
         hBox.setSpacing(10);
         hBox.setPadding(new Insets(10, 10, 10, 10));
 
-        double sum = sumCategories(list);
-        pieChartData.add(new PieChart.Data("Extra", totalBudget - sum));
-        addToPieChartData(list);
+        double sum = sumBudgets(budgetList);
+        pieChartData.add(new PieChart.Data("Extra", totalBudgetAmount - sum));
+        addToPieChartData(budgetList);
         PieChart chart = new PieChart(pieChartData);
         chart.setStyle("-fx-font-family: Roboto-Regular; -fx-font-size: 14px;");
         chart.setTitle("Budget Allocation");
@@ -59,23 +73,50 @@ public class BudgetView extends Tab {
         titleLabel.setStyle("-fx-font-family: Roboto-Regular; -fx-font-size: 20px;");
         chart.setLabelLineLength(20);
 
+        // create pie chart
+        pieChart = new PieChart();
+        pieChart.setTitle("Budget Allocation");
+        pieChart.setLegendSide(Side.RIGHT);
+        updatePieChart();
+
+        // create stacked bar chart
+        createSBC(budgetList, transactionList);
+
+        // Add a listener to update the charts whenever the lists change
+        budgetList.addListener((ListChangeListener<Budget>) e -> updateCharts());
+        transactionList.addListener((ListChangeListener<Transaction>) e -> updateCharts());
+
         // show percentages in chart and legend
         chart.getData().forEach(data -> {
-            String label = String.format("%s: %.2f%%", data.getName(), ((data.getPieValue()/totalBudget) * 100));
+            String label = String.format("%s: %.2f%%", data.getName(), ((data.getPieValue()/totalBudgetAmount) * 100));
             data.setName(label);
         });
 
         addMockData();
-        StackedBarChart stackedBarChart = createSBC(list, mockData);
+//        StackedBarChart stackedBarChart = createSBC(list, mockData);
 
         vBox.getChildren().addAll(chart, stackedBarChart);
-
+        vBox.setFillWidth(true);
+        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(10));
         scrollPane.setContent(vBox);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
         setContent(scrollPane);
     }
 
+    public Tab getTab() {
+        return this; // create tab instance var and return instead?
+    }
+
+    private void updateCharts() {
+        updatePieChart();
+        updateSBC();
+    }
+
+    private PieChart createPieChart() {return null;}
+    private ObservableList<PieChart.Data> createPieChartData() {return null;}
+    private StackedBarChart<String, Number> createStackedChart() {return null;}
     private StackedBarChart createSBC(ObservableList<Budget> bList, ObservableList<Transaction> tList) {
         // set x axis
         CategoryAxis xAxis = new CategoryAxis();
@@ -112,18 +153,39 @@ public class BudgetView extends Tab {
                 )
         );
         timeline.play();
-        xAxis.setAnimated(false);
-
-        //TODO set the color of each bar in totalSeries to match its pie slice
-        // set color of each bar in spentSeries to a single color
-        // create a startup animation
-        // pie startup animation too?
 
         return stackedBarChart;
     }
+    private ObservableList<XYChart.Series<String, Number>> createSBCData() {return null;}
+    private void updatePieChart() {
+        // get totalBudgetAmount
+        double sum = sumBudgets(budgetList);
+        double extraAmount = totalBudgetAmount - sum;
+
+        // create pie chart data
+
+        // set data and colors
+
+        // set labels
+    }
+    private void updateSBC() {
+        stackedBarChart.setPrefSize(800, 600);
+        // create series data
+        XYChart.Series<String, Number> spentSeries = new XYChart.Series<>();
+        spentSeries.setName("Spent");
+        XYChart.Series<String, Number> totalSeries = new XYChart.Series<>();
+        totalSeries.setName("Total");
+
+        for (Budget budget : budgetList) {
+            String budgetName = budget.getName();
+            double budgetAmount = budget.getAmount();
+            double spentAmount = budget.getCurrent();
 
 
-    private double sumCategories(ObservableList<Budget> list) {
+        }
+    }
+
+    private double sumBudgets(ObservableList<Budget> list) {
         double sum = 0;
         for (Budget item : list) {
             sum += item.getAmount();
