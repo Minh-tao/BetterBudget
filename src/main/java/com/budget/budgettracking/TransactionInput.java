@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -21,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.util.function.Function;
@@ -113,12 +115,8 @@ public class TransactionInput extends Tab {
 //        tabPane.getTabs().addAll(shopTab, chartTab);
 //        tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE); // prevent user from closing tabs
 
-        // set the scene
-        VBox root = new VBox(outerGrid);
-
         setText("Transactions");
-        setContent(root);
-
+        setContent(outerGrid);
 
     }
 
@@ -160,28 +158,41 @@ public class TransactionInput extends Tab {
      */
     private void tableSetup() {
         // create table columns
-        TableColumn<Transaction, String> itemCol = new TableColumn<>("Item");
+        TableColumn<Transaction, String> itemCol = new TableColumn<>("Name");
         itemCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         itemCol.setStyle( "-fx-alignment: CENTER;");
-        itemCol.prefWidthProperty().bind(table.widthProperty().multiply(0.27));
+        itemCol.prefWidthProperty().bind(table.widthProperty().multiply(0.25));
         itemCol.setResizable(false);
 
         TableColumn<Transaction, Double> amountCol = new TableColumn<>("Amount");
         amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
         amountCol.setStyle( "-fx-alignment: CENTER;");
-        amountCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
+        amountCol.prefWidthProperty().bind(table.widthProperty().multiply(0.14));
         amountCol.setResizable(false);
 
-        TableColumn<Transaction, String> catCol = new TableColumn<>("Category");
+        amountCol.setCellFactory(column -> new TextFieldTableCell<Transaction, Double>(new StringConverter<Double>() {
+            @Override
+            public String toString(Double value) {
+                return "$" + value;
+            }
+
+            @Override
+            public Double fromString(String value) {
+                // Implement if needed
+                return null;
+            }
+        }));
+
+    TableColumn<Transaction, String> catCol = new TableColumn<>("Category");
         catCol.setCellValueFactory(new PropertyValueFactory<>("category"));
         catCol.setStyle( "-fx-alignment: CENTER;");
-        catCol.prefWidthProperty().bind(table.widthProperty().multiply(0.27));
+        catCol.prefWidthProperty().bind(table.widthProperty().multiply(0.26));
         catCol.setResizable(false);
 
-        TableColumn<Transaction, LocalDate> dateCol = new TableColumn<>("Date");
+        TableColumn<Transaction, LocalDate> dateCol = new TableColumn<>("Date Ordered");
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateCol.setStyle( "-fx-alignment: CENTER;");
-        dateCol.prefWidthProperty().bind(table.widthProperty().multiply(0.19));
+        dateCol.prefWidthProperty().bind(table.widthProperty().multiply(0.21));
         dateCol.setResizable(false);
 
         TableColumn delCol = new TableColumn();
