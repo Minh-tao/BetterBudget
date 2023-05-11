@@ -189,7 +189,7 @@ public class TransactionInput extends Application{
         dateCol.setResizable(false);
 
         TableColumn delCol = new TableColumn();
-        delCol.prefWidthProperty().bind(table.widthProperty().multiply(0.10));
+        delCol.prefWidthProperty().bind(table.widthProperty().multiply(0.09));
         delCol.setResizable(false);
         Image delete = new Image("delete.png");
 
