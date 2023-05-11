@@ -342,7 +342,7 @@ public class BudgetInput extends Application{
 
         Budget newBudget = new Budget(name, amount, 0);
         budgetList.add(newBudget);
-        dataStorage.createBudget(name, 0, amount);
+        dataStorage.createBudget(name, amount, amount);
     }
 
     private void removeHandler() {
@@ -382,7 +382,6 @@ public class BudgetInput extends Application{
 
     private void test() {
         //This is here for testing purposes
-        budgetList.add(new Budget("Food", 250));
 //        budgetList.add(new Budget("Health", 100));
 //        budgetList.add(new Budget("Rent", 1000));
 //        budgetList.add(new Budget("Transportation", 120));
