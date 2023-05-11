@@ -56,6 +56,9 @@ public class BudgetInputTab extends Tab{
     Button quitButton = new Button("Quit");
 
     // initial budget, TODO should be loaded from user data
+
+    private DataStorage dataStorage;
+
     double totalBudgetAmount = 0.0;
 
     // dropdown for budget category name
@@ -67,15 +70,25 @@ public class BudgetInputTab extends Tab{
     ComboBox<String> nameCombo = new ComboBox<>(nameList);
 
     // table of budget categories
-    ObservableList<Budget> budgetList = FXCollections.observableArrayList();
+    ObservableList<Budget> budgetList;
     TableView<Budget> table = new TableView<>(budgetList);
+
+    private void initializeTotalBudgetAmount() {
+        totalBudgetAmount = dataStorage.getTotalBudgetAmount();
+    }
+
+    private void initializeBudgetList() {
+        budgetList = FXCollections.observableArrayList(dataStorage.getBudgets());
+    }
 
     /**
      *
      * @return scene budget input window
      */
-    public BudgetInputTab() {
-
+    public BudgetInputTab(DataStorage dataStorageInstance) {
+        dataStorage = dataStorageInstance;
+        initializeBudgetList();
+        initializeTotalBudgetAmount();
         allStyling();
         populate();
         setHandlers();

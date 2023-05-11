@@ -35,7 +35,7 @@ public class MainWindow extends Application {
         budgetList.add(new Budget("Misc", totalBudgetAmount - 1670));
 
         // input and view tabs
-        BudgetInputTab budgetInputTab = new BudgetInputTab();
+        BudgetInputTab budgetInputTab = new BudgetInputTab(dataStorage);
         BudgetView budgetViewTab = new BudgetView(totalBudgetAmount, budgetList);
 //        TransactionInput transactionInputTab = new TransactionInput();
 //        TransactionView transactionViewTab = new TransactionView();
@@ -69,7 +69,7 @@ public class MainWindow extends Application {
         budgetList.add(new Budget("Misc", totalBudgetAmount - 1670));
 
         // Input and view tabs
-        BudgetInputTab budgetInputTab = new BudgetInputTab();
+        BudgetInputTab budgetInputTab = new BudgetInputTab(dataStorage);
         BudgetView budgetViewTab = new BudgetView(totalBudgetAmount, budgetList);
 //        TransactionInput transactionInputTab = new TransactionInput();
 //        TransactionView transactionViewTab = new TransactionView();
