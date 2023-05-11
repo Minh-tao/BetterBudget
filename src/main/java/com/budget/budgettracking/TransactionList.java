@@ -3,13 +3,15 @@ package com.budget.budgettracking;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-
 public class TransactionList {
     private ObservableList<Transaction> list;
 
+    public TransactionList(ObservableList<Transaction> list) {
+        this.list = list;
+    }
+
     public TransactionList() {
-        list = FXCollections.observableArrayList();
+        this(FXCollections.observableArrayList());
     }
 
     public boolean addTransaction(Transaction t) {
@@ -32,7 +34,7 @@ public class TransactionList {
         return list.get(0);
     }
 
-    public ObservableList<Transaction> list() {
+    public ObservableList<Transaction> getList() {
         return list;
     }
 

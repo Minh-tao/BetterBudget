@@ -1,31 +1,22 @@
 package com.budget.budgettracking;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.time.LocalDate;
-import java.util.function.Function;
 
 /** Class used to create SpendingApp GUI and add functionality
  *
@@ -63,7 +54,6 @@ public class TransactionInput extends Tab {
     Label dateLabel = new Label("Date");
     Label totalLabel = new Label("Total ");
 
-
     // widgets
     TextField nameField = new TextField();
     TextField amountField = new TextField();
@@ -74,10 +64,7 @@ public class TransactionInput extends Tab {
     Button quitButton = new Button("Quit");
 
     // lists
-    ObservableList<Transaction> mockData = FXCollections.observableArrayList(
-    ); // hold purchases
-
-
+    ObservableList<Transaction> tableData = FXCollections.observableArrayList(); // hold purchases
 
     ObservableList<String> categoryList = FXCollections.observableArrayList( // list of categories
             "Clothing", "Debt payments", "Education", "Entertainment", "Food", "Gifts and donations",
@@ -86,10 +73,22 @@ public class TransactionInput extends Tab {
     );
 
     // tableview
-    TableView<Transaction> table = new TableView<>(mockData);
+    TableView<Transaction> table;
+
+    public TransactionInput(TransactionList list) {
+        tableData = list.getList();
+        table = new TableView<>(tableData);
+        start();
+    }
+
+    public TransactionInput(ObservableList<Transaction> list) {
+        tableData = list;
+        table = new TableView<>(tableData);
+        start();
+    }
 
     public TransactionInput() {
-        start();
+        this(FXCollections.observableArrayList());
     }
 
     public void start() {
@@ -105,7 +104,6 @@ public class TransactionInput extends Tab {
         tableSetup();
         addAmountRegex();
         bindTotalField();
-        addMockData();
 
 //        // create and add tabs to tabPane
 //        shopTab.setText("Purchases");
@@ -118,6 +116,10 @@ public class TransactionInput extends Tab {
         setText("Transactions");
         setContent(outerGrid);
 
+    }
+
+    public TransactionList getTransactionList() {
+        return new TransactionList(table.getItems());
     }
 
     /** Input validation for amount field to prevent invalid input
@@ -443,29 +445,6 @@ public class TransactionInput extends Tab {
      * Method gets the sums for each item category, and calls TransactionView class to create a tab for a chart object
      * @return TransactionView: tab containing the chart
      */
-    private void addMockData() {
-        // map for chart
-        mockData.add(new Transaction("Starcraft 2", 25, "Entertainment", LocalDate.now()));
-        mockData.add(new Transaction("Rainbow Six Siege", 100, "Entertainment", LocalDate.now()));
-        mockData.add(new Transaction("Warcraft 3", 60, "Entertainment", LocalDate.now().minusMonths(1)));
-        mockData.add(new Transaction("Battlefield 4", 15, "Entertainment", LocalDate.now().minusMonths(2)));
-        mockData.add(new Transaction("Crying Suns", 25, "Entertainment", LocalDate.now().minusMonths(2)));
-        mockData.add(new Transaction("Minecraft", 25, "Entertainment", LocalDate.now().minusMonths(3)));
-        mockData.add(new Transaction("Signalis", 20, "Entertainment", LocalDate.now().minusMonths(2)));
-        mockData.add(new Transaction("Undertale", 20, "Entertainment", LocalDate.now().minusMonths(3)));
-
-        mockData.add(new Transaction("Protein powder", 12, "Health and wellness", LocalDate.now()));
-        mockData.add(new Transaction("Treadmill", 100, "Health and wellness", LocalDate.now().minusMonths(4)));
-        mockData.add(new Transaction("Blender", 30, "Health and wellness", LocalDate.now()));
-        mockData.add(new Transaction("Weights", 25, "Health and wellness", LocalDate.now().minusMonths(1)));
-        mockData.add(new Transaction("Running Shoes", 80, "Health and wellness", LocalDate.now().minusMonths(3)));
-        mockData.add(new Transaction("Jump Rope", 25, "Health and wellness", LocalDate.now().minusMonths(2)));
-
-        mockData.add(new Transaction("China: Crony Capitalism", 25, "Education", LocalDate.now()));
-        mockData.add(new Transaction("Wacom Tablet", 75, "Education", LocalDate.now().plusMonths(2)));
-        mockData.add(new Transaction("Apple Pen", 80, "Education", LocalDate.now().minusMonths(1)));
-        mockData.add(new Transaction("iPad", 150, "Education", LocalDate.now().minusMonths(2)));
-    }
 
     private TransactionView createChartTab() {
         TransactionView TransactionView = new TransactionView(table.getItems());
