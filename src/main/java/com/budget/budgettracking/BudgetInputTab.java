@@ -2,6 +2,7 @@ package com.budget.budgettracking;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
@@ -97,35 +99,39 @@ public class BudgetInputTab extends Tab{
         totalBar.setPadding(new Insets(5));
 //        totalLabel.setPrefWidth(100);
 //        totalLabel.getStyleClass().add("label");
-        totalField.setMinWidth(200);
-        totalField.setPrefWidth(200);
+//        totalField.setMinWidth(225);
+        totalField.setPrefWidth(225);
         totalField.setPromptText("Enter amount in dollars (e.g. 1000)");
         totalField.setAlignment(Pos.CENTER);
+        Text promptText = new Text(totalField.getPromptText());
+        promptText.setFont(totalField.getFont());
+//        totalField.setMinWidth(promptText.getBoundsInLocal().getWidth() + totalField.getPadding().getLeft() + totalField.getPadding().getRight());
         totalButton.setPrefWidth(75);
 
         lineSeparator.setPrefWidth(800);
 
         categoryBar.setSpacing(10);
+        categoryBar.setPadding(new Insets(10, 0, 10, 0));
         categoryBar.setAlignment(Pos.CENTER);
-        categoryBar.setPadding(new Insets(10));
+//        categoryBar.setPadding(new Insets(10));
         categoryLabelBox.setPadding(new Insets(10, 0, 0, 0));
-        categoryLabelBox.setSpacing(10);
+//        categoryLabelBox.setSpacing(10);
         categoryLabelBox.setAlignment(Pos.CENTER);
 //        nameLabel.setPrefWidth(100);
-        nameBox.setAlignment(Pos.CENTER);
+        nameBox.setAlignment(Pos.BOTTOM_CENTER);
         nameBox.setPrefWidth(160);
         nameBox.setMaxWidth(Double.MAX_VALUE);
-        nameCombo.setPrefWidth(160);
-        nameCombo.setPromptText("Select or add a name");
-        amountLabel.setPrefWidth(100);
-        amountBox.setAlignment(Pos.CENTER);
+        nameCombo.setPrefWidth(175);
+        nameCombo.setPromptText("Select/add a name");
+//        amountLabel.setPrefWidth(100);
+        amountBox.setAlignment(Pos.BOTTOM_CENTER);
         amountBox.setPrefWidth(150);
         amountBox.setMaxWidth(Double.MAX_VALUE);
         amountField.setPrefWidth(100);
         amountField.setPromptText("Enter amount in dollars"); // or just "$"
 //        buttonBox.setSpacing(10);
-        buttonBox.setPadding(new Insets(10, 10, 10, 10));
-        buttonBox.setAlignment(Pos.CENTER_LEFT);
+//        buttonBox.setPadding(new Insets(10, 10, 10, 10));
+        buttonBox.setAlignment(Pos.BOTTOM_LEFT);
 //        addButton.setPrefWidth(80);
 
         tableBox.setAlignment(Pos.CENTER);
@@ -155,7 +161,7 @@ public class BudgetInputTab extends Tab{
         tableBox.setStyle("-fx-border-style: solid inside;"
                 + "-fx-border-width: 1;"
                 + "-fx-border-color: black;"
-                + "-fx-background-color: LIGHTGREY;");
+                + "-fx-background-color: #7AE1B5;");
 
     }
 
@@ -163,6 +169,7 @@ public class BudgetInputTab extends Tab{
         vBox.getChildren().addAll(totalBar, categoryBar, tableBox, bottomBar);
         totalBar.getChildren().addAll(totalLabel, totalField, totalButton);
         categoryBar.getChildren().addAll(categoryLabelBox, nameBox, amountBox, buttonBox);
+        tableLabelBox.getChildren().add(tableLabel);
         tableBox.getChildren().addAll(tableLabelBox, table);
         bottomBar.getChildren().add(quitButton);
 
@@ -177,10 +184,14 @@ public class BudgetInputTab extends Tab{
         TableColumn<Budget, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.setStyle("-fx-alignment: CENTER;");
+        nameColumn.minWidthProperty().bind(table.widthProperty().multiply(0.27));
+        nameColumn.setResizable(false);
 
         TableColumn<Budget, String> amountColumn = new TableColumn<>("Amount");
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
         amountColumn.setStyle("-fx-alignment: CENTER;");
+        amountColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.27));
+        amountColumn.setResizable(false);
 
         TableColumn<Budget, String> percentColumn = new TableColumn<>("% of Total Budget");
         percentColumn.setCellValueFactory(cellData -> {
@@ -189,9 +200,12 @@ public class BudgetInputTab extends Tab{
             return new SimpleStringProperty(String.format("%.2f%%", percentage));
         });
         percentColumn.setStyle("-fx-alignment: CENTER;");
+        percentColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.27));
+        percentColumn.setResizable(false);
 
         TableColumn delCol = new TableColumn();
-//        delCol.setStyle("-fx-alignment: CENTER;");
+        delCol.prefWidthProperty().bind(table.widthProperty().multiply(0.27));
+        delCol.setResizable(false);
         Image delete = new Image("delete.png");
         // TODO set delete column cell factory
         delCol.setCellFactory(ButtonTableCell.<Budget>forTableColumn(delete, (Budget Budget) ->
@@ -261,16 +275,23 @@ public class BudgetInputTab extends Tab{
 
     private void setHandlers() {
         totalButton.setOnAction(e -> setTotalHandler());
+        totalButton.disableProperty().bind(
+                Bindings.isEmpty(totalField.textProperty())
+        );
         addButton.setOnAction(e -> addHandler());
-//        removeButton.setOnAction(e -> removeHandler());
-//        viewButton.setOnAction(e -> overviewHandler());
+        addButton.disableProperty().bind(
+                Bindings.or(
+                    amountField.textProperty().isEmpty(),
+                    nameCombo.valueProperty().isNull()
+                )
+        );
         quitButton.setOnAction(e -> quitHandler());
     }
 
     private void createToolTips(){
         // tooltips
         nameCombo.setTooltip(new Tooltip("Select or add a new category name"));
-
+        totalButton.setTooltip(new Tooltip("Enter a total budget amount in $ and click here to set"));
         quitButton.setTooltip(new Tooltip("Save and quit the application"));
     }
 
