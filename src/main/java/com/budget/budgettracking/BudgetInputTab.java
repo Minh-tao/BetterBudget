@@ -75,7 +75,7 @@ public class BudgetInputTab extends Tab{
         tableSetup();
         test();
 //        createToolTips();
-
+        scrollPane.setContent(vBox);
         setText("Budget Input");
         setContent(scrollPane);
     }
