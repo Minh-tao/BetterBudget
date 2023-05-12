@@ -5,14 +5,6 @@ public class Budget {
     private double amount;
     private double current;
 
-    enum Frequency {
-        DAILY,
-        WEEKLY,
-        BIWEEKLY,
-        MONTHLY,
-        ANNUALLY
-    }
-
     public Budget(String name, double amount, double current) {
         this.name = name;
         this.amount = amount;
