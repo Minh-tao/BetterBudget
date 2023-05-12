@@ -31,13 +31,19 @@ public class BudgetView extends Tab {
     HBox hBox = new HBox();
     Button editButton = new Button("Edit Budget");
     Button quitButton = new Button("Quit");
-
+    private DataStorage dataStorage;
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-    ObservableList<Transaction> mockData = FXCollections.observableArrayList(); // DEBUG
+    ObservableList<Transaction> mockData; // DEBUG
 
-    public BudgetView(double totalBudget, ObservableList<Budget> list) {
 
+    public BudgetView(DataStorage dataStorage) {
+        this.dataStorage = dataStorage;
         setText("Budget Overview");
+
+        double totalBudget = dataStorage.getLoggedUser().getTotalLimit();
+
+        ObservableList<Budget> list = FXCollections.observableArrayList(dataStorage.getBudgets());
+        ObservableList<Transaction> mockData = FXCollections.observableArrayList(dataStorage.getLoggedUser().getTransactions());
 
 //        BorderPane bp = new BorderPane();
         quitButton.setOnAction(e -> {Platform.exit();});
@@ -146,13 +152,13 @@ public class BudgetView extends Tab {
 
     private void addMockData() {
         // map for chart
-        mockData.add(new Transaction("Doctor", 75, "Health", LocalDate.now()));
+/*        mockData.add(new Transaction("Doctor", 75, "Health", LocalDate.now()));
         mockData.add(new Transaction("Burger", 60, "Food", LocalDate.now()));
         mockData.add(new Transaction("Rent", 1000, "Rent", LocalDate.now().minusMonths(1)));
         mockData.add(new Transaction("Gas", 70, "Transportation", LocalDate.now().minusMonths(2)));
         mockData.add(new Transaction("Metro Pass", 27, "Transportation", LocalDate.now().minusMonths(2)));
         mockData.add(new Transaction("Minecraft", 25, "Personal", LocalDate.now().minusMonths(3)));
-        mockData.add(new Transaction("Dog Food", 20, "Misc", LocalDate.now().minusMonths(2)));
+        mockData.add(new Transaction("Dog Food", 20, "Misc", LocalDate.now().minusMonths(2)));*/
     }
 
 }
