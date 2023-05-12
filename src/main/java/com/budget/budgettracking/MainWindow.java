@@ -37,7 +37,7 @@ public class MainWindow extends Application {
 
         // input and view tabs
         BudgetInputTab budgetInputTab = new BudgetInputTab(dataStorage);
-        BudgetView budgetViewTab = new BudgetView(totalBudgetAmount, budgetList);
+        BudgetView budgetViewTab = new BudgetView(dataStorage);
 
         // TransactionInput
 
@@ -86,15 +86,17 @@ public class MainWindow extends Application {
         final int WIDTH = 750;
         final int HEIGHT = 450;
 
+        double totalBudgetAmount = dataStorage.getLoggedUser().getTotalLimit();
+        ObservableList<Budget> budgetList = FXCollections.observableArrayList(dataStorage.getBudgets());
         // Test data
-        ObservableList<Budget> budgetList = FXCollections.observableArrayList();
+/*        ObservableList<Budget> budgetList = FXCollections.observableArrayList();
         double totalBudgetAmount = 2000;
         budgetList.add(new Budget("Food", 250));
         budgetList.add(new Budget("Health", 100));
         budgetList.add(new Budget("Rent", 1000));
         budgetList.add(new Budget("Transportation", 120));
         budgetList.add(new Budget("Personal", 200));
-        budgetList.add(new Budget("Misc", totalBudgetAmount - 1670));
+        budgetList.add(new Budget("Misc", totalBudgetAmount - 1670));*/
 
         TransactionList transactionList = new TransactionList();
 
@@ -120,7 +122,7 @@ public class MainWindow extends Application {
         transactionList.addTransaction(new Transaction("iPad", 150, "Education", LocalDate.now().minusMonths(2)));
         // Input and view tabs
         BudgetInputTab budgetInputTab = new BudgetInputTab(dataStorage);
-        BudgetView budgetViewTab = new BudgetView(totalBudgetAmount, budgetList);
+        BudgetView budgetViewTab = new BudgetView(dataStorage);
         TransactionInput transactionInputTab = new TransactionInput(transactionList);
         TransactionView transactionViewTab = new TransactionView(transactionList.getList());
 

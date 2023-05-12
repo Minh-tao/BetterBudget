@@ -308,7 +308,7 @@ public class BudgetInput extends Application{
     }
 
     private void createView() {
-        BudgetView tab = new BudgetView(totalBudgetAmount, budgetList);
+        BudgetView tab = new BudgetView(dataStorage);
         if (tp.getTabs().size() <= 1) {
             tp.getTabs().add(tab);
         } else { tp.getTabs().set(1, tab); }
