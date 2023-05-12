@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 
-public class MainWindow extends Application {
+public class MainWindow {
 
     TabPane tp = new TabPane();
 
@@ -20,38 +20,6 @@ public class MainWindow extends Application {
     public MainWindow(DataStorage dataStorage) {
         this.dataStorage = dataStorage;
     }
-
-    public void start(Stage stage) {
-        final int WIDTH = 750;
-        final int HEIGHT = 450;
-
-        // test
-        ObservableList<Budget> budgetList = FXCollections.observableArrayList();
-        // input and view tabs
-        BudgetInputTab budgetInputTab = new BudgetInputTab(dataStorage);
-        BudgetView budgetViewTab = new BudgetView(dataStorage);
-
-        // TransactionInput
-
-        TransactionList transactionList = new TransactionList();
-
-        TransactionInput transactionInputTab = new TransactionInput(transactionList);
-        TransactionView transactionViewTab = new TransactionView(dataStorage);
-
-//        tp.getTabs().addAll(budgetInputTab, budgetViewTab, transactionInputTab, transactionViewTab);
-        tp.getTabs().addAll(budgetInputTab, budgetViewTab, transactionInputTab, transactionViewTab);
-        tp.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-
-        Scene scene = new Scene(tp, Color.LIGHTBLUE);
-        scene.getStylesheets().add("stylesheet.css");
-        stage.setTitle("Budget Tracker");
-        stage.setWidth(WIDTH);
-        stage.setHeight(HEIGHT);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
 
     // Add a createScene() method that returns the Scene object
     public Scene createScene() {
@@ -71,9 +39,5 @@ public class MainWindow extends Application {
         scene.getStylesheets().add("stylesheet.css");
 
         return scene;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
