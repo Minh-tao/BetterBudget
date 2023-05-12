@@ -450,7 +450,7 @@ public class TransactionInput extends Tab {
      */
 
     private TransactionView createChartTab() {
-        TransactionView TransactionView = new TransactionView(table.getItems());
+        TransactionView TransactionView = new TransactionView(dataStorage);
         TransactionView.setTooltip(new Tooltip("Shows a breakdown of the given purchased items"));
         return TransactionView;
     }
