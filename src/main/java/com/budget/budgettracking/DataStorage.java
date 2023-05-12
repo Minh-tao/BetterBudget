@@ -147,11 +147,6 @@ public class DataStorage {
         return false;
     }
 
-
-    public void loadData() {
-        readFromCSV();
-    }
-
     public boolean checkUsernameAlreadyExisting(String username) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {

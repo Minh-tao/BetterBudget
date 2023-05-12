@@ -33,7 +33,8 @@ public class TransactionView extends Tab {
      * Create BreakdownTab and LineChart
      * @param list: Map containing categories as keys and total costs for each category as values
      */
-    public TransactionView(List<Transaction> list) {
+    private DataStorage dataStorage;
+    public TransactionView(DataStorage dataStorage) {
 
         setText("Transactions Breakdown");
 
@@ -41,6 +42,9 @@ public class TransactionView extends Tab {
         Button quit = new Button("Quit");
         VBox vBox = new VBox();
         HBox quitBox = new HBox();
+
+        this.dataStorage = dataStorage;
+        List<Transaction> list = dataStorage.getLoggedUser().getTransactions();
 
         LineChart<String, Number> chart = createChart(list);
 
