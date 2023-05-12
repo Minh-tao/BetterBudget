@@ -23,9 +23,6 @@ import java.time.LocalDate;
  */
 public class TransactionInput extends Tab {
 
-    private static final int WIDTH = 750;
-    private static final int HEIGHT = 450;
-
     String fontDirectory = "/fonts/HankenGrotesk.ttf";
 
     // visual components
@@ -67,9 +64,9 @@ public class TransactionInput extends Tab {
     ObservableList<Transaction> tableData; // hold purchases
 
     ObservableList<String> categoryList = FXCollections.observableArrayList( // list of categories
-            "Clothing", "Debt payments", "Education", "Entertainment", "Food", "Gifts and donations",
-            "Health and wellness", "Housing", "Insurance", "Personal care",
-            "Savings and investments", "Taxes", "Transportation", "Miscellaneous"
+            "Clothing", "Debt payments", "Education", "Entertainment", "Food", "Gifts",
+            "Health", "Housing", "Insurance", "Personal",
+            "Savings", "Taxes", "Transportation", "Misc."
     );
 
     // tableview
@@ -121,9 +118,6 @@ public class TransactionInput extends Tab {
 
     }
 
-    public TransactionList getTransactionList() {
-        return new TransactionList(table.getItems());
-    }
 
     /** Input validation for amount field to prevent invalid input
      *
