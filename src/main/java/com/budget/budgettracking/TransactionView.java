@@ -34,26 +34,41 @@ public class TransactionView extends Tab {
      * @param list: Map containing categories as keys and total costs for each category as values
      */
     private DataStorage dataStorage;
+    private Button quit; // Define quit button as a class field
     public TransactionView(DataStorage dataStorage) {
-
+        this.dataStorage = dataStorage;
         setText("Transactions Breakdown");
 
-        BorderPane bp = new BorderPane();
-        Button quit = new Button("Quit");
-        VBox vBox = new VBox();
-        HBox quitBox = new HBox();
-
-        this.dataStorage = dataStorage;
-        List<Transaction> list = dataStorage.getLoggedUser().getTransactions();
-
-        LineChart<String, Number> chart = createChart(list);
-
+        // Initialize quit button here
+        quit = new Button("Quit");
         Font font = Font.loadFont("file:resources/fonts/Roboto/Roboto-Regular.ttf", 14);
 
         quit.setOnAction(e -> quitHandler());
         quit.setPrefWidth(75);
         quit.setMaxWidth(75);
         quit.setFont(font);
+
+        // Attach the refresh method to the onSelectionChanged event
+        this.setOnSelectionChanged(event -> {
+            if (this.isSelected()) {
+                refresh();
+            }
+        });
+
+        // Call refresh initially to populate the tab
+        refresh();
+    }
+
+    public void refresh() {
+        // Clear the old data
+        List<Transaction> list = dataStorage.getLoggedUser().getTransactions();
+
+        // Clear and re-create the chart
+        LineChart<String, Number> chart = createChart(list);
+
+        // Re-populate your UI elements
+        VBox vBox = new VBox();
+        HBox quitBox = new HBox();
         quitBox.getChildren().addAll(quit);
         quitBox.setAlignment(Pos.BOTTOM_RIGHT);
         quitBox.setPadding(new Insets(10, 10, 9, 0));
@@ -64,10 +79,11 @@ public class TransactionView extends Tab {
         vBox.setStyle("-fx-background-color: linear-gradient(to bottom, #2FC9ED, #F6CE55);");
         this.setTooltip(new Tooltip("Shows a breakdown of transactions"));
 
-        // sp.getChildren().addAll(chart, hole, totalText);
+        BorderPane bp = new BorderPane();
         bp.setCenter(chart);
         setContent(bp);
     }
+
 
     /**
      * Closes the application
