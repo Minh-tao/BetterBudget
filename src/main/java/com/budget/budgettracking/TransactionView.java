@@ -41,7 +41,9 @@ public class TransactionView extends Tab {
 
         // Initialize quit button here
         quit = new Button("Quit");
-        Font font = Font.loadFont("file:resources/fonts/Roboto/Roboto-Regular.ttf", 14);
+        String fontDirectory = "/fonts/HankenGrotesk.ttf";
+        Font font = Font.loadFont(getClass().getResourceAsStream(fontDirectory), 14);
+        Font titleFont = Font.loadFont(getClass().getResourceAsStream(fontDirectory), 20);
 
         quit.setOnAction(e -> quitHandler());
         quit.setPrefWidth(75);
@@ -106,9 +108,9 @@ public class TransactionView extends Tab {
                 new LineChart<>(xAxis,yAxis);
 
         chart.setTitle("Transactions Breakdown");
-        chart.setStyle("-fx-font-family: Roboto-Regular; -fx-font-size: 14px;");
+        chart.setStyle("-fx-font-family: \"Hanken Grotesk\"; -fx-font-size: 14px;");
         Label titleLabel = (Label) chart.lookup(".chart-title");
-        titleLabel.setStyle("-fx-font-family: Roboto-Regular; -fx-font-size: 20px;");
+        titleLabel.setStyle("-fx-font-family: \"Hanken Grotesk\"; -fx-font-size: 20px;");
 
         createChartData(list, chart);
 

@@ -23,37 +23,41 @@ import javafx.util.StringConverter;
 import java.util.Arrays;
 
 public class BudgetInputTab extends Tab{
+
+    String fontDirectory = "/fonts/HankenGrotesk.ttf";
+    Font font = Font.loadFont(getClass().getResourceAsStream(fontDirectory), 14);
     // visual components
     Tab inputTab = new Tab();
     ScrollPane scrollPane = new ScrollPane();
     VBox vBox = new VBox();
     HBox totalBar = new HBox();
+    HBox totalDisplayBox = new HBox();
+
+
     Label totalLabel = new Label("Total Budget"); // tooltip -> amount allowed to spend/month
     TextField totalField = new TextField();
     Button totalButton = new Button("Set Total");
-    HBox totalDisplayBox = new HBox();
     Label totalDisplayLabel = new Label("");
+    Label categoryLabel = new Label("Categories");
+    Label nameLabel = new Label("Name");
+    Label amountLabel = new Label("Amount");
+    TextField amountField = new TextField();
+    Label blank = new Label("");
+    Button addButton = new Button("Add");
+    Label tableLabel = new Label("Current Categories"); // does this need its own box?
+    Button quitButton = new Button("Quit");
 
     Separator lineSeparator = new Separator();
 
     HBox categoryBar = new HBox();
     VBox categoryLabelBox = new VBox();
-    Label categoryLabel = new Label("Categories");
     VBox nameBox = new VBox();
-    Label nameLabel = new Label("Name");
     VBox amountBox = new VBox();
-    Label amountLabel = new Label("Amount");
-    TextField amountField = new TextField();
     VBox buttonBox = new VBox();
-    Label blank = new Label("");
-    Button addButton = new Button("Add");
-
     VBox tableBox = new VBox();
     HBox tableLabelBox = new HBox();
-    Label tableLabel = new Label("Current Categories"); // does this need its own box?
-
     HBox bottomBar = new HBox();
-    Button quitButton = new Button("Quit");
+
 
     // initial budget, TODO should be loaded from user data
 
@@ -108,7 +112,6 @@ public class BudgetInputTab extends Tab{
 
     private void allStyling() {
         inputTab.setClosable(false);
-
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
 
@@ -185,6 +188,18 @@ public class BudgetInputTab extends Tab{
                 + "-fx-border-color: black;"
                 + "-fx-background-color: #7AE1B5;");
 
+        totalLabel.setFont(font);
+        totalField.setFont(font);
+         totalButton.setFont(font);
+         totalDisplayLabel.setFont(font);
+         categoryLabel.setFont(font);
+         nameLabel.setFont(font);
+         amountLabel.setFont(font);
+         amountField.setFont(font);
+         blank.setFont(font);
+         addButton.setFont(font);
+         tableLabel.setFont(font);
+         quitButton.setFont(font);
     }
 
     private void populate() {
