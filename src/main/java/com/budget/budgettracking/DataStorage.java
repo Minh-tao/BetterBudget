@@ -63,7 +63,9 @@ public class DataStorage {
                     case "User" -> {
                         String username = nextLine[1];
                         String password = nextLine[2];
+                        double totalLimit = Double.parseDouble(nextLine[3]);
                         currentUser = new User(username, password);
+                        currentUser.setTotalLimit(totalLimit);
                         users.add(currentUser);
                     }
                     case "Budget" -> {
@@ -98,7 +100,7 @@ public class DataStorage {
         List<String[]> data = new ArrayList<>();
 
         for (User user : users) {
-            String[] userData = {"User", user.getUsername(), user.getPassword()};
+            String[] userData = {"User", user.getUsername(), user.getPassword(), Double.toString(user.getTotalLimit())};
             data.add(userData);
 
             for (Budget budget : user.getBudgets()) {
@@ -190,22 +192,6 @@ public class DataStorage {
         User newUser = new User(username, password);
         users.add(newUser);
 
-/*        // Mock Data to test + register defaults
-        String defaultBudgetName = "Default Budget";
-        double defaultBudgetAmount = 1000.0;
-        double defaultBudgetLimit = 1000.0;
-        createBudgetForUser(newUser, defaultBudgetName, defaultBudgetAmount, defaultBudgetLimit);
-
-        // Add default transactions
-        String[] defaultTransactionNames = {"Transaction 1", "Transaction 2", "Transaction 3"};
-        double[] defaultTransactionAmounts = {100.0, 200.0, 300.0};
-        String[] defaultTransactionCategories = {"Groceries", "Bills", "Entertainment"};
-        LocalDate[] defaultTransactionDates = {LocalDate.now().minusDays(3), LocalDate.now().minusDays(2), LocalDate.now().minusDays(1)};
-
-        for (int i = 0; i < defaultTransactionNames.length; i++) {
-            createTransaction(newUser, defaultTransactionNames[i], defaultTransactionAmounts[i], defaultTransactionCategories[i], defaultTransactionDates[i]);
-        }
-*/
         writeToCSV();
     }
 
@@ -241,6 +227,11 @@ public class DataStorage {
                 break;
             }
         }
+        writeToCSV();
+    }
+
+    public void updateUserTotalLimit(User user, double newTotalLimit) {
+        user.setTotalLimit(newTotalLimit);
         writeToCSV();
     }
 

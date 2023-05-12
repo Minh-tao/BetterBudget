@@ -74,7 +74,7 @@ public class BudgetInputTab extends Tab{
     TableView<Budget> table = new TableView<>(budgetList);
 
     private void initializeTotalBudgetAmount() {
-        totalBudgetAmount = dataStorage.getTotalBudgetAmount();
+        totalBudgetAmount = dataStorage.getLoggedUser().getTotalLimit();
     }
 
     private void initializeBudgetList() {
@@ -301,6 +301,7 @@ public class BudgetInputTab extends Tab{
         // TODO grey out and disable panel below separator until budget is set
         System.out.println("Updated total");
         totalBudgetAmount = Double.parseDouble(totalField.getText());
+        dataStorage.updateUserTotalLimit(dataStorage.getLoggedUser(), totalBudgetAmount);
     }
 
     private void setHandlers() {
@@ -326,6 +327,7 @@ public class BudgetInputTab extends Tab{
     }
 
     private void test() {
+/*
         totalBudgetAmount = 2000;
         budgetList.add(new Budget("Food", 250));
         budgetList.add(new Budget("Health", 100));
@@ -333,6 +335,7 @@ public class BudgetInputTab extends Tab{
         budgetList.add(new Budget("Transportation", 120));
         budgetList.add(new Budget("Personal", 200));
         budgetList.add(new Budget("Misc", totalBudgetAmount - 1670)); // make misc the remaining unallocated amount
+*/
 
 //        createView();
     }
