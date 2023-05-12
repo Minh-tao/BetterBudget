@@ -64,7 +64,7 @@ public class TransactionInput extends Tab {
     Button quitButton = new Button("Quit");
 
     // lists
-    ObservableList<Transaction> tableData = FXCollections.observableArrayList(); // hold purchases
+    ObservableList<Transaction> tableData; // hold purchases
 
     ObservableList<String> categoryList = FXCollections.observableArrayList( // list of categories
             "Clothing", "Debt payments", "Education", "Entertainment", "Food", "Gifts and donations",
@@ -75,20 +75,23 @@ public class TransactionInput extends Tab {
     // tableview
     TableView<Transaction> table;
 
+    private DataStorage dataStorage;
     public TransactionInput(TransactionList list) {
         tableData = list.getList();
         table = new TableView<>(tableData);
         start();
     }
 
-    public TransactionInput(ObservableList<Transaction> list) {
-        tableData = list;
+    public TransactionInput(DataStorage dataStorage) {
+        this.dataStorage = dataStorage;
+
+        tableData = FXCollections.observableArrayList(dataStorage.getLoggedUser().getTransactions());
         table = new TableView<>(tableData);
         start();
     }
 
     public TransactionInput() {
-        this(FXCollections.observableArrayList());
+        this((TransactionList) FXCollections.observableArrayList());
     }
 
     public void start() {
@@ -463,6 +466,7 @@ public class TransactionInput extends Tab {
         Transaction newT = new Transaction(name, cost, category, date);
         amountField.setText(null);
         table.getItems().add(newT);
+        dataStorage.createTransaction(dataStorage.getLoggedUser(), name, cost, category, date);
         // refreshChartTab();
     }
 
@@ -471,6 +475,7 @@ public class TransactionInput extends Tab {
      */
     private void removeHandler(Transaction toRemove) {
         table.getItems().remove(toRemove);
+        dataStorage.removeTransaction(dataStorage.getLoggedUser(), toRemove.getName());
         // refreshChartTab();
     }
 
