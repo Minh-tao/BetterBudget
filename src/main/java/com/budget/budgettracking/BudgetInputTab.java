@@ -77,6 +77,12 @@ public class BudgetInputTab extends Tab{
         totalBudgetAmount = dataStorage.getLoggedUser().getTotalLimit();
     }
 
+    private void initializeBudgetTotalList() {
+        if (totalBudgetAmount != 0) {
+            totalDisplayLabel.setText("Budget Limit: $" + totalBudgetAmount);
+        }
+    }
+
     private void initializeBudgetList() {
         budgetList = FXCollections.observableArrayList(dataStorage.getBudgets());
     }
@@ -90,6 +96,7 @@ public class BudgetInputTab extends Tab{
         initializeBudgetList();
         initializeTotalBudgetAmount();
         allStyling();
+        initializeBudgetTotalList();
         populate();
         setHandlers();
         tableSetup();
@@ -109,6 +116,7 @@ public class BudgetInputTab extends Tab{
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(10));
 
+        totalDisplayBox.setAlignment(Pos.CENTER_RIGHT);
         totalBar.setSpacing(10);
         totalBar.setAlignment(Pos.CENTER);
         totalBar.setPadding(new Insets(5));
@@ -181,12 +189,14 @@ public class BudgetInputTab extends Tab{
     }
 
     private void populate() {
+        totalDisplayBox.getChildren().add(totalDisplayLabel);
         vBox.getChildren().addAll(totalBar, categoryBar, tableBox, bottomBar);
-        totalBar.getChildren().addAll(totalLabel, totalField, totalButton);
+        totalBar.getChildren().addAll(totalLabel, totalField, totalButton, totalDisplayBox);
         categoryBar.getChildren().addAll(categoryLabelBox, nameBox, amountBox, buttonBox);
         tableLabelBox.getChildren().add(tableLabel);
         tableBox.getChildren().addAll(tableLabelBox, table);
         bottomBar.getChildren().add(quitButton);
+
 
         // categoryBar Boxes
         categoryLabelBox.getChildren().add(categoryLabel);
@@ -302,6 +312,7 @@ public class BudgetInputTab extends Tab{
         System.out.println("Updated total");
         totalBudgetAmount = Double.parseDouble(totalField.getText());
         dataStorage.updateUserTotalLimit(dataStorage.getLoggedUser(), totalBudgetAmount);
+        totalDisplayLabel.setText("Budget Limit: $" + totalBudgetAmount);
     }
 
     private void setHandlers() {
