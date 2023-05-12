@@ -42,7 +42,7 @@
     /*-fx-selection-bar: purple;
     -fx-selection-bar-non-focused: green;*/
     -fx-font-family: "Hanken Grotesk";
-    -fx-font-size: 13px;
+    -fx-font-size: 14px;
 }
 
 .table-view .column-header-background .filler {
@@ -58,12 +58,20 @@
     -fx-font-weight: bold;
 }
 
-.table-cell {
-    -fx-background-color: #7AE1B5; /* Set background color for all cells */
+.table-view .column-header-background{
+    -fx-background-color: #3CAC70;
 }
 
 .table-view .column-header-background .filler {
-    -fx-background-color: transparent;
+    -fx-background-color: #3CAC70;
+}
+
+.table-row-cell {
+    -fx-background-color: #7AE1B5; /* Set background color for all cells */
+}
+
+.table-cell {
+    -fx-background-color: #7AE1B5; /* Set background color for all cells */
 }
 
 .table-view .corner {
@@ -78,19 +86,19 @@
 .default-color5.chart-pie { -fx-pie-color: #ff4949; }
 
 .custom-label {
-    -fx-font-family: Roboto-Regular;
+    -fx-font-family: "Hanken Grotesk";
     -fx-font-size: 14px;
     -fx-font-weight: normal;
 }
 
 .button {
-    -fx-font-family: Roboto-Regular;
+    -fx-font-family: "Hanken Grotesk";
     -fx-font-size: 14px;
     -fx-font-weight: normal;
 }
 
 .title {
-    -fx-font-family: Roboto-Regular;
+    -fx-font-family: "Hanken Grotesk";
     -fx-font-size: 18px;
     -fx-font-weight: normal;
 }
@@ -99,7 +107,7 @@
     -fx-border-style: solid inside;
     -fx-border-width: 1;
     -fx-border-color: black;
-    -fx-padding: 0;"
+    -fx-padding: 0;
     -fx-background-color: LIGHTCYAN;
 }
 

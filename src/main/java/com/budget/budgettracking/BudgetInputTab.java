@@ -12,12 +12,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
 import java.util.Arrays;
 
 public class BudgetInputTab extends Tab{
+
+    String fontDirectory = "/fonts/HankenGrotesk.ttf";
+    Font font = Font.loadFont(getClass().getResourceAsStream(fontDirectory), 14);
     // visual components
     Tab inputTab = new Tab();
     ScrollPane scrollPane = new ScrollPane();
@@ -101,7 +105,6 @@ public class BudgetInputTab extends Tab{
 
     private void allStyling() {
         inputTab.setClosable(false);
-
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
 
@@ -175,6 +178,19 @@ public class BudgetInputTab extends Tab{
                 + "-fx-border-color: black;"
                 + "-fx-background-color: #7AE1B5;");
 
+        totalLabel.setFont(font);
+        totalField.setFont(font);
+         totalButton.setFont(font);
+         totalDisplayLabel.setFont(font);
+         categoryLabel.setFont(font);
+         nameLabel.setFont(font);
+         amountLabel.setFont(font);
+         amountField.setFont(font);
+         blank.setFont(font);
+         addButton.setFont(font);
+         tableLabel.setFont(font);
+
+         quitButton.setFont(font);
     }
 
     private void populate() {
@@ -183,6 +199,7 @@ public class BudgetInputTab extends Tab{
         totalBar.getChildren().addAll(totalLabel, totalField, totalButton, totalDisplayBox);
         categoryBar.getChildren().addAll(categoryLabelBox, nameBox, amountBox, buttonBox);
         tableLabelBox.getChildren().add(tableLabel);
+        tableLabelBox.setMargin(tableLabel, new Insets(6,0,6,0));
         tableBox.getChildren().addAll(tableLabelBox, table);
         bottomBar.getChildren().add(quitButton);
 
@@ -270,7 +287,7 @@ public class BudgetInputTab extends Tab{
         String name = (String)nameCombo.getValue();
         nameCombo.setValue(null);
 
-        if (amountField.getText().isEmpty() || Double.parseDouble(amountField.getText()) <= 0) {
+        if (amountField.getText().isEmpty() || amountField.getText().equals("$")) {
             System.out.println("Invalid amount");
             return;
         }

@@ -42,7 +42,7 @@
     /*-fx-selection-bar: purple;
     -fx-selection-bar-non-focused: green;*/
     -fx-font-family: "Hanken Grotesk";
-    -fx-font-size: 13px;
+    -fx-font-size: 14px;
 }
 
 .table-view .column-header-background .filler {
@@ -74,13 +74,13 @@
 .default-color5.chart-pie { -fx-pie-color: #ff4949; }
 
 .title {
-    -fx-font-family: HankenGrotesk;
+    -fx-font-family: "Hanken Grotesk";
     -fx-font-size: 18px;
     -fx-font-weight: normal;
 }
 
 .custom-label {
-    -fx-font-family: HankenGrotesk;
+    -fx-font-family: "Hanken Grotesk";
     -fx-font-size: 14px;
     -fx-font-weight: normal;
 }
@@ -98,6 +98,6 @@
 }
 
 .root {
-   -fx-font-family: Bubbleboddy;
+   -fx-font-family: "Hanken Grotesk";
    -fx-background-color: #E8F5E9;
 }

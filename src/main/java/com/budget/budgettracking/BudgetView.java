@@ -9,11 +9,18 @@ import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.util.Duration;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class BudgetView extends Tab {
-
+    String fontDirectory = "/fonts/HankenGrotesk.ttf";
+    Font font = Font.loadFont(getClass().getResourceAsStream(fontDirectory), 14);
+    Font titleFont = Font.loadFont(getClass().getResourceAsStream(fontDirectory), 20);
     ScrollPane scrollPane = new ScrollPane();
     VBox vBox = new VBox();
     HBox hBox = new HBox();
@@ -28,6 +35,8 @@ public class BudgetView extends Tab {
         this.dataStorage = dataStorage;
         setText("Budget Overview");
 
+        quitButton.setFont(font);
+        editButton.setFont(font);
         quitButton.setOnAction(e -> {Platform.exit();});
         quitButton.setPrefWidth(75);
         hBox.getChildren().addAll(editButton, quitButton);
@@ -63,10 +72,10 @@ public class BudgetView extends Tab {
         pieChartData.add(new PieChart.Data("Extra", totalBudget - sum));
         addToPieChartData(list);
         PieChart chart = new PieChart(pieChartData);
-        chart.setStyle("-fx-font-family: Roboto-Regular; -fx-font-size: 14px;");
+        chart.setStyle("-fx-font-family: \"Hanken Grotesk\"; -fx-font-size: 14px;");
         chart.setTitle("Budget Allocation");
         Label titleLabel = (Label) chart.lookup(".chart-title");
-        titleLabel.setStyle("-fx-font-family: Roboto-Regular; -fx-font-size: 20px;");
+        titleLabel.setFont(titleFont);
         chart.setLabelLineLength(20);
 
         // show percentages in chart and legend
@@ -125,10 +134,6 @@ public class BudgetView extends Tab {
         stackedBarChart.getData().addAll(spentSeries, totalSeries);
 
         return stackedBarChart;
-    }
-
-    private void playAnimation() {
-
     }
 
 

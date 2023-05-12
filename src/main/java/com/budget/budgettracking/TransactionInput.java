@@ -38,6 +38,7 @@ public class TransactionInput extends Tab {
     HBox totalBox = new HBox();
     HBox removeBox = new HBox();
     HBox quitBox = new HBox();
+    VBox totalQuitBox = new VBox();
     HBox addTitleBox = new HBox();
     HBox pTitleBox = new HBox();
     VBox tableBox = new VBox();
@@ -160,7 +161,7 @@ public class TransactionInput extends Tab {
         TableColumn<Transaction, String> itemCol = new TableColumn<>("Name");
         itemCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         itemCol.setStyle( "-fx-alignment: CENTER;");
-        itemCol.prefWidthProperty().bind(table.widthProperty().multiply(0.25));
+        itemCol.prefWidthProperty().bind(table.widthProperty().multiply(0.28));
         itemCol.setResizable(false);
 
         TableColumn<Transaction, Double> amountCol = new TableColumn<>("Amount");
@@ -197,6 +198,7 @@ public class TransactionInput extends Tab {
         TableColumn delCol = new TableColumn();
         delCol.prefWidthProperty().bind(table.widthProperty().multiply(0.09));
         delCol.setResizable(false);
+        delCol.setStyle( "-fx-alignment: CENTER;");
         Image delete = new Image("delete.png");
 
         delCol.setCellFactory(ButtonTableCell.<Transaction>forTableColumn(delete, (Transaction Transaction) ->
@@ -257,11 +259,14 @@ public class TransactionInput extends Tab {
         outerGrid.add(tableBox, 1, 1);
         outerGrid.add(bottomGrid, 1, 2);
         bottomGrid.add(removeBox, 0, 0);
-        bottomGrid.add(totalBox, 1, 0);
         totalBox.getChildren().addAll(totalLabel, totalField);
 
-        bottomGrid.add(quitBox, 1, 1);
+
         quitBox.getChildren().add(quitButton);
+
+        totalQuitBox.getChildren().addAll(totalBox, quitBox);
+
+        bottomGrid.add(totalQuitBox, 1, 0);
     }
 
     /** Helper function sets box, label, and widget styling
@@ -277,8 +282,8 @@ public class TransactionInput extends Tab {
         purchaseBox.setAlignment(Pos.BOTTOM_CENTER);
         totalBox.setAlignment(Pos.CENTER_RIGHT);
         removeBox.setAlignment(Pos.TOP_LEFT);
-        quitBox.setAlignment(Pos.BOTTOM_RIGHT);
-        totalBox.setAlignment(Pos.CENTER_RIGHT);
+        quitBox.setAlignment(Pos.TOP_RIGHT);
+        totalQuitBox.setAlignment(Pos.TOP_RIGHT);
         totalBox.setMargin(totalLabel, new Insets(0,5,0,0));
 
         // label styling (sizes, font)
@@ -309,7 +314,6 @@ public class TransactionInput extends Tab {
         totalField.setPromptText("$");
         totalField.setEditable(false);
         totalField.setMaxWidth(75);
-        totalField.setAlignment(Pos.CENTER_RIGHT);
         quitButton.setPrefWidth(75);
         purchaseButton.setFont(font);
         amountField.setFont(font);
@@ -318,6 +322,7 @@ public class TransactionInput extends Tab {
                 + "-fx-font-size: " + font.getSize() + "px;";
         dateField.setStyle(style);
         totalField.setFont(font);
+        totalQuitBox.setMargin(totalBox, new Insets(3,0,10,0));
 
         // box/grid styling
         outerGrid.setAlignment(Pos.CENTER);
@@ -406,7 +411,7 @@ public class TransactionInput extends Tab {
         bottomGrid.setPadding(new Insets(10, 0, 0, 0));
         bottomGrid.setHgap(10);
         bottomGrid.setVgap(10);
-        bottomGrid.setAlignment(Pos.TOP_CENTER);
+        bottomGrid.setAlignment(Pos.TOP_RIGHT);
 
         ColumnConstraints bottomColumn1 = new ColumnConstraints();
         bottomColumn1.setPrefWidth(235);
