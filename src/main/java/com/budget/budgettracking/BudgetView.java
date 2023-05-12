@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class BudgetView extends Tab {
 
     ScrollPane scrollPane = new ScrollPane();
@@ -33,27 +34,44 @@ public class BudgetView extends Tab {
     Button quitButton = new Button("Quit");
     private DataStorage dataStorage;
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-    ObservableList<Transaction> mockData; // DEBUG
+    //ObservableList<Transaction> mockData; // DEBUG
 
 
     public BudgetView(DataStorage dataStorage) {
         this.dataStorage = dataStorage;
         setText("Budget Overview");
 
-        double totalBudget = dataStorage.getLoggedUser().getTotalLimit();
-
-        ObservableList<Budget> list = FXCollections.observableArrayList(dataStorage.getBudgets());
-        ObservableList<Transaction> mockData = FXCollections.observableArrayList(dataStorage.getLoggedUser().getTransactions());
-
-//        BorderPane bp = new BorderPane();
         quitButton.setOnAction(e -> {Platform.exit();});
         quitButton.setPrefWidth(75);
-//        editButton.setOnAction(e -> {tabPane.getSelectionModel().select(0);});
         hBox.getChildren().addAll(editButton, quitButton);
         hBox.setAlignment(Pos.TOP_RIGHT);
         hBox.setSpacing(10);
         hBox.setPadding(new Insets(10, 10, 10, 10));
+        vBox.getChildren().add(hBox);
 
+        // Attach the refresh method to the onSelectionChanged event
+        this.setOnSelectionChanged(event -> {
+            if (this.isSelected()) {
+                refresh();
+            }
+        });
+
+        // Call refresh initially to populate the tab
+        refresh();
+    }
+
+
+    public void refresh() {
+        // Clear the old data
+        vBox.getChildren().clear();
+        pieChartData.clear();
+
+        // Reload your data from DataStorage
+        double totalBudget = dataStorage.getLoggedUser().getTotalLimit();
+        ObservableList<Budget> list = FXCollections.observableArrayList(dataStorage.getBudgets());
+        ObservableList<Transaction> mockData = FXCollections.observableArrayList(dataStorage.getLoggedUser().getTransactions());
+
+        // Re-populate your UI elements
         double sum = sumCategories(list);
         pieChartData.add(new PieChart.Data("Extra", totalBudget - sum));
         addToPieChartData(list);
@@ -80,6 +98,7 @@ public class BudgetView extends Tab {
         scrollPane.setFitToHeight(true);
         setContent(scrollPane);
     }
+
 
     private StackedBarChart createSBC(ObservableList<Budget> bList, ObservableList<Transaction> tList) {
         // set x axis
