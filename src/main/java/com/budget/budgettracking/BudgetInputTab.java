@@ -100,7 +100,6 @@ public class BudgetInputTab extends Tab{
         populate();
         setHandlers();
         tableSetup();
-        test();
         createToolTips();
         scrollPane.setContent(vBox);
         setText("Budget Input");
@@ -265,10 +264,13 @@ public class BudgetInputTab extends Tab{
         dataStorage.removeBudget(dataStorage.getLoggedUser(), toRemove.getName());
     }
 
-//    private void refreshViewTab() {
-//        chartTab = createChartTab();
-//        tabPane.getTabs().set(1, chartTab);
-//    }
+    private void refreshTable() {
+        ObservableList<Budget> list = table.getItems();
+        table.setItems(null);
+        table.layout();
+        table.setItems(list);
+    }
+
 
     private void addHandler() {
         if (nameCombo.getValue() == null) {
@@ -296,25 +298,18 @@ public class BudgetInputTab extends Tab{
         dataStorage.createBudget(name, amount, amount);
     }
 
-    private void removeHandler() {
-        Budget item = table.getSelectionModel().getSelectedItem();
-        budgetList.remove(item);
-    }
-
     private void quitHandler() {
-        // save info?
         Platform.exit();
     }
-
     private void setTotalHandler() {
-        // TODO totalBudget == 0, button says "Set", changes to "Update" after
-        // TODO grey out and disable panel below separator until budget is set
         System.out.println("Updated total");
         totalBudgetAmount = Double.parseDouble(totalField.getText());
         dataStorage.updateUserTotalLimit(dataStorage.getLoggedUser(), totalBudgetAmount);
         totalDisplayLabel.setText("Budget Limit: $" + totalBudgetAmount);
-    }
 
+        // refresh the table
+        refreshTable();
+    }
     private void setHandlers() {
         totalButton.setOnAction(e -> setTotalHandler());
         totalButton.disableProperty().bind(
@@ -329,26 +324,10 @@ public class BudgetInputTab extends Tab{
         );
         quitButton.setOnAction(e -> quitHandler());
     }
-
     private void createToolTips(){
         // tooltips
         nameCombo.setTooltip(new Tooltip("Select or add a new category name"));
         totalButton.setTooltip(new Tooltip("Enter a total budget amount in $ and click here to set"));
         quitButton.setTooltip(new Tooltip("Save and quit the application"));
     }
-
-    private void test() {
-/*
-        totalBudgetAmount = 2000;
-        budgetList.add(new Budget("Food", 250));
-        budgetList.add(new Budget("Health", 100));
-        budgetList.add(new Budget("Rent", 1000));
-        budgetList.add(new Budget("Transportation", 120));
-        budgetList.add(new Budget("Personal", 200));
-        budgetList.add(new Budget("Misc", totalBudgetAmount - 1670)); // make misc the remaining unallocated amount
-*/
-
-//        createView();
-    }
-
 }

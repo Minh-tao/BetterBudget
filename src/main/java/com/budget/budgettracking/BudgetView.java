@@ -88,7 +88,6 @@ public class BudgetView extends Tab {
             data.setName(label);
         });
 
-        addMockData();
         StackedBarChart stackedBarChart = createSBC(list, mockData);
 
         vBox.getChildren().addAll(chart, stackedBarChart);
@@ -168,16 +167,4 @@ public class BudgetView extends Tab {
             pieChartData.add(new PieChart.Data(item.getName(), item.getAmount()));
         }
     }
-
-    private void addMockData() {
-        // map for chart
-/*        mockData.add(new Transaction("Doctor", 75, "Health", LocalDate.now()));
-        mockData.add(new Transaction("Burger", 60, "Food", LocalDate.now()));
-        mockData.add(new Transaction("Rent", 1000, "Rent", LocalDate.now().minusMonths(1)));
-        mockData.add(new Transaction("Gas", 70, "Transportation", LocalDate.now().minusMonths(2)));
-        mockData.add(new Transaction("Metro Pass", 27, "Transportation", LocalDate.now().minusMonths(2)));
-        mockData.add(new Transaction("Minecraft", 25, "Personal", LocalDate.now().minusMonths(3)));
-        mockData.add(new Transaction("Dog Food", 20, "Misc", LocalDate.now().minusMonths(2)));*/
-    }
-
 }
