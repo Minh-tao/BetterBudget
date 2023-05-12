@@ -199,6 +199,7 @@ public class BudgetInputTab extends Tab{
          blank.setFont(font);
          addButton.setFont(font);
          tableLabel.setFont(font);
+
          quitButton.setFont(font);
     }
 
@@ -208,6 +209,7 @@ public class BudgetInputTab extends Tab{
         totalBar.getChildren().addAll(totalLabel, totalField, totalButton, totalDisplayBox);
         categoryBar.getChildren().addAll(categoryLabelBox, nameBox, amountBox, buttonBox);
         tableLabelBox.getChildren().add(tableLabel);
+        tableLabelBox.setMargin(tableLabel, new Insets(6,0,6,0));
         tableBox.getChildren().addAll(tableLabelBox, table);
         bottomBar.getChildren().add(quitButton);
 
