@@ -204,6 +204,7 @@ public class TransactionInput extends Tab {
         TableColumn delCol = new TableColumn();
         delCol.prefWidthProperty().bind(table.widthProperty().multiply(0.09));
         delCol.setResizable(false);
+        delCol.setStyle( "-fx-alignment: CENTER;");
         Image delete = new Image("delete.png");
 
         delCol.setCellFactory(ButtonTableCell.<Transaction>forTableColumn(delete, (Transaction Transaction) ->
@@ -319,7 +320,6 @@ public class TransactionInput extends Tab {
         totalField.setPromptText("$");
         totalField.setEditable(false);
         totalField.setMaxWidth(75);
-        totalField.setAlignment(Pos.CENTER_RIGHT);
         quitButton.setPrefWidth(75);
         purchaseButton.setFont(font);
         amountField.setFont(font);

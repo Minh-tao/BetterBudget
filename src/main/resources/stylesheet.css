@@ -58,12 +58,20 @@
     -fx-font-weight: bold;
 }
 
-.table-cell {
-    -fx-background-color: #7AE1B5; /* Set background color for all cells */
+.table-view .column-header-background{
+    -fx-background-color: #3CAC70;
 }
 
 .table-view .column-header-background .filler {
-    -fx-background-color: transparent;
+    -fx-background-color: #3CAC70;
+}
+
+.table-row-cell {
+    -fx-background-color: #7AE1B5; /* Set background color for all cells */
+}
+
+.table-cell {
+    -fx-background-color: #7AE1B5; /* Set background color for all cells */
 }
 
 .table-view .corner {
