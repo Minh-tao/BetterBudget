@@ -1,6 +1,5 @@
 package com.budget.budgettracking;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -8,16 +7,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.util.Arrays;
@@ -31,33 +27,30 @@ public class BudgetInputTab extends Tab{
     ScrollPane scrollPane = new ScrollPane();
     VBox vBox = new VBox();
     HBox totalBar = new HBox();
-    HBox totalDisplayBox = new HBox();
-
-
     Label totalLabel = new Label("Total Budget"); // tooltip -> amount allowed to spend/month
     TextField totalField = new TextField();
     Button totalButton = new Button("Set Total");
+    VBox totalDisplayBox = new VBox();
     Label totalDisplayLabel = new Label("");
-    Label categoryLabel = new Label("Categories");
-    Label nameLabel = new Label("Name");
-    Label amountLabel = new Label("Amount");
-    TextField amountField = new TextField();
-    Label blank = new Label("");
-    Button addButton = new Button("Add");
-    Label tableLabel = new Label("Current Categories"); // does this need its own box?
-    Button quitButton = new Button("Quit");
-
-    Separator lineSeparator = new Separator();
 
     HBox categoryBar = new HBox();
     VBox categoryLabelBox = new VBox();
+    Label categoryLabel = new Label("Categories");
     VBox nameBox = new VBox();
+    Label nameLabel = new Label("Name");
     VBox amountBox = new VBox();
+    Label amountLabel = new Label("Amount");
+    TextField amountField = new TextField();
     VBox buttonBox = new VBox();
+    Label blank = new Label("");
+    Button addButton = new Button("Add");
+
     VBox tableBox = new VBox();
     HBox tableLabelBox = new HBox();
-    HBox bottomBar = new HBox();
+    Label tableLabel = new Label("Current Categories"); // does this need its own box?
 
+    HBox bottomBar = new HBox();
+    Button quitButton = new Button("Quit");
 
     // initial budget, TODO should be loaded from user data
 
@@ -67,9 +60,9 @@ public class BudgetInputTab extends Tab{
 
     // dropdown for budget category name
     ObservableList<String> nameList = FXCollections.observableArrayList(Arrays.asList( // list of categories
-            "Clothing", "Debt payments", "Education", "Entertainment", "Food", "Gifts and donations",
-            "Health and wellness", "Housing", "Insurance", "Personal care",
-            "Savings", "Taxes", "Transportation", "Miscellaneous"
+            "Clothing", "Debt payments", "Education", "Entertainment", "Food", "Gifts",
+            "Health", "Housing", "Insurance", "Personal",
+            "Savings", "Taxes", "Transportation", "Misc."
     ));
     ComboBox<String> nameCombo = new ComboBox<>(nameList);
 
@@ -133,8 +126,6 @@ public class BudgetInputTab extends Tab{
 //        totalField.setMinWidth(promptText.getBoundsInLocal().getWidth() + totalField.getPadding().getLeft() + totalField.getPadding().getRight());
         totalButton.setPrefWidth(75);
 
-        lineSeparator.setPrefWidth(800);
-
         categoryBar.setSpacing(10);
         categoryBar.setPadding(new Insets(10, 0, 10, 0));
         categoryBar.setAlignment(Pos.CENTER);
@@ -152,13 +143,12 @@ public class BudgetInputTab extends Tab{
         amountBox.setAlignment(Pos.BOTTOM_CENTER);
         amountBox.setPrefWidth(150);
         amountBox.setMaxWidth(Double.MAX_VALUE);
-        amountField.setPrefWidth(100);
+        amountField.setPrefWidth(110);
         amountField.setPromptText("Enter amount in dollars"); // or just "$"
 //        buttonBox.setSpacing(10);
 //        buttonBox.setPadding(new Insets(10, 10, 10, 10));
         buttonBox.setAlignment(Pos.BOTTOM_LEFT);
 //        addButton.setPrefWidth(80);
-
         tableBox.setAlignment(Pos.CENTER);
 //        tableBox.setSpacing(10);
 //        tableBox.setPadding(new Insets(10));
@@ -322,7 +312,7 @@ public class BudgetInputTab extends Tab{
         System.out.println("Updated total");
         totalBudgetAmount = Double.parseDouble(totalField.getText());
         dataStorage.updateUserTotalLimit(dataStorage.getLoggedUser(), totalBudgetAmount);
-        totalDisplayLabel.setText("Budget Limit: $" + totalBudgetAmount);
+        totalDisplayLabel.setText("Current Limit: $" + totalBudgetAmount);
 
         // refresh the table
         refreshTable();

@@ -1,20 +1,12 @@
 package com.budget.budgettracking;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -23,7 +15,6 @@ import javafx.util.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 
 public class BudgetView extends Tab {
@@ -37,7 +28,7 @@ public class BudgetView extends Tab {
     Button quitButton = new Button("Quit");
     private DataStorage dataStorage;
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-    //ObservableList<Transaction> mockData; // DEBUG
+    double totalBudget;
 
 
     public BudgetView(DataStorage dataStorage) {
@@ -72,9 +63,9 @@ public class BudgetView extends Tab {
         pieChartData.clear();
 
         // Reload your data from DataStorage
-        double totalBudget = dataStorage.getLoggedUser().getTotalLimit();
+        totalBudget = dataStorage.getLoggedUser().getTotalLimit();
         ObservableList<Budget> list = FXCollections.observableArrayList(dataStorage.getBudgets());
-        ObservableList<Transaction> mockData = FXCollections.observableArrayList(dataStorage.getLoggedUser().getTransactions());
+        ObservableList<Transaction> transactionList = FXCollections.observableArrayList(dataStorage.getLoggedUser().getTransactions());
 
         // Re-populate your UI elements
         double sum = sumCategories(list);
@@ -93,9 +84,10 @@ public class BudgetView extends Tab {
             data.setName(label);
         });
 
-        StackedBarChart stackedBarChart = createSBC(list, mockData);
+        StackedBarChart stackedBarChart = createSBC(list, transactionList, totalBudget);
 
         vBox.getChildren().addAll(chart, stackedBarChart);
+        vBox.setPadding(new Insets(10));
 
         scrollPane.setContent(vBox);
         scrollPane.setFitToWidth(true);
@@ -103,16 +95,26 @@ public class BudgetView extends Tab {
         setContent(scrollPane);
     }
 
+    private ArrayList<String> getBudgetNames(ObservableList<Budget> bList) {
+        ArrayList<String> names = new ArrayList<>();
+        for (Budget budget : bList) {
+            names.add(budget.getName());
+        }
+        return names;
+    }
 
-    private StackedBarChart createSBC(ObservableList<Budget> bList, ObservableList<Transaction> tList) {
+    private StackedBarChart createSBC(ObservableList<Budget> bList, ObservableList<Transaction> tList, double totalBudget) {
+        // get category names for xAxis
+        ArrayList<String> categoryNames = getBudgetNames(bList);
+
         // set x axis
         CategoryAxis xAxis = new CategoryAxis();
-        xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList("Food", "Health", "Rent", "Transportation", "Personal", "Misc")));
+        xAxis.setCategories(FXCollections.observableArrayList(categoryNames));
         xAxis.setLabel("Category");
 
         // set y axis
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("$");
+        double tickUnit = totalBudget * 0.1; // make each tick in the chart occur every 10% of the upper bound
+        NumberAxis yAxis = new NumberAxis("$", 0, totalBudget, tickUnit);
 
         StackedBarChart<String, Number> stackedBarChart = new StackedBarChart<>(xAxis, yAxis);
         stackedBarChart.setTitle("Budget Usage by Category");
@@ -130,30 +132,6 @@ public class BudgetView extends Tab {
         }
 
         stackedBarChart.getData().addAll(spentSeries, totalSeries);
-
-//        Timeline tl = new Timeline();
-//        tl.getKeyFrames().add(
-//                new KeyFrame(Duration.millis(500),
-//                        new EventHandler<ActionEvent>() {
-//                            @Override public void handle(ActionEvent actionEvent) {
-//                                for (XYChart.Series<String, Number> series : stackedBarChart.getData()) {
-//                                    for (XYChart.Data<String, Number> data : series.getData()) {
-//                                        data.setYValue(Math.random() * 1000);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                ));
-//        tl.setCycleCount(Animation.INDEFINITE);
-//        tl.setAutoReverse(true);
-//        tl.play();
-//
-//        xAxis.setAnimated(false);
-
-        //TODO set the color of each bar in totalSeries to match its pie slice
-        // set color of each bar in spentSeries to a single color
-        // create a startup animation
-        // pie startup animation too?
 
         return stackedBarChart;
     }
