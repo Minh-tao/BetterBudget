@@ -3,6 +3,7 @@ package com.budget.budgettracking;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
@@ -92,6 +93,12 @@ public class LoginScene extends Styling {
         username.setPrefHeight(40);
         password.setPrefHeight(40);
 
+
+        password.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                loginButtonEvent(username.getText(), password.getText());
+            }
+        });
 
         // For log in button
         loginButton.setFont(bodyFont);

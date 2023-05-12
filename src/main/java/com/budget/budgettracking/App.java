@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 public class App extends Application{
 
-    private static final int WIDTH = 750;
+    private static final int WIDTH = 800;
     private static final int HEIGHT = 450;
     private static final String LOGO_PATH = "Logo.gif";
 
@@ -63,7 +63,7 @@ public class App extends Application{
         introPane.setAlignment(Pos.CENTER);
         root.setCenter(introPane);
 
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         primaryStage.setWidth(WIDTH);
         primaryStage.setHeight(HEIGHT);
 
